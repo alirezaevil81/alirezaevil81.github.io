@@ -1,12 +1,6 @@
-/**
-* Template Name: iPortfolio
-* Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-* Updated: Jun 29 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
 
-(function() {
+
+(function () {
   "use strict";
 
   /**
@@ -37,7 +31,7 @@
    * Toggle mobile nav dropdowns
    */
   document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
-    navmenu.addEventListener('click', function(e) {
+    navmenu.addEventListener('click', function (e) {
       e.preventDefault();
       this.parentNode.classList.toggle('active');
       this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
@@ -118,7 +112,7 @@
     new Waypoint({
       element: item,
       offset: '80%',
-      handler: function(direction) {
+      handler: function (direction) {
         let progress = item.querySelectorAll('.progress .progress-bar');
         progress.forEach(el => {
           el.style.width = el.getAttribute('aria-valuenow') + '%';
@@ -137,13 +131,13 @@
   /**
    * Init isotope layout and filters
    */
-  document.querySelectorAll('.isotope-layout').forEach(function(isotopeItem) {
+  document.querySelectorAll('.isotope-layout').forEach(function (isotopeItem) {
     let layout = isotopeItem.getAttribute('data-layout') ?? 'masonry';
     let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
     let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
 
     let initIsotope;
-    imagesLoaded(isotopeItem.querySelector('.isotope-container'), function() {
+    imagesLoaded(isotopeItem.querySelector('.isotope-container'), function () {
       initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
         itemSelector: '.isotope-item',
         layoutMode: layout,
@@ -152,8 +146,8 @@
       });
     });
 
-    isotopeItem.querySelectorAll('.isotope-filters li').forEach(function(filters) {
-      filters.addEventListener('click', function() {
+    isotopeItem.querySelectorAll('.isotope-filters li').forEach(function (filters) {
+      filters.addEventListener('click', function () {
         isotopeItem.querySelector('.isotope-filters .filter-active').classList.remove('filter-active');
         this.classList.add('filter-active');
         initIsotope.arrange({
@@ -171,7 +165,7 @@
    * Init swiper sliders
    */
   function initSwiper() {
-    document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
+    document.querySelectorAll(".init-swiper").forEach(function (swiperElement) {
       let config = JSON.parse(
         swiperElement.querySelector(".swiper-config").innerHTML.trim()
       );
@@ -189,7 +183,7 @@
   /**
    * Correct scrolling position upon page load for URLs containing hash links.
    */
-  window.addEventListener('load', function(e) {
+  window.addEventListener('load', function (e) {
     if (window.location.hash) {
       if (document.querySelector(window.location.hash)) {
         setTimeout(() => {
@@ -226,4 +220,95 @@
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
 
+  /**
+ *  List of all Potfolio **************************************
+ */
+
+  const portfolioItems = [
+    {
+      imgSrc: 'assets/img/portfolio/bilmakh.png',
+      title: 'Bilmakh',
+      description: 'best test MMPI....',
+      link: 'https://xno1n.com/bilmakh/index.php',
+      filter: 'app'
+    },
+    {
+      imgSrc: 'assets/img/portfolio/compressorsepah.png',
+      title: 'Compressorsepah',
+      description: 'Site for selling compressors and industrial tools',
+      link: 'https://compressorsepah.ir',
+      filter: 'product'
+    },
+    {
+      imgSrc: 'assets/img/portfolio/azadpc.png',
+      title: 'AzadPc',
+      description: 'Site for shop pc and laptop gaming',
+      link: 'https://azadpc.com',
+      filter: 'product'
+    },
+    {
+      imgSrc: 'assets/img/portfolio/freepik-geter.png',
+      title: 'Freepik-geter',
+      description: 'library for get resourse freepik',
+      link: 'https://github.com/alirezaevil81/freepik-geter',
+      filter: 'books'
+    },
+  ];
+  /**
+   * ************************************************************
+   */
+
+
+
+  /**
+   * Add to HTML all Portfolio **********************************
+   */
+
+  const container = document.getElementById('portfolio-container');
+  portfolioItems.forEach(item => {
+    const portfolioItem = document.createElement('div');
+    portfolioItem.classList.add('col-lg-4', 'col-md-6', 'portfolio-item', 'isotope-item', 'filter-' + item.filter);
+    portfolioItem.innerHTML = `
+      <div class="portfolio-content h-100">
+          <img src="${item.imgSrc}" class="img-fluid" alt="${item.title}">
+          <div class="portfolio-info">
+              <h4>${item.title}</h4>
+              <p>${item.description}</p>
+              <a href="${item.imgSrc}" title="${item.title}" data-gallery="portfolio-gallery-${item.filter}"
+                 class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+              <a href="${item.link}" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+          </div>
+      </div>
+  `;
+    container.appendChild(portfolioItem);
+  });
+  //const lightbox = GLightbox({ selector: '.glightbox' });
+  /**
+   * ************************************************************
+   */
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+    //calculate age and birth
+    const birthday = new Date('2003-06-14');
+    let age = new Date().getFullYear() - birthday.getFullYear();
+
+    // birt date type to => string
+    let birthday_text = birthday.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+
+    // get age and birth elements
+    let EL_Age = document.getElementById('age');
+    let EL_Birthday = document.getElementById('birthday');
+    
+    //get year copyright element
+    let year = document.getElementById('year')
+
+    // put variable to elements
+    EL_Age.textContent = age
+    EL_Birthday.textContent = birthday_text
+    year.textContent = new Date().getFullYear()
+  });
+
+
 })();
+
