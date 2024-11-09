@@ -1,5 +1,3 @@
-
-
 (function () {
   "use strict";
 
@@ -220,34 +218,36 @@
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
 
+})();
+
   /**
  *  List of all Potfolio **************************************
  */
 
   const portfolioItems = [
     {
-      imgSrc: 'assets/img/portfolio/bilmakh.png',
+      imgSrc: 'assets/img/portfolio/bilmakh.webp',
       title: 'Bilmakh',
       description: 'best test MMPI....',
       link: 'https://xno1n.com/bilmakh/index.php',
       filter: 'app'
     },
     {
-      imgSrc: 'assets/img/portfolio/compressorsepah.png',
+      imgSrc: 'assets/img/portfolio/compressorsepah.webp',
       title: 'Compressorsepah',
       description: 'Site for selling compressors and industrial tools',
       link: 'https://compressorsepah.ir',
       filter: 'product'
     },
     {
-      imgSrc: 'assets/img/portfolio/azadpc.png',
+      imgSrc: 'assets/img/portfolio/azadpc.webp',
       title: 'AzadPc',
       description: 'Site for shop pc and laptop gaming',
       link: 'https://azadpc.com',
       filter: 'product'
     },
     {
-      imgSrc: 'assets/img/portfolio/freepik-geter.png',
+      imgSrc: 'assets/img/portfolio/freepik-geter.webp',
       title: 'Freepik-geter',
       description: 'library for get resourse freepik',
       link: 'https://github.com/alirezaevil81/freepik-geter',
@@ -283,12 +283,13 @@
     container.appendChild(portfolioItem);
   });
   //const lightbox = GLightbox({ selector: '.glightbox' });
+  
   /**
    * ************************************************************
    */
 
 
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("load", function () {
     //calculate age and birth
     const birthday = new Date('2003-06-14');
     let age = new Date().getFullYear() - birthday.getFullYear();
@@ -308,7 +309,3 @@
     EL_Birthday.textContent = birthday_text
     year.textContent = new Date().getFullYear()
   });
-
-
-})();
-
