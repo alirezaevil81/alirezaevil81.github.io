@@ -220,55 +220,55 @@
 
 })();
 
-  /**
- *  List of all Potfolio **************************************
+/**
+*  List of all Potfolio **************************************
+*/
+
+const portfolioItems = [
+  {
+    imgSrc: 'assets/img/portfolio/bilmakh.webp',
+    title: 'Bilmakh',
+    description: 'best test MMPI....',
+    link: 'https://xno1n.com/bilmakh/index.php',
+    filter: 'app'
+  },
+  {
+    imgSrc: 'assets/img/portfolio/compressorsepah.webp',
+    title: 'Compressorsepah',
+    description: 'Site for selling compressors and industrial tools',
+    link: 'https://compressorsepah.ir',
+    filter: 'product'
+  },
+  {
+    imgSrc: 'assets/img/portfolio/azadpc.webp',
+    title: 'AzadPc',
+    description: 'Site for shop pc and laptop gaming',
+    link: 'https://azadpc.com',
+    filter: 'product'
+  },
+  {
+    imgSrc: 'assets/img/portfolio/freepik-geter.webp',
+    title: 'Freepik-geter',
+    description: 'library for get resourse freepik',
+    link: 'https://github.com/alirezaevil81/freepik-geter',
+    filter: 'books'
+  },
+];
+/**
+ * ************************************************************
  */
 
-  const portfolioItems = [
-    {
-      imgSrc: 'assets/img/portfolio/bilmakh.webp',
-      title: 'Bilmakh',
-      description: 'best test MMPI....',
-      link: 'https://xno1n.com/bilmakh/index.php',
-      filter: 'app'
-    },
-    {
-      imgSrc: 'assets/img/portfolio/compressorsepah.webp',
-      title: 'Compressorsepah',
-      description: 'Site for selling compressors and industrial tools',
-      link: 'https://compressorsepah.ir',
-      filter: 'product'
-    },
-    {
-      imgSrc: 'assets/img/portfolio/azadpc.webp',
-      title: 'AzadPc',
-      description: 'Site for shop pc and laptop gaming',
-      link: 'https://azadpc.com',
-      filter: 'product'
-    },
-    {
-      imgSrc: 'assets/img/portfolio/freepik-geter.webp',
-      title: 'Freepik-geter',
-      description: 'library for get resourse freepik',
-      link: 'https://github.com/alirezaevil81/freepik-geter',
-      filter: 'books'
-    },
-  ];
-  /**
-   * ************************************************************
-   */
 
 
+/**
+ * Add to HTML all Portfolio **********************************
+ */
 
-  /**
-   * Add to HTML all Portfolio **********************************
-   */
-
-  const container = document.getElementById('portfolio-container');
-  portfolioItems.forEach(item => {
-    const portfolioItem = document.createElement('div');
-    portfolioItem.classList.add('col-lg-4', 'col-md-6', 'portfolio-item', 'isotope-item', 'filter-' + item.filter);
-    portfolioItem.innerHTML = `
+const container = document.getElementById('portfolio-container');
+portfolioItems.forEach(item => {
+  const portfolioItem = document.createElement('div');
+  portfolioItem.classList.add('col-lg-4', 'col-md-6', 'portfolio-item', 'isotope-item', 'filter-' + item.filter);
+  portfolioItem.innerHTML = `
       <div class="portfolio-content h-100">
           <img src="${item.imgSrc}" class="img-fluid" alt="${item.title}">
           <div class="portfolio-info">
@@ -280,32 +280,29 @@
           </div>
       </div>
   `;
-    container.appendChild(portfolioItem);
-  });
-  //const lightbox = GLightbox({ selector: '.glightbox' });
-  
-  /**
-   * ************************************************************
-   */
+  container.appendChild(portfolioItem);
+});
+//const lightbox = GLightbox({ selector: '.glightbox' });
 
+/**
+ * ************************************************************
+ */
 
-  document.addEventListener("load", function () {
-    //calculate age and birth
-    const birthday = new Date('2003-06-14');
-    let age = new Date().getFullYear() - birthday.getFullYear();
+//calculate age and birth
+const birthday = new Date('2003-06-14');
+let age = new Date().getFullYear() - birthday.getFullYear();
 
-    // birt date type to => string
-    let birthday_text = birthday.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+// birt date type to => string
+let birthday_text = birthday.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 
-    // get age and birth elements
-    let EL_Age = document.getElementById('age');
-    let EL_Birthday = document.getElementById('birthday');
-    
-    //get year copyright element
-    let year = document.getElementById('year')
+// get age and birth elements
+let EL_Age = document.getElementById('age');
+let EL_Birthday = document.getElementById('birthday');
 
-    // put variable to elements
-    EL_Age.textContent = age
-    EL_Birthday.textContent = birthday_text
-    year.textContent = new Date().getFullYear()
-  });
+//get year copyright element
+let year = document.getElementById('year')
+
+// put variable to elements
+EL_Age.textContent = age
+EL_Birthday.textContent = birthday_text
+year.textContent = new Date().getFullYear()
