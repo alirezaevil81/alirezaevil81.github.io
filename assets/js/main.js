@@ -1,308 +1,143 @@
-(function () {
-  "use strict";
+document.addEventListener('alpine:init', () => {
+    // ثبت کامپوننت اصلی رزومه
+    Alpine.data('portfolioApp', () => ({
+        isMobileMenuOpen: false,
+        showScrollTop: false,
+        user: null,
+        
+        // Typewriter Logic
+        typedText: '',
+        typedStrings: ['PHP Developer', 'JavaScript Developer', 'WordPress Developer', 'Laravel Developer', 'Python Developer'],
+        stringIndex: 0,
+        isDeleting: false,
 
-  /**
-   * Header toggle
-   */
-  const headerToggleBtn = document.querySelector('.header-toggle');
+        // UI States for animations
+        showHeroContent: false,
+        showAboutContent: false,
+        showStats: [false, false, false, false], // Followers, Following, Repos, Gists
 
-  function headerToggle() {
-    document.querySelector('#header').classList.toggle('header-show');
-    headerToggleBtn.classList.toggle('bi-list');
-    headerToggleBtn.classList.toggle('bi-x');
-  }
-  headerToggleBtn.addEventListener('click', headerToggle);
+        // Skill Data
+        skills: [
+            { name: 'HTML', level: '100%', icon: 'fa-brands fa-html5', color: 'text-orange-500' },
+            { name: 'CSS', level: '90%', icon: 'fa-brands fa-css3-alt', color: 'text-blue-500' },
+            { name: 'JavaScript', level: '65%', icon: 'fa-brands fa-square-js', color: 'text-yellow-400' },
+            { name: 'PHP / Laravel', level: '80%', icon: 'fa-brands fa-php', color: 'text-indigo-600' },
+            { name: 'WordPress / CMS', level: '90%', icon: 'fa-brands fa-wordpress', color: 'text-blue-400' },
+            { name: 'Python / Django', level: '70%', icon: 'fa-brands fa-python', color: 'text-blue-600' }
+        ],
+        skillCategories: [
+            { title: 'Backend & Databases', skills: ['MySQL', 'PostgreSQL', 'MongoDB', 'Redis', 'Node.js', 'RESTful API'] },
+            { title: 'Frameworks', skills: ['Laravel', 'Symfony', 'Django', 'Flask', 'FastAPI'] },
+            { title: 'Core Concepts', skills: ['OOP', 'Socket Programming', 'Multithreading', 'Design Patterns', 'Microservices'] },
+            { title: 'Tools & DevOps', skills: ['Git / GitHub', 'Docker', 'Agile/Scrum', 'CI/CD', 'SEO Optimization', 'Unit Testing'] }
+        ],
+        softSkills: [
+            'Team Collaboration', 'Problem-Solving', 'Time Management', 'Self-Motivation', 
+            'Performance Optimization', 'Secure Coding', 'Webmastering', 'Responsive Design', 
+            'Data Migration', 'Agile Methodologies'
+        ],
 
-  /**
-   * Hide mobile nav on same-page/hash links
-   */
-  document.querySelectorAll('#navmenu a').forEach(navmenu => {
-    navmenu.addEventListener('click', () => {
-      if (document.querySelector('.header-show')) {
-        headerToggle();
-      }
-    });
+        // Image Assets Logic
+        heroBg: '', // Selected background for hero section
+        imageAssets: null, // Stores fetched image links from JSON
 
-  });
+        // Portfolio Logic
+        activeFilter: '0',
+        portfolioItems: [
+            { imgSrc: 'assets/img/portfolio/compressorsepah.webp', title: 'Compressorsepah', description: 'Site for selling compressors and industrial tools', link: 'https://compressorsepah.ir', filter: 'WordPress', category: 'WordPress' },
+            { imgSrc: 'assets/img/portfolio/azadpc.webp', title: 'AzadPc', description: 'Site for shop pc and laptop gaming', link: 'https://azadpc.com', filter: 'WordPress', category: 'WordPress' },
+        ],
 
-  /**
-   * Toggle mobile nav dropdowns
-   */
-  document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
-    navmenu.addEventListener('click', function (e) {
-      e.preventDefault();
-      this.parentNode.classList.toggle('active');
-      this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
-      e.stopImmediatePropagation();
-    });
-  });
+        async init() {
+            // 1. Fetch Image Assets first (needed for placeholders)
+            try {
+                const imageRes = await fetch('/assets/data/images.json');
+                this.imageAssets = await imageRes.json();
+                this.heroBg = this.imageAssets.backgrounds[Math.floor(Math.random() * this.imageAssets.backgrounds.length)];
+            } catch (e) { console.error("Image assets fetch failed", e); }
 
-  /**
-   * Preloader
-   */
-  const preloader = document.querySelector('#preloader');
-  if (preloader) {
-    window.addEventListener('load', () => {
-      preloader.remove();
-    });
-  }
+            // 2. Fetch GitHub User Data
+            try {
+                const response = await fetch('https://api.github.com/users/alirezaevil81');
+                this.user = await response.json();
+            } catch (e) { console.error("Github fetch failed", e); }
 
-  /**
-   * Scroll top button
-   */
-  let scrollTop = document.querySelector('.scroll-top');
+            try {
+                const repoRes = await fetch('https://api.github.com/users/alirezaevil81/repos');
+                let repos = await repoRes.json();
+                repos.splice(0, 2); 
+                
+                repos.forEach((repo) => {
+                    switch (repo.id) {
+                        case 825470024: // bilmakh
+                            this.portfolioItems.push({ imgSrc: 'assets/img/portfolio/bilmakh.webp', title: repo.name, description: repo.description, link: repo.html_url, filter: repo.language, category: repo.language });
+                            break;
+                        case 756756391: // freepik-geter
+                            this.portfolioItems.push({ imgSrc: 'assets/img/portfolio/freepik-geter.webp', title: repo.name, description: repo.description, link: repo.html_url, filter: repo.language, category: repo.language });
+                            break;
+                        case 1047266466: // weblog-plus
+                            this.portfolioItems.push({ imgSrc: 'assets/img/portfolio/weblog-plus.webp', title: repo.name, description: repo.description, link: repo.html_url, filter: repo.language, category: repo.language });
+                            break;
+                        default:
+                                const placeholders = this.imageAssets?.placeholderImgs || ['https://github.blog/wp-content/uploads/2025/03/github_logo_invertocat_dark_3.png?w=1024'];
+                                const randomImg = placeholders[Math.floor(Math.random() * placeholders.length)];
+                            this.portfolioItems.push({ imgSrc: randomImg, title: repo.name, description: repo.description, link: repo.html_url, filter: repo.language, category: repo.language });
+                    }
+                });
+            } catch (e) { console.error("Repos fetch failed", e); }
 
-  function toggleScrollTop() {
-    if (scrollTop) {
-      window.scrollY > 100 ? scrollTop.classList.add('active') : scrollTop.classList.remove('active');
-    }
-  }
-  scrollTop.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  });
+            // 3. Start Typewriter
+            this.type();
 
-  window.addEventListener('load', toggleScrollTop);
-  document.addEventListener('scroll', toggleScrollTop);
+                // 4. Trigger UI Sequential Animations
+                setTimeout(() => this.showHeroContent = true, 300);
+                setTimeout(() => this.showAboutContent = true, 500);
+                setTimeout(() => this.showStats[0] = true, 700);
+                setTimeout(() => this.showStats[1] = true, 900);
+                setTimeout(() => this.showStats[2] = true, 1100);
+                setTimeout(() => this.showStats[3] = true, 1300);
 
-  /**
-   * Animation on scroll function and init
-   */
-  function aosInit() {
-    AOS.init({
-      duration: 600,
-      easing: 'ease-in-out',
-      once: true,
-      mirror: false
-    });
-  }
-  window.addEventListener('load', aosInit);
+            // 5. Handle Hash Scroll on load
+            if (window.location.hash) {
+                const section = document.querySelector(window.location.hash);
+                if (section) setTimeout(() => { window.scrollTo({ top: section.offsetTop, behavior: 'smooth' }); }, 100);
+            }
+        },
 
-  /**
-   * Init typed.js
-   */
-  const selectTyped = document.querySelector('.typed');
-  if (selectTyped) {
-    let typed_strings = selectTyped.getAttribute('data-typed-items');
-    typed_strings = typed_strings.split(',');
-    new Typed('.typed', {
-      strings: typed_strings,
-      loop: true,
-      typeSpeed: 100,
-      backSpeed: 50,
-      backDelay: 2000
-    });
-  }
+        handleScroll() {
+            this.showScrollTop = window.scrollY > 100;
+        },
 
-  /**
-   * Initiate Pure Counter
-   */
-  new PureCounter();
+        handleResize() {
+            if (window.innerWidth >= 1024) this.isMobileMenuOpen = false;
+        },
 
-  /**
-   * Animate the skills items on reveal
-   */
-  let skillsAnimation = document.querySelectorAll('.skills-animation');
-  skillsAnimation.forEach((item) => {
-    new Waypoint({
-      element: item,
-      offset: '80%',
-      handler: function (direction) {
-        let progress = item.querySelectorAll('.progress .progress-bar');
-        progress.forEach(el => {
-          el.style.width = el.getAttribute('aria-valuenow') + '%';
-        });
-      }
-    });
-  });
+        type() {
+            let current = this.typedStrings[this.stringIndex];
+            this.typedText = this.isDeleting 
+                ? current.substring(0, this.typedText.length - 1) 
+                : current.substring(0, this.typedText.length + 1);
 
-  /**
-   * Initiate glightbox
-   */
-  const glightbox = GLightbox({
-    selector: '.glightbox'
-  });
+            let speed = this.isDeleting ? 50 : 100;
 
-  /**
-   * Init isotope layout and filters
-   */
-  document.querySelectorAll('.isotope-layout').forEach(function (isotopeItem) {
-    let layout = isotopeItem.getAttribute('data-layout') ?? 'masonry';
-    let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
-    let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
+            if (!this.isDeleting && this.typedText === current) {
+                speed = 2000;
+                this.isDeleting = true;
+            } else if (this.isDeleting && this.typedText === '') {
+                this.isDeleting = false;
+                this.stringIndex = (this.stringIndex + 1) % this.typedStrings.length;
+                speed = 500;
+            }
+            setTimeout(() => this.type(), speed);
+        },
 
-    let initIsotope;
-    imagesLoaded(isotopeItem.querySelector('.isotope-container'), function () {
-      initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
-        itemSelector: '.isotope-item',
-        layoutMode: layout,
-        filter: filter,
-        sortBy: sort
-      });
-    });
+        get age() {
+            return Math.floor((new Date() - new Date('2003-01-14')) / 31557600000);
+        },
 
-    isotopeItem.querySelectorAll('.isotope-filters li').forEach(function (filters) {
-      filters.addEventListener('click', function () {
-        isotopeItem.querySelector('.isotope-filters .filter-active').classList.remove('filter-active');
-        this.classList.add('filter-active');
-        initIsotope.arrange({
-          filter: this.getAttribute('data-filter')
-        });
-        if (typeof aosInit === 'function') {
-          aosInit();
+        get filteredItems() {
+            if (this.activeFilter === '0') return this.portfolioItems;
+            return this.portfolioItems.filter(item => item.filter === this.activeFilter);
         }
-      }, false);
-    });
-
-  });
-
-  /**
-   * Init swiper sliders
-   */
-  function initSwiper() {
-    document.querySelectorAll(".init-swiper").forEach(function (swiperElement) {
-      let config = JSON.parse(
-        swiperElement.querySelector(".swiper-config").innerHTML.trim()
-      );
-
-      if (swiperElement.classList.contains("swiper-tab")) {
-        initSwiperWithCustomPagination(swiperElement, config);
-      } else {
-        new Swiper(swiperElement, config);
-      }
-    });
-  }
-
-  window.addEventListener("load", initSwiper);
-
-  /**
-   * Correct scrolling position upon page load for URLs containing hash links.
-   */
-  window.addEventListener('load', function (e) {
-    if (window.location.hash) {
-      if (document.querySelector(window.location.hash)) {
-        setTimeout(() => {
-          let section = document.querySelector(window.location.hash);
-          let scrollMarginTop = getComputedStyle(section).scrollMarginTop;
-          window.scrollTo({
-            top: section.offsetTop - parseInt(scrollMarginTop),
-            behavior: 'smooth'
-          });
-        }, 100);
-      }
-    }
-  });
-
-  /**
-   * Navmenu Scrollspy
-   */
-  let navmenulinks = document.querySelectorAll('.navmenu a');
-
-  function navmenuScrollspy() {
-    navmenulinks.forEach(navmenulink => {
-      if (!navmenulink.hash) return;
-      let section = document.querySelector(navmenulink.hash);
-      if (!section) return;
-      let position = window.scrollY + 200;
-      if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
-        document.querySelectorAll('.navmenu a.active').forEach(link => link.classList.remove('active'));
-        navmenulink.classList.add('active');
-      } else {
-        navmenulink.classList.remove('active');
-      }
-    })
-  }
-  window.addEventListener('load', navmenuScrollspy);
-  document.addEventListener('scroll', navmenuScrollspy);
-
-})();
-
-/**
-*  List of all Potfolio **************************************
-*/
-
-const portfolioItems = [
-  {
-    imgSrc: 'assets/img/portfolio/bilmakh.webp',
-    title: 'Bilmakh',
-    description: 'best test MMPI....',
-    link: 'https://xno1n.com/bilmakh/index.php',
-    filter: 'app'
-  },
-  {
-    imgSrc: 'assets/img/portfolio/compressorsepah.webp',
-    title: 'Compressorsepah',
-    description: 'Site for selling compressors and industrial tools',
-    link: 'https://compressorsepah.ir',
-    filter: 'product'
-  },
-  {
-    imgSrc: 'assets/img/portfolio/azadpc.webp',
-    title: 'AzadPc',
-    description: 'Site for shop pc and laptop gaming',
-    link: 'https://azadpc.com',
-    filter: 'product'
-  },
-  {
-    imgSrc: 'assets/img/portfolio/freepik-geter.webp',
-    title: 'Freepik-geter',
-    description: 'library for get resourse freepik',
-    link: 'https://github.com/alirezaevil81/freepik-geter',
-    filter: 'books'
-  },
-];
-/**
- * ************************************************************
- */
-
-
-
-/**
- * Add to HTML all Portfolio **********************************
- */
-
-const container = document.getElementById('portfolio-container');
-portfolioItems.forEach(item => {
-  const portfolioItem = document.createElement('div');
-  portfolioItem.classList.add('col-lg-4', 'col-md-6', 'portfolio-item', 'isotope-item', 'filter-' + item.filter);
-  portfolioItem.innerHTML = `
-      <div class="portfolio-content h-100">
-          <img src="${item.imgSrc}" class="img-fluid" alt="${item.title}">
-          <div class="portfolio-info">
-              <h4>${item.title}</h4>
-              <p>${item.description}</p>
-              <a href="${item.imgSrc}" title="${item.title}" data-gallery="portfolio-gallery-${item.filter}"
-                 class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-              <a href="${item.link}" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-          </div>
-      </div>
-  `;
-  container.appendChild(portfolioItem);
+    }));
 });
-//const lightbox = GLightbox({ selector: '.glightbox' });
-
-/**
- * ************************************************************
- */
-
-//calculate age and birth
-const birthday = new Date('2003-06-14');
-let age = new Date().getFullYear() - birthday.getFullYear();
-
-// birt date type to => string
-let birthday_text = birthday.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
-
-// get age and birth elements
-let EL_Age = document.getElementById('age');
-let EL_Birthday = document.getElementById('birthday');
-
-//get year copyright element
-let year = document.getElementById('year')
-
-// put variable to elements
-EL_Age.textContent = age
-EL_Birthday.textContent = birthday_text
-year.textContent = new Date().getFullYear()

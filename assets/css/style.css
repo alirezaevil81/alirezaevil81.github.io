@@ -1,0 +1,7 @@
+.text-shadow-lg {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.shadow-3xl {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 5px rgba(59, 130, 246, 0.5); /* blue-500 with 50% opacity */
+}
