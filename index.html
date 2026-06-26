@@ -1,472 +1,605 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>رزومه علی رضا هرجی | Alireza Haraji Resume</title>
-  <meta name="description" content="رزومه علی رضا هرجی، متخصص | Alireza Haraji's Resume, Specialist">
-  <meta name="keywords" content="علی رضا هرجی, Alireza Haraji, رزومه, resume, متخصص">
-  <meta name="author" content="علی رضا هرجی | Alireza Haraji">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>رزومه علی رضا هرجی | Alireza Haraji Resume</title>
+    <meta name="description" content="رزومه علی رضا هرجی، متخصص | Alireza Haraji's Resume, Specialist">
+    <meta name="keywords" content="علی رضا هرجی, Alireza Haraji, رزومه, resume, متخصص">
+    <meta name="author" content="علی رضا هرجی | Alireza Haraji">
 
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-icon">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-    rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- CSS Style -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Alpine.js CDN -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
-
-  <!-- Open Graph برای پیش‌نمایش بهتر در شبکه‌های اجتماعی -->
-  <meta property="og:title" content="رزومه علی رضا هرجی | Alireza Haraji Resume">
-  <meta property="og:image" content="https://alirezaevil81.github.io/assets/img/my-profile-img.jpg">
-  <meta property="og:image:alt" content="عکس پروفایل علی رضا هرجی | Alireza Haraji Profile Photo">
-  <meta property="og:description" content="رزومه حرفه‌ای علی رضا هرجی، متخصص در زمینه‌های مختلف">
-  <!-- Schema.org برای اطلاعات ساختاریافته -->
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "علی رضا هرجی",
-      "alternateName": "Alireza Haraji",
-      "image": "https://alirezaevil81.github.io/assets/img/my-profile-img.jpg",
-      "jobTitle": "متخصص",
-      "url": "https://alirezaevil81.github.io",
-      "sameAs": [
-        "https://www.linkedin.com/in/alirezaharaji",
-        "https://www.instagram.com/alireza.haraji"
-      ]
-    }
-  </script>
-
+    <!-- Open Graph برای پیش‌نمایش بهتر در شبکه‌های اجتماعی -->
+    <meta property="og:title" content="رزومه علی رضا هرجی | Alireza Haraji Resume">
+    <meta property="og:image" content="https://alirezaevil81.github.io/assets/img/my-profile-img.jpg">
+    <meta property="og:image:alt" content="عکس پروفایل علی رضا هرجی | Alireza Haraji Profile Photo">
+    <meta property="og:description" content="رزومه حرفه‌ای علی رضا هرجی، متخصص در زمینه‌های مختلف">
+    <!-- Schema.org برای اطلاعات ساختاریافته -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "علی رضا هرجی",
+            "alternateName": "Alireza Haraji",
+            "image": "https://alirezaevil81.github.io/assets/img/my-profile-img.jpg",
+            "jobTitle": "متخصص",
+            "url": "https://alirezaevil81.github.io",
+            "sameAs": [
+                "https://www.linkedin.com/in/alirezaharaji",
+                "https://www.instagram.com/alireza.haraji"
+            ]
+        }
+    </script>
 </head>
+<body class="font-sans antialiased text-gray-800 bg-white overflow-x-hidden"
+      x-data="portfolioApp"
+      @scroll.window="handleScroll"
+      @resize.window="handleResize">
 
-<body class="index-page">
+<!-- Header Section -->
+<header id="header"
+        class="fixed top-0 left-0 bottom-0 w-72 transition-all duration-500 ease-in-out bg-slate-950/95 backdrop-blur-xl text-white z-50 flex flex-col border-r border-white/5 lg:left-0"
+        :class="{ '-left-72': !isMobileMenuOpen, 'left-0': isMobileMenuOpen }"
+        @click.outside="if (window.innerWidth < 1024) isMobileMenuOpen = false">
+    <button class="header-toggle lg:hidden w-12 h-12 flex items-center justify-center rounded-r-xl bg-blue-600 text-white absolute top-6 -right-12 shadow-xl shadow-blue-500/40 focus:outline-none transition-transform hover:scale-105"
+            @click="isMobileMenuOpen = !isMobileMenuOpen">
+        <i x-show="!isMobileMenuOpen" class="fa-solid fa-bars"></i>
+        <i x-show="isMobileMenuOpen" class="fa-solid fa-xmark"></i>
+    </button>
 
-  <header id="header" class="header dark-background d-flex flex-column">
-    <i class="header-toggle d-xl-none bi bi-list"></i>
+    <div class="flex-1 overflow-y-auto w-full pt-12 pb-8 flex flex-col items-center">
+        <div class="profile-img mb-4 relative group">
+            <div class="absolute inset-0 bg-blue-500 rounded-full blur-lg opacity-20 group-hover:opacity-40 transition-opacity"></div>
+            <img :src="user?.avatar_url || 'assets/img/alireza-haraji-profile.jpg'"
+                 alt="عکس پروفایل علی رضا هرجی | Alireza Haraji Profile Photo"
+                 title="علیرضا هرجی متخصص"
+                 class="relative img-fluid rounded-full w-32 h-32 object-cover border-4 border-slate-800 ring-2 ring-blue-500/50 group-hover:ring-blue-500 transition-all duration-500"
+                 loading="lazy"
+            >
+        </div>
 
-    <div class="profile-img">
-      <img src="assets/img/alireza-haraji-profile.jpg"
-           alt="عکس پروفایل علی رضا هرجی | Alireza Haraji Profile Photo"
-           title="علیرضا هرجی متخصص"
-           class="img-fluid rounded-circle"
-           loading="lazy"
-      >
+        <a href="index.html" class="logo flex flex-col items-center justify-center mb-8">
+            <h1 class="text-2xl font-black tracking-tighter text-white" x-text="user?.name || 'ALIREZA HARAJI'"></h1>
+            <div class="h-1 w-12 bg-blue-500 rounded-full mt-1"></div>
+        </a>
+
+        <div class="social-links text-center mb-10 flex space-x-2">
+            <a href="https://t.me/alirezaharaji"
+               class="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 text-gray-400 hover:bg-blue-600 hover:text-white transition-all duration-300"><i
+                    class="fa-brands fa-telegram text-lg"></i></a>
+            <a href="https://github.com/alirezaevil81"
+               class="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 text-gray-400 hover:bg-gray-700 hover:text-white transition-all duration-300"><i
+                    class="fa-brands fa-github text-lg"></i></a>
+            <a href="https://www.linkedin.com/in/alirezaharaji/"
+               class="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 text-gray-400 hover:bg-blue-700 hover:text-white transition-all duration-300"><i
+                    class="fa-brands fa-linkedin text-lg"></i></a>
+            <a :href="user?.blog ? 'https://' + user.blog : '#'"
+               class="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 text-gray-400 hover:bg-emerald-600 hover:text-white transition-all duration-300"><i
+                    class="fa-solid fa-globe text-lg"></i></a>
+        </div>
+
+        <nav id="navmenu" class="navmenu w-full px-4">
+            <ul class="flex flex-col space-y-1">
+                <li><a href="#hero"
+                       class="group flex items-center py-3 px-6 text-gray-400 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300 active"
+                       @click="isMobileMenuOpen = false"><i
+                        class="fa-solid fa-house mr-4 text-sm group-hover:text-blue-500 transition-colors"></i><span
+                        class="font-medium tracking-wide">Home</span></a></li>
+                <li><a href="#about"
+                       class="group flex items-center py-3 px-6 text-gray-400 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300"
+                       @click="isMobileMenuOpen = false"><i
+                        class="fa-solid fa-user mr-4 text-sm group-hover:text-blue-500 transition-colors"></i><span
+                        class="font-medium tracking-wide">About</span></a></li>
+                <li><a href="#skill"
+                       class="group flex items-center py-3 px-6 text-gray-400 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300"
+                       @click="isMobileMenuOpen = false"><i
+                        class="fa-solid fa-terminal mr-4 text-sm group-hover:text-blue-500 transition-colors"></i><span
+                        class="font-medium tracking-wide">Skills</span></a></li>
+                <li><a href="#resume"
+                       class="group flex items-center py-3 px-6 text-gray-400 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300"
+                       @click="isMobileMenuOpen = false"><i
+                        class="fa-solid fa-file-lines mr-4 text-sm group-hover:text-blue-500 transition-colors"></i><span
+                        class="font-medium tracking-wide">Resume</span></a></li>
+                <li><a href="#portfolio"
+                       class="group flex items-center py-3 px-6 text-gray-400 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300"
+                       @click="isMobileMenuOpen = false"><i
+                        class="fa-solid fa-images mr-4 text-sm group-hover:text-blue-500 transition-colors"></i><span
+                        class="font-medium tracking-wide">Portfolio</span></a></li>
+            </ul>
+        </nav>
     </div>
+</header>
 
-    <a href="index.html" class="logo d-flex align-items-center justify-content-center">
-      <!-- Uncomment the line below if you also wish to use an image logo -->
-      <!-- <img src="assets/img/logo.png" alt=""> -->
-      <h1 class="sitename">Alireza haraji</h1>
-    </a>
+<!-- Overlay for Mobile Menu -->
+<div x-show="isMobileMenuOpen" x-transition.opacity class="fixed inset-0 bg-black/60 z-40 lg:hidden"
+     @click="isMobileMenuOpen = false"></div>
 
-    <div class="social-links text-center">
-      <a href="https://t.me/alirezaharaji" class="telegram"><i class="bi bi-telegram"></i></a>
-      <a href="https://github.com/alirezaevil81" class="google-plus"><i class="bi bi-github"></i></a>
-      <a href="https://www.linkedin.com/in/alirezaharaji/" class="linkedin"><i class="bi bi-linkedin"></i></a>
-      <a href="https://www.exxondev.ir" class="linkedin"><i class="bi bi-globe2"></i></a>
-    </div>
-
-    <nav id="navmenu" class="navmenu">
-      <ul>
-        <li><a href="#hero" class="active"><i class="bi bi-house navicon"></i>Home</a></li>
-        <li><a href="#about"><i class="bi bi-person navicon"></i> About</a></li>
-        <li><a href="#skill"><i class="bi bi-terminal navicon"></i> Skill</a></li>
-        <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Resume</a></li>
-        <li><a href="#portfolio"><i class="bi bi-images navicon"></i> Portfolio</a></li>
-      </ul>
-    </nav>
-
-  </header>
-
-  <main class="main">
+<main class="transition-all duration-300 ease-in-out lg:ml-72">
 
     <!-- Hero Section -->
-    <section id="hero" class="hero section dark-background">
-
-      <img src="assets/img/hero-bg.webp" alt="" data-aos="fade-in" class="">
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <h2>alireza haraji</h2>
-        <p>I'm <span class="typed"
-            data-typed-items=" PHP Developer , JavaScript Developer , WordPress Developer , Laravel Developer , Python Developer "></span><span
-            class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span
-            class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
-      </div>
-
-
-
+    <section id="hero"
+             class="relative h-screen flex items-center justify-center text-white text-center overflow-hidden bg-slate-900">
+        <div class="absolute inset-0 bg-cover bg-center"
+             :style="`background-image: url('${heroBg}')`"></div>
+        <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/50 to-transparent"></div>
+        <!-- Gradient overlay -->
+        <div class="relative z-10 p-4 max-w-4xl mx-auto" x-show="showHeroContent"
+             x-transition:enter="transition ease-out duration-1000"
+             x-transition:enter-start="opacity-0 transform -translate-y-10"
+             x-transition:enter-end="opacity-100 transform translate-y-0">
+            <h2 class="text-4xl sm:text-7xl md:text-8xl font-extrabold mb-4 leading-tight tracking-tight text-shadow-lg"
+                x-text="user?.name || 'Alireza Haraji'"></h2>
+            <p class="text-2xl sm:text-3xl font-medium">I'm <span class="text-blue-400" x-text="typedText"></span><span
+                    class="animate-pulse">|</span></p>
+        </div>
+        <!-- Scroll Down Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+            <i class="fa-solid fa-angles-down text-3xl"></i>
+        </div>
     </section><!-- /Hero Section -->
 
     <!-- About Section -->
-    <section id="about" class="about section">
+    <section id="about" class="py-20 px-4 sm:px-8 bg-gray-100"
+             x-show="showAboutContent"
+             x-transition:enter="transition ease-out duration-1000"
+             x-transition:enter-start="opacity-0 transform translate-y-10"
+             x-transition:enter-end="opacity-100 transform translate-y-0">
+        <div class="container mx-auto max-w-7xl">
+            <h2 class="text-4xl sm:text-5xl font-extrabold text-center mb-12 text-gray-900 tracking-wide">About Me</h2>
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>About</h2>
-      </div><!-- End Section Title -->
+            <div class="flex flex-col lg:flex-row items-center lg:items-start gap-16 bg-white p-8 md:p-12 rounded-2xl shadow-2xl">
+                <div class="lg:w-1/4 shrink-0 text-center">
+                    <img :src="user?.avatar_url || 'assets/img/alireza-haraji-profile.jpg'"
+                         class="rounded-full w-48 h-48 object-cover object-center shadow-3xl border-4 border-blue-600 mx-auto transform hover:scale-105 transition-all duration-300 grayscale hover:grayscale-0"
+                         alt="عکس پروفایل علی رضا هرجی | Alireza Haraji Profile Photo"
+                         title="علیرضا هرجی متخصص"
+                         loading="lazy"
+                    >
+                    <a :href="user?.html_url || '#'" target="_blank" rel="noopener noreferrer"
+                       class="block text-xl text-blue-600 hover:text-blue-800 hover:underline mt-4 font-semibold">
+                        <i class="fa-brands fa-github mr-2"></i><span
+                            x-text="user?.login ? `@${user.login}` : ''"></span>
+                    </a>
+                </div>
+                <div class="lg:w-3/4 text-center lg:text-left">
+                    <h3 class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4 leading-tight"
+                        x-text="user?.name || 'Alireza Haraji'"></h3>
+                    <p class="text-xl text-gray-600 leading-relaxed mb-10 max-w-3xl mx-auto lg:mx-0"
+                       x-text="user?.bio || 'Dynamic PHP & Laravel Developer with a passion for building robust and scalable web applications.'"></p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 mb-12 text-gray-700 text-left">
+                        <div>
+                            <ul class="space-y-5">
+                                <li class="flex items-center break-all"><i
+                                        class="fa-solid fa-globe text-blue-500 w-6 h-6 mr-3"></i> <strong
+                                        class="font-bold text-gray-800">Website:</strong> <a
+                                        :href="user?.blog ? 'https://' + user.blog : '#'" target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="text-blue-600 hover:text-blue-800 hover:underline font-medium"><span
+                                        x-text="user?.blog || 'www.exxondev.ir'"></span></a></li>
+                                <li class="flex items-center"><i
+                                        class="fa-solid fa-location-dot text-blue-500 w-6 h-6 mr-3"></i> <strong
+                                        class="font-bold text-gray-800">City:</strong> <span
+                                        x-text="user?.location || 'nowshahr, Mazandaran'" class="font-medium"></span>
+                                </li>
+                                <li class="flex items-center"><i
+                                        class="fa-solid fa-user text-blue-500 w-6 h-6 mr-3"></i> <strong
+                                        class="font-bold text-gray-800">Age:</strong> <span x-text="age"
+                                                                                            class="font-medium"></span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="md:mt-0">
+                            <ul class="space-y-5 mt-5 md:mt-0">
+                                <li class="flex items-center"><i
+                                        class="fa-solid fa-graduation-cap text-blue-500 w-6 h-6 mr-3"></i> <strong
+                                        class="font-bold text-gray-800">Degree:</strong> <span class="font-medium">Mid-Level</span>
+                                </li>
+                                <li class="flex items-center"><i
+                                        class="fa-solid fa-envelope text-blue-500 w-6 h-6 mr-3"></i> <strong
+                                        class="font-bold text-gray-800">Email:</strong> <a
+                                        href="mailto:alirezask385@gmail.com"
+                                        class="text-blue-600 hover:text-blue-800 hover:underline font-medium">alirezask385@gmail.com</a>
+                                </li>
+                                <li class="flex items-center"><i
+                                        class="fa-solid fa-circle-check text-blue-500 w-6 h-6 mr-3"></i> <strong
+                                        class="font-bold text-gray-800">Hireable:</strong>
+                                    <span :class="user?.hireable ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'"
+                                          x-text="user?.hireable ? 'Available' : 'Unavailable'">Available</span>
+                                </li>
+                                <li class="flex items-center" x-show="user?.twitter_username"><i
+                                        class="fa-brands fa-twitter text-blue-500 w-6 h-6 mr-3"></i> <strong
+                                        class="font-bold text-gray-800">Twitter:</strong> <a
+                                        :href="`https://twitter.com/${user?.twitter_username}`" target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="text-blue-600 hover:text-blue-800 hover:underline font-medium"><span
+                                        x-text="`@${user?.twitter_username}`"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4 justify-content-center">
-          <div class="col-lg-4">
-            <img src="assets/img/alireza-haraji-profile.jpg"
-                 class="img-fluid rounded-5"
-                 alt="عکس پروفایل علی رضا هرجی | Alireza Haraji Profile Photo"
-                 title="علی رضا هرجی، متخصص"
-                 loading="lazy"
-            >
-          </div>
-          <div class="col-lg-8 content">
-            <h2>php &amp; laravel Developer.</h2>
-            <div class="row">
-              <div class="col-lg-6">
-                <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Birthday:</strong> <span id="birthday"></span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span>www.exxondev.ir</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Phone:</strong> <span>+989105954788</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>City:</strong> <span>nowshahr, Mazandaran</span></li>
-                </ul>
-              </div>
-              <div class="col-lg-6">
-                <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span id="age"></span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong> <span>Mid-Level</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span>alirezask385@gmail.com</span>
-                  </li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Freelance:</strong> <span>Available</span></li>
-                </ul>
-              </div>
+                    <!-- GitHub Stats -->
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mt-12">
+                        <div class="group text-center p-5 bg-gray-50 rounded-xl shadow-md hover:shadow-lg hover:bg-blue-50 transition-all duration-300 border-b-2 border-blue-500 group-hover:border-blue-700"
+                             x-show="showStats[0]" 
+                             x-transition:enter="transition ease-out duration-500"
+                             x-transition:enter-start="opacity-0 transform scale-90"
+                             x-transition:enter-end="opacity-100 transform scale-100">
+                            <i class="fa-solid fa-users text-blue-600 group-hover:text-blue-700 text-5xl mb-2 transition-colors duration-300"></i>
+                            <p class="text-3xl md:text-4xl font-extrabold text-gray-900 group-hover:text-gray-800" 
+                               x-text="user?.followers"></p>
+                            <p class="text-base text-gray-600">Followers</p>
+                        </div>
+                        <div class="group text-center p-5 bg-gray-50 rounded-xl shadow-md hover:shadow-lg hover:bg-blue-50 transition-all duration-300 border-b-2 border-blue-500 group-hover:border-blue-700"
+                             x-show="showStats[1]" 
+                             x-transition:enter="transition ease-out duration-500"
+                             x-transition:enter-start="opacity-0 transform scale-90"
+                             x-transition:enter-end="opacity-100 transform scale-100">
+                            <i class="fa-solid fa-user-plus text-blue-600 group-hover:text-blue-700 text-5xl mb-2 transition-colors duration-300"></i>
+                            <p class="text-3xl md:text-4xl font-extrabold text-gray-900 group-hover:text-gray-800" 
+                               x-text="user?.following"></p>
+                            <p class="text-base text-gray-600">Following</p>
+                        </div>
+                        <div class="group text-center p-5 bg-gray-50 rounded-xl shadow-md hover:shadow-lg hover:bg-blue-50 transition-all duration-300 border-b-2 border-blue-500 group-hover:border-blue-700"
+                             x-show="showStats[2]" 
+                             x-transition:enter="transition ease-out duration-500"
+                             x-transition:enter-start="opacity-0 transform scale-90"
+                             x-transition:enter-end="opacity-100 transform scale-100">
+                            <i class="fa-solid fa-folder text-blue-600 group-hover:text-blue-700 text-5xl mb-2 transition-colors duration-300"></i>
+                            <p class="text-3xl md:text-4xl font-extrabold text-gray-900 group-hover:text-gray-800" 
+                               x-text="user?.public_repos"></p>
+                            <p class="text-base text-gray-600">Public Repos</p>
+                        </div>
+                        <div class="group text-center p-5 bg-gray-50 rounded-xl shadow-md hover:shadow-lg hover:bg-blue-50 transition-all duration-300 border-b-2 border-blue-500 group-hover:border-blue-700"
+                             x-show="showStats[3] && user?.public_gists"
+                             x-transition:enter="transition ease-out duration-500"
+                             x-transition:enter-start="opacity-0 transform scale-90"
+                             x-transition:enter-end="opacity-100 transform scale-100">
+                            <i class="fa-solid fa-code-branch text-blue-600 group-hover:text-blue-700 text-5xl mb-2 transition-colors duration-300"></i>
+                            <p class="text-3xl md:text-4xl font-extrabold text-gray-900 group-hover:text-gray-800"
+                               x-text="user?.public_gists"></p>
+                            <p class="text-base text-gray-600">Public Gists</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- <p class="py-3">
-              Officiis eligendi itaque labore et dolorum mollitia officiis optio vero. Quisquam sunt adipisci omnis et ut. Nulla accusantium dolor incidunt officia tempore. Et eius omnis.
-              Cupiditate ut dicta maxime officiis quidem quia. Sed et consectetur qui quia repellendus itaque neque.
-            </p> -->
-          </div>
         </div>
-
-      </div>
-
     </section><!-- /About Section -->
 
     <!-- Skill Section -->
-    <section id="skill" class="skills section light-background">
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Skills</h2>
-      </div><!-- End Section Title -->
+    <section id="skill" class="py-20 px-4 sm:px-8 bg-white">
+        <div class="container mx-auto max-w-6xl">
+            <h2 class="text-4xl sm:text-5xl font-extrabold text-center mb-4 text-gray-900 tracking-tight">Technical
+                Proficiency</h2>
+            <p class="text-center text-gray-500 mb-16 max-w-2xl mx-auto">My technical toolkit is diverse, ranging from
+                low-level backend logic to modern frontend aesthetics.</p>
 
+            <!-- Main Expertise (Progress Bars) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8 mb-20">
+                <template x-for="skill in skills" :key="skill.name">
+                    <div class="w-full group p-4 rounded-xl transition-all duration-300 hover:bg-gray-50 border border-transparent hover:border-gray-100">
+                        <div class="flex justify-between items-center mb-3">
+                            <div class="flex items-center gap-3">
+                                <i :class="skill.icon + ' ' + skill.color"
+                                   class="text-2xl transition-transform duration-300 group-hover:scale-125"></i>
+                                <span class="text-sm font-bold text-gray-700 uppercase tracking-wider"
+                                      x-text="skill.name"></span>
+                            </div>
+                            <span class="text-sm font-bold text-blue-600" x-text="skill.level"></span>
+                        </div>
+                        <div class="w-full bg-gray-100 rounded-full h-3 overflow-hidden shadow-inner">
+                            <div class="bg-linear-to-r from-blue-500 to-blue-700 h-full rounded-full transition-all duration-1000 ease-out group-hover:from-blue-600 group-hover:to-blue-800"
+                                 :style="`width: ${skill.level}`"></div>
+                        </div>
+                    </div>
+                </template>
+            </div>
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <!-- Additional Skills (Tag Cloud) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
 
-        <div class="row skills-content skills-animation">
+                <template x-for="cat in skillCategories" :key="cat.title">
+                    <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100 hover:shadow-lg transition-all duration-300">
+                        <h3 class="text-lg font-bold text-blue-600 mb-4 flex items-center">
+                            <i class="fa-solid fa-layer-group mr-2 text-xs"></i>
+                            <span x-text="cat.title"></span>
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            <template x-for="s in cat.skills" :key="s">
+                                <span class="px-3 py-1 bg-white border border-gray-200 text-gray-600 text-xs font-semibold rounded-lg hover:border-blue-300 hover:text-blue-500 transition-colors cursor-default"
+                                      x-text="s"></span>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </div>
 
-          <div class="col-lg-6">
-
-            <div class="progress">
-              <span class="skill"><span>HTML</span> <i class="val">100%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+            <!-- Other Tags Section -->
+            <div class="mt-16 text-center">
+                <h3 class="text-xl font-bold text-gray-800 mb-6">Soft Skills & Others</h3>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <template x-for="tag in softSkills" :key="tag">
+                        <span class="px-4 py-2 bg-blue-50 text-blue-700 text-sm font-medium rounded-full border border-blue-100"
+                              x-text="tag"></span>
+                    </template>
                 </div>
-              </div>
-            </div><!-- End Skills Item -->
-
-            <div class="progress">
-              <span class="skill"><span>CSS</span> <i class="val">90%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
-                </div>
-              </div>
-            </div><!-- End Skills Item -->
-
-            <div class="progress">
-              <span class="skill"><span>JavaScript</span> <i class="val">65%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                </div>
-              </div>
-            </div><!-- End Skills Item -->
-
-          </div>
-
-          <div class="col-lg-6">
-
-            <div class="progress">
-              <span class="skill"><span>PHP</span> <i class="val">80%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
-                </div>
-              </div>
-            </div><!-- End Skills Item -->
-
-            <div class="progress">
-              <span class="skill"><span>WordPress/CMS</span> <i class="val">90%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
-                </div>
-              </div>
-            </div><!-- End Skills Item -->
-
-            <div class="progress">
-              <span class="skill"><span>Photoshop</span> <i class="val">75%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">
-                </div>
-              </div>
-            </div><!-- End Skills Item -->
-
-          </div>
-
+            </div>
         </div>
-
-      </div>
-
-      <div class="row" data-aos="fade-in">
-        <div class="col-md-6">
-          <ul>
-            <li>Python</li>
-            <li>NoSQL Databases</li>
-            <li>Database Management</li>
-            <li>Multithreading</li>
-            <li>API Development</li>
-            <li>Flask framework</li>
-            <li>Code Writing</li>
-            <li>RESTful APIs</li>
-            <li>Python Django</li>
-            <li>REST</li>
-            <li>Socket Programming</li>
-            <li>Django framework</li>
-            <li>Software Development</li>
-            <li>DevOps Practices</li>
-            <li>Code quality optimization</li>
-            <li>Web development</li>
-            <li>GitHub collaboration</li>
-            <li>Testing and debugging</li>
-            <li>Interpersonal Skills</li>
-            <li>Javascript</li>
-            <li>HTML</li>
-            <li>Programming</li>
-            <li>Python and C++</li>
-            <li>Code reviews</li>
-            <li>RESTful web services</li>
-            <li>MySQL database management</li>
-            <li>Responsive Web Design</li>
-            <li>PHP development</li>
-            <li>Project management experience</li>
-          </ul>
-        </div>
-        <div class="col-md-6">
-          <ul>
-            <li>Object-Oriented Programming</li>
-            <li>Performance Optimization</li>
-            <li>Secure Coding Practices</li>
-            <li>New feature deployments</li>
-            <li>WordPress customization</li>
-            <li>API integration abilities</li>
-            <li>Expert PHP knowledge</li>
-            <li>SQL platforms</li>
-            <li>Proficient in HTML5</li>
-            <li>Symfony framework knowledge</li>
-            <li>Laravel framework experience</li>
-            <li>Software testing</li>
-            <li>Coding best practices</li>
-            <li>Strong JavaScript skills</li>
-            <li>Front-End Skills: HTML, CSS</li>
-            <li>Time Management</li>
-            <li>Problem-solving abilities</li>
-            <li>Self Motivation</li>
-            <li>Team Collaboration</li>
-            <li>Graphic Design</li>
-            <li>SEO Optimization</li>
-            <li>Web development projects</li>
-            <li>Front-End Development</li>
-            <li>SQL Programming</li>
-            <li>Databases: Oracle, SQL Server, MongoDB</li>
-            <li>CSS proficiency</li>
-            <li>Wordpress</li>
-            <li>Website Maintenance</li>
-          </ul>
-        </div>
-      </div>
     </section><!-- /Skill Section -->
 
     <!-- Resume Section -->
-    <section id="resume" class="resume section">
+    <section id="resume" class="py-20 px-4 sm:px-8 bg-gray-50">
+        <div class="container mx-auto max-w-7xl">
+            <h2 class="text-4xl sm:text-5xl font-extrabold text-center mb-4 text-gray-900 tracking-tight">My Resume</h2>
+            <p class="text-center text-gray-500 mb-16 max-w-2xl mx-auto text-lg">A detailed overview of my professional
+                journey, education, and key achievements.</p>
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Resume</h2>
-        <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-          consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit
-          in iste officiis commodi quidem hic quas.</p>
-      </div><!-- End Section Title -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-16">
+                <!-- Left Column: Summary & Education -->
+                <div class="space-y-12">
+                    <h3 class="text-3xl font-bold text-gray-800 mb-6 border-b-2 border-blue-500 pb-2">Summary</h3>
+                    <div class="relative pl-8 border-l-4 border-blue-500 pb-8 last:pb-0">
+                        <div class="absolute -left-2.5 top-0 w-5 h-5 bg-blue-500 rounded-full border-4 border-white shadow-md"></div>
+                        <p class="text-gray-700 leading-relaxed bg-white p-6 rounded-xl shadow-sm">
+                            Dynamic Python and PHP developer with a proven track record at Webmaster,
+                            where I enhanced web application efficiency and spearheaded a team to mentor in coding best
+                            practices.
+                            Expert in database management and API development,
+                            I excel in fostering team collaboration and driving significant improvements in code quality
+                            and
+                            project management.
+                        </p>
+                    </div>
 
-      <div class="container">
+                    <h3 class="text-3xl font-bold text-gray-800 mb-6 border-b-2 border-blue-500 pb-2">Education</h3>
+                    <div class="relative pl-8 border-l-4 border-blue-500 pb-8 last:pb-0">
+                        <div class="absolute -left-2.5 top-0 w-5 h-5 bg-blue-500 rounded-full border-4 border-white shadow-md"></div>
+                        <h4 class="text-2xl font-bold text-gray-800 mb-1">Bachelor of Science - sadr | Biological
+                            Sciences</h4>
+                        <h5 class="text-blue-600 font-semibold text-lg mb-2">2019 - 2021</h5>
+                        <p class="text-gray-600 italic">Iran, Tehran</p>
+                    </div>
+                    <div class="relative pl-8 border-l-4 border-blue-500 pb-8 last:pb-0">
+                        <div class="absolute -left-2.5 top-0 w-5 h-5 bg-blue-500 rounded-full border-4 border-white shadow-md"></div>
+                        <h4 class="text-2xl font-bold text-gray-800 mb-1">Self-study programming learning</h4>
+                        <h5 class="text-blue-600 font-semibold text-lg mb-2">2021 - Present</h5>
+                        <p class="text-gray-600 italic">Iran, Mazandaran, nowshahr</p>
+                    </div>
+                </div>
 
-        <div class="row">
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <h3 class="resume-title">Sumary</h3>
-
-            <div class="resume-item pb-0">
-              <p><em>Dynamic Python and PHP developer with a proven track record at Webmaster,
-                  where I enhanced web application efficiency and spearheaded a team to mentor in coding best practices.
-                  Expert in database management and API development,
-                  I excel in fostering team collaboration and driving significant improvements in code quality and
-                  project management..</em></p>
-            </div><!-- Edn Resume Item -->
-
-            <h3 class="resume-title">Education</h3>
-            <div class="resume-item">
-              <h4>achelor of Science - sadr | Biological Sciences</h4>
-              <h5>2019 - 2021</h5>
-              <p><em>Iran, Tehran</em></p>
-            </div><!-- Edn Resume Item -->
-
-            <div class="resume-item">
-              <h4>Self-study programming learning</h4>
-              <h5>2021 - Present</h5>
-              <p><em>Iran, Mazandaran, nowshahr</em></p>
-            </div><!-- Edn Resume Item -->
-
-          </div>
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <h3 class="resume-title">Professional Experience</h3>
-            <div class="resume-item">
-              <h4>PHP Developer</h4>
-              <h5>2019 - Present</h5>
-              <ul>
-                <li>Performed troubleshooting of technical issues within production environment.</li>
-                <li>Delivered improvements in proprietary framework, promoting significant efficiency boost.</li>
-                <li>Developed back-end components to connect applications with web services.</li>
-                <li>Built and maintained internal tools to streamline software development process.</li>
-                <li>Designed user-facing elements to integrate with web APIs and server-side logic.</li>
-                <li>Integrated disparate systems and supported data migration efforts.</li>
-                <li>Created detailed system documentation and presentations for use in training.</li>
-                <li>Developed custom WordPress plugins for improved user experience.</li>
-                <li>Utilized agile methodologies such as Scrum to promote efficient project management.</li>
-                <li>Developed scalable e-commerce solutions that increased sales conversions.</li>
-                <li>Implemented caching strategies to reduce server load.</li>
-                <li>Planned, coded, and deployed web-based applications using PHP, MySQL, and JavaScript.</li>
-                <li>Researched, tested, and implemented various client feature requests.</li>
-                <li>Collaborated with cross-functional teams to deliver high-quality web applications.</li>
-                <li>Reduced page load times by optimizing front-end code in HTML, CSS, and JavaScript.</li>
-                <li>Refactored legacy code for improved readability and performance optimizations.</li>
-                <li>Automated routine tasks using PHP scripts, increasing productivity.</li>
-                <li>Streamlined database operations with effective MySQL queries.</li>
-                <li>Worked with clients to design new features and functionality.</li>
-                <li>Ensured seamless migration of websites by performing thorough testing.</li>
-              </ul>
-            </div><!-- Edn Resume Item -->
-            <div class="resume-item">
-              <h4>Python Developer</h4>
-              <h5>2022 - Present</h5>
-              <ul>
-                <li>Collaborated closely with team to create story points and sprint planning.</li>
-                <li>Mentored junior developers on Python best practices and coding standards.</li>
-                <li>Developed efficient algorithms for complex data processing tasks.</li>
-                <li>Increased code reusability with modular programming techniques.</li>
-                <li>Worked independently to design, develop, and test code.</li>
-                <li>Monitored and maintained operational readiness of middleware applications.</li>
-                <li>Self-motivated, with a strong sense of personal responsibility.</li>
-                <li>Excellent communication skills, both verbal and written.</li>
-              </ul>
-            </div><!-- Edn Resume Item -->
-          </div>
-
+                <!-- Right Column: Professional Experience -->
+                <div class="space-y-12">
+                    <h3 class="text-3xl font-bold text-gray-800 mb-6 border-b-2 border-blue-500 pb-2">Professional
+                        Experience</h3>
+                    <div class="relative pl-8 border-l-4 border-blue-500 pb-8 last:pb-0">
+                        <div class="absolute -left-2.5 top-0 w-5 h-5 bg-blue-500 rounded-full border-4 border-white shadow-md"></div>
+                        <h4 class="text-2xl font-bold text-gray-800 mb-1">PHP Developer</h4>
+                        <h5 class="text-blue-600 font-semibold text-lg mb-2">2019 - Present</h5>
+                        <ul class="list-none space-y-2 text-gray-700 mt-4">
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Performed troubleshooting of technical issues within production environment.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Delivered improvements in proprietary framework, promoting significant efficiency boost.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Developed back-end components to connect applications with web services.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Built and maintained internal tools to streamline software development process.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Designed user-facing elements to integrate with web APIs and server-side logic.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Integrated disparate systems and supported data migration efforts.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Created detailed system documentation and presentations for use in training.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Developed custom WordPress plugins for improved user experience.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Utilized agile methodologies suchs as Scrum to promote efficient project management.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Developed scalable e-commerce solutions that increased sales conversions.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Implemented caching strategies to reduce server load.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Planned, coded, and deployed web-based applications using PHP, MySQL, and JavaScript.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Researched, tested, and implemented various client feature requests.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Collaborated with cross-functional teams to deliver high-quality web applications.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Reduced page load times by optimizing front-end code in HTML, CSS, and JavaScript.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Refactored legacy code for improved readability and performance optimizations.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Automated routine tasks using PHP scripts, increasing productivity.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Streamlined database operations with effective MySQL queries.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Worked with clients to design new features and functionality.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Ensured seamless migration of websites by performing thorough testing.
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="relative pl-8 border-l-4 border-blue-500 pb-8 last:pb-0">
+                        <div class="absolute -left-2.5 top-0 w-5 h-5 bg-blue-500 rounded-full border-4 border-white shadow-md"></div>
+                        <h4 class="text-2xl font-bold text-gray-800 mb-1">Python Developer</h4>
+                        <h5 class="text-blue-600 font-semibold text-lg mb-2">2022 - Present</h5>
+                        <ul class="list-none space-y-2 text-gray-700 mt-4">
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Collaborated closely with team to create story points and sprint planning.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Mentored junior developers on Python best practices and coding standards.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Developed efficient algorithms for complex data processing tasks.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Increased code reusability with modular programming techniques.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Worked independently to design, develop, and test code.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Monitored and maintained operational readiness of middleware applications.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Self-motivated, with a strong sense of personal responsibility.
+                            </li>
+                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
+                                Excellent communication skills, both verbal and written.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-
-      </div>
-
     </section><!-- /Resume Section -->
 
     <!-- Portfolio Section -->
-    <section id="portfolio" class="portfolio section light-background">
+    <section id="portfolio" class="py-20 px-4 sm:px-8 bg-white">
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Portfolio</h2>
-      </div><!-- End Section Title -->
+        <div class="container mx-auto max-w-7xl">
+            <h2 class="text-4xl sm:text-5xl font-extrabold text-center mb-4 text-gray-900 tracking-tight">Featured
+                Works</h2>
+            <p class="text-center text-gray-500 mb-12 max-w-2xl mx-auto text-lg">A showcase of my recent projects,
+                blending clean code with functional design.</p>
 
-      <div class="container">
+            <div class="flex justify-center mb-16">
+                <ul class="flex flex-wrap justify-center gap-3 p-2 bg-gray-50 rounded-2xl border border-gray-100 shadow-sm">
+                    <li>
+                        <button class="py-2.5 px-6 rounded-xl text-sm font-bold transition-all duration-300"
+                                :class="activeFilter === '0' ? 'bg-slate-950/95 text-white shadow-lg shadow-slate-200' : 'text-gray-500 hover:bg-gray-200'"
+                                @click="activeFilter = '0'">All Projects
+                        </button>
+                    </li>
+                    <li>
+                        <button class="py-2.5 px-6 rounded-xl text-sm font-bold transition-all duration-300"
+                                :class="activeFilter === 'PHP' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200' : 'text-gray-500 hover:bg-gray-200'"
+                                @click="activeFilter = 'PHP'">PHP
+                        </button>
+                    </li>
+                    <li>
+                        <button class="py-2.5 px-6 rounded-xl text-sm font-bold transition-all duration-300"
+                                :class="activeFilter === 'WordPress' ? 'bg-blue-400 text-white shadow-lg shadow-blue-200' : 'text-gray-500 hover:bg-gray-200'"
+                                @click="activeFilter = 'WordPress'">WordPress
+                        </button>
+                    </li>
+                    <li>
+                        <button class="py-2.5 px-6 rounded-xl text-sm font-bold transition-all duration-300"
+                                :class="activeFilter === 'Blade' ? 'bg-red-600 text-white shadow-lg shadow-red-200' : 'text-gray-500 hover:bg-gray-200'"
+                                @click="activeFilter = 'Blade'">Blade
+                        </button>
+                    </li>
+                    <li>
+                        <button class="py-2.5 px-6 rounded-xl text-sm font-bold transition-all duration-300"
+                                :class="activeFilter === 'Python' ? 'bg-blue-600 text-white shadow-lg shadow-blue-200' : 'text-gray-500 hover:bg-gray-200'"
+                                @click="activeFilter = 'Python'">Python
+                        </button>
+                    </li>
+                </ul>
+            </div>
 
-        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+            <div class="flex flex-wrap -mx-4">
+                <template x-for="item in filteredItems" :key="item.title">
+                    <div :class="'portfolio-item filter-' + item.filter" class="w-full sm:w-1/2 lg:w-1/3 p-4">
+                        <div class="group relative overflow-hidden rounded-3xl bg-white shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3">
+                            <!-- Category Badge -->
+                            <span class="absolute top-5 left-5 z-20 bg-white/90 backdrop-blur-md text-blue-600 text-[11px] uppercase tracking-wider font-black py-1.5 px-4 rounded-full shadow-sm"
+                                  x-text="item.category"></span>
 
-          <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
-            <li data-filter="*" class="filter-active">All</li>
-            <li data-filter=".filter-app">Fun</li>
-            <li data-filter=".filter-product">WordPress</li>
-            <li data-filter=".filter-branding">Laravel</li>
-            <li data-filter=".filter-books">PHP</li>
-          </ul><!-- End Portfolio Filters -->
+                            <img :src="item.imgSrc"
+                                 class="w-96 h-64 object-cover transition-transform duration-1000 group-hover:scale-110"
+                                 :alt="item.title" alt="">
 
-          <div id="portfolio-container" class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+                            <!-- Glassmorphism Overlay -->
+                            <div class="absolute inset-0 z-10 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 bg-blue-900/80 backdrop-blur-lg p-8 text-center">
+                                <h4 class="text-2xl font-bold text-white mb-3 translate-y-6 group-hover:translate-y-0 transition-transform duration-500 delay-75"
+                                    x-text="item.title"></h4>
+                                <p class="text-blue-100 text-sm mb-8 line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-150"
+                                   x-text="item.description"></p>
 
-            <!-- Fill by JavaScript -->
-
-          </div><!-- End Portfolio Container -->
-
+                                <div class="flex justify-center translate-y-10 group-hover:translate-y-0 transition-transform duration-500 delay-200">
+                                    <a :href="item.link" target="_blank"
+                                       class="w-14 h-14 flex items-center justify-center rounded-2xl bg-white/20 hover:bg-white text-white hover:text-blue-600 transition-all duration-300 border border-white/30 hover:shadow-xl transform hover:scale-110">
+                                        <i class="fa-solid fa-arrow-up-right-from-square text-xl"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
         </div>
+    </section>
+    <!-- /Portfolio Section -->
 
-      </div>
+</main>
 
-    </section><!-- /Portfolio Section -->
-  </main>
-    <footer id="footer" class="footer position-relative light-background">
-
-      <div class="container">
-        <div class="copyright text-center ">
-          <p>© <span id="year"></span></p>
+<footer id="footer" class="lg:ml-72 py-8 text-center bg-gray-900 text-white transition-all duration-300 ease-in-out">
+    <div class="container mx-auto max-w-7xl">
+        <div class="mb-4">
+            <p class="text-lg font-semibold text-gray-300">
+                © <span
+                    x-text="user ? `${new Date(user.created_at).getFullYear()} - ${new Date().getFullYear()}` : new Date().getFullYear()"></span>
+                All rights reserved.
+            </p>
         </div>
-        <div class="credits">
-          Designed by <a
-            href="https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/">iportfolio</a>
-        </div>
-      </div>
+        <p class="text-sm text-gray-500">
+            Designed & Developed with <i class="fa-solid fa-heart text-red-500 mx-1"></i> by <a href="#about"
+                                                                                                class="text-blue-400 hover:underline"
+                                                                                                x-text="user?.name || 'Alireza Haraji'"></a>
+        </p>
+    </div>
+</footer>
 
-    </footer>
+<!-- Scroll Top -->
+<a href="#" id="scroll-top"
+   class="fixed bottom-8 right-8 w-12 h-12 bg-linear-to-br from-blue-600 to-blue-400 text-white rounded-full shadow-lg shadow-blue-500/50 hover:shadow-blue-500/80 transition-all duration-300 flex items-center justify-center z-50 transform hover:-translate-y-1 hover:scale-110 active:scale-95 border border-white/20"
+   x-show="showScrollTop"
+   x-transition:enter="transition ease-out duration-300"
+   x-transition:enter-start="opacity-0 translate-y-10"
+   x-transition:enter-end="opacity-100 translate-y-0"
+   x-transition:leave="transition ease-in duration-200"
+   x-transition:leave-start="opacity-100 translate-y-0"
+   x-transition:leave-end="opacity-0 translate-y-10"
+   @click.prevent="window.scrollTo({top: 0, behavior: 'smooth'})">
+    <i class="fa-solid fa-arrow-up text-xl"></i>
+</a>
 
-
-
-    <!-- Scroll Top -->
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-        class="bi bi-arrow-up-short"></i></a>
-
-    <!-- Preloader -->
-    <div id="preloader"></div>
-
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/typed.js/typed.umd.js"></script>
-    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-    <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-    <!-- Main JS File -->
-    <script src="assets/js/main.js"></script>
-
-    <!-- LinkedIn  Public profile badge builder -->
-    <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
+<!-- Main Logic -->
+<script src="assets/js/main.js"></script>
 </body>
-
 </html>
