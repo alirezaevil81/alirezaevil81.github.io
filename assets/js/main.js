@@ -42,13 +42,131 @@ document.addEventListener('alpine:init', () => {
         imageAssets: null, // Stores fetched image links from JSON
 
         // Portfolio Logic
-        activeFilter: '0',
+        activeFilter: 'all',
+        isCategoryDropdownOpen: false,
         portfolioItems: [
-            { imgSrc: 'assets/img/portfolio/compressorsepah.webp', title: 'Compressorsepah', description: 'Site for selling compressors and industrial tools', link: 'https://compressorsepah.ir', filter: 'WordPress', category: 'WordPress' },
-            { imgSrc: 'assets/img/portfolio/azadpc.webp', title: 'AzadPc', description: 'Site for shop pc and laptop gaming', link: 'https://azadpc.com', filter: 'WordPress', category: 'WordPress' },
+            { imgSrc: 'assets/img/portfolio/compressorsepah.webp', title: 'Compressorsepah', description: 'Site for selling compressors and industrial tools', link: 'https://compressorsepah.ir', category: 'WordPress', websiteUrl: 'https://compressorsepah.ir' },
+            { imgSrc: 'assets/img/portfolio/azadpc.webp', title: 'AzadPc', description: 'Site for shop pc and laptop gaming', link: 'https://azadpc.com', category: 'WordPress', websiteUrl: 'https://azadpc.com' },
         ],
 
+        // Brand colors for specific tech stacks and categories
+        categoryColors: {
+            'php': {
+                activeBtn: 'bg-[#6366F1] text-white shadow-md shadow-[#6366F1]/30',
+                badge: 'bg-[#6366F1] text-white border-white/30',
+                text: 'text-[#6366F1]',
+                dot: 'bg-[#6366F1]',
+                btnHover: 'hover:text-[#6366F1]'
+            },
+            'python': {
+                activeBtn: 'bg-[#1E3A5F] text-[#FFD43B] shadow-md shadow-[#1E3A5F]/40 border border-[#FFD43B]/40',
+                badge: 'bg-[#1E3A5F] text-[#FFD43B] border-[#FFD43B]/60 font-black',
+                text: 'text-[#1E3A5F]',
+                dot: 'bg-[#FFD43B]',
+                btnHover: 'hover:text-[#1E3A5F]'
+            },
+            'wordpress': {
+                activeBtn: 'bg-[#0073AA] text-white shadow-md shadow-[#0073AA]/30',
+                badge: 'bg-[#0073AA] text-white border-white/30',
+                text: 'text-[#0073AA]',
+                dot: 'bg-[#0073AA]',
+                btnHover: 'hover:text-[#0073AA]'
+            },
+            'blade': {
+                activeBtn: 'bg-[#E11D48] text-white shadow-md shadow-[#E11D48]/30',
+                badge: 'bg-[#E11D48] text-white border-white/30',
+                text: 'text-[#E11D48]',
+                dot: 'bg-[#E11D48]',
+                btnHover: 'hover:text-[#E11D48]'
+            },
+            'html': {
+                activeBtn: 'bg-[#EA580C] text-white shadow-md shadow-[#EA580C]/30',
+                badge: 'bg-[#EA580C] text-white border-white/30',
+                text: 'text-[#EA580C]',
+                dot: 'bg-[#EA580C]',
+                btnHover: 'hover:text-[#EA580C]'
+            },
+            'javascript': {
+                activeBtn: 'bg-[#D97706] text-white shadow-md shadow-[#D97706]/30',
+                badge: 'bg-[#D97706] text-white border-white/30',
+                text: 'text-[#D97706]',
+                dot: 'bg-[#D97706]',
+                btnHover: 'hover:text-[#D97706]'
+            },
+            'typescript': {
+                activeBtn: 'bg-[#2563EB] text-white shadow-md shadow-[#2563EB]/30',
+                badge: 'bg-[#2563EB] text-white border-white/30',
+                text: 'text-[#2563EB]',
+                dot: 'bg-[#2563EB]',
+                btnHover: 'hover:text-[#2563EB]'
+            },
+            'css': {
+                activeBtn: 'bg-[#0284C7] text-white shadow-md shadow-[#0284C7]/30',
+                badge: 'bg-[#0284C7] text-white border-white/30',
+                text: 'text-[#0284C7]',
+                dot: 'bg-[#0284C7]',
+                btnHover: 'hover:text-[#0284C7]'
+            },
+            'vue': {
+                activeBtn: 'bg-[#10B981] text-white shadow-md shadow-[#10B981]/30',
+                badge: 'bg-[#10B981] text-white border-white/30',
+                text: 'text-[#10B981]',
+                dot: 'bg-[#10B981]',
+                btnHover: 'hover:text-[#10B981]'
+            },
+            'react': {
+                activeBtn: 'bg-[#087EA4] text-white shadow-md shadow-[#087EA4]/30',
+                badge: 'bg-[#087EA4] text-white border-white/30',
+                text: 'text-[#087EA4]',
+                dot: 'bg-[#087EA4]',
+                btnHover: 'hover:text-[#087EA4]'
+            },
+            'laravel': {
+                activeBtn: 'bg-[#E11D48] text-white shadow-md shadow-[#E11D48]/30',
+                badge: 'bg-[#E11D48] text-white border-white/30',
+                text: 'text-[#E11D48]',
+                dot: 'bg-[#E11D48]',
+                btnHover: 'hover:text-[#E11D48]'
+            },
+            'open source': {
+                activeBtn: 'bg-[#059669] text-white shadow-md shadow-[#059669]/30',
+                badge: 'bg-[#059669] text-white border-white/30',
+                text: 'text-[#059669]',
+                dot: 'bg-[#059669]',
+                btnHover: 'hover:text-[#059669]'
+            },
+            'default': {
+                activeBtn: 'bg-blue-600 text-white shadow-md shadow-blue-600/30',
+                badge: 'bg-slate-900/90 text-white border-white/20',
+                text: 'text-blue-600',
+                dot: 'bg-blue-600',
+                btnHover: 'hover:text-blue-600'
+            }
+        },
+
+        getCategoryStyle(categoryName) {
+            if (!categoryName) return this.categoryColors['default'];
+            const key = String(categoryName).toLowerCase().trim();
+            return this.categoryColors[key] || this.categoryColors['default'];
+        },
+
+        get categories() {
+            const set = new Set();
+            this.portfolioItems.forEach(item => {
+                if (item.category) set.add(item.category);
+            });
+            return Array.from(set).sort();
+        },
+
+        getCategoryCount(cat) {
+            if (cat === 'all') return this.portfolioItems.length;
+            return this.portfolioItems.filter(item => item.category === cat).length;
+        },
+
         async init() {
+            // Set initial circular avatar favicon
+            this.updateCircularFavicon('https://github.com/alirezaevil81.png');
+
             // 1. Fetch Image Assets first (needed for placeholders)
             try {
                 const imageRes = await fetch('/assets/data/images.json');
@@ -60,42 +178,78 @@ document.addEventListener('alpine:init', () => {
             try {
                 const response = await fetch('https://api.github.com/users/alirezaevil81');
                 this.user = await response.json();
+                if (this.user?.avatar_url) {
+                    this.updateCircularFavicon(this.user.avatar_url);
+                }
             } catch (e) { console.error("Github fetch failed", e); }
 
             try {
-                const repoRes = await fetch('https://api.github.com/users/alirezaevil81/repos');
+                const repoRes = await fetch('https://api.github.com/users/alirezaevil81/repos?per_page=100&sort=updated');
                 let repos = await repoRes.json();
-                repos.splice(0, 2); 
                 
-                repos.forEach((repo) => {
-                    switch (repo.id) {
-                        case 825470024: // bilmakh
-                            this.portfolioItems.push({ imgSrc: 'assets/img/portfolio/bilmakh.webp', title: repo.name, description: repo.description, link: repo.html_url, filter: repo.language, category: repo.language });
-                            break;
-                        case 756756391: // freepik-geter
-                            this.portfolioItems.push({ imgSrc: 'assets/img/portfolio/freepik-geter.webp', title: repo.name, description: repo.description, link: repo.html_url, filter: repo.language, category: repo.language });
-                            break;
-                        case 1047266466: // weblog-plus
-                            this.portfolioItems.push({ imgSrc: 'assets/img/portfolio/weblog-plus.webp', title: repo.name, description: repo.description, link: repo.html_url, filter: repo.language, category: repo.language });
-                            break;
-                        default:
-                                const placeholders = this.imageAssets?.placeholderImgs || ['https://github.blog/wp-content/uploads/2025/03/github_logo_invertocat_dark_3.png?w=1024'];
-                                const randomImg = placeholders[Math.floor(Math.random() * placeholders.length)];
-                            this.portfolioItems.push({ imgSrc: randomImg, title: repo.name, description: repo.description, link: repo.html_url, filter: repo.language, category: repo.language });
-                    }
-                });
+                if (Array.isArray(repos)) {
+                    repos.forEach((repo) => {
+                        // Skip profile repo if it is just a README or the current host itself unless desired
+                        if (repo.name.toLowerCase() === 'alirezaevil81') return;
+
+                        let category = repo.language || 'Open Source';
+                        let imgSrc = '';
+
+                        const repoNameLower = repo.name.toLowerCase();
+                        if (repo.id === 825470024 || repoNameLower.includes('bilmakh')) {
+                            imgSrc = 'assets/img/portfolio/bilmakh.webp';
+                        } else if (repo.id === 756756391 || repoNameLower.includes('freepik')) {
+                            imgSrc = 'assets/img/portfolio/freepik-geter.webp';
+                        } else if (repo.id === 1047266466 || repoNameLower.includes('weblog')) {
+                            imgSrc = 'assets/img/portfolio/weblog-plus.webp';
+                        } else {
+                            const placeholders = this.imageAssets?.placeholderImgs || ['https://github.blog/wp-content/uploads/2025/03/github_logo_invertocat_dark_3.png?w=1024'];
+                            imgSrc = placeholders[Math.floor(Math.random() * placeholders.length)];
+                        }
+
+                        let websiteUrl = null;
+                        if (repo.homepage && typeof repo.homepage === 'string' && repo.homepage.trim() !== '') {
+                            let hp = repo.homepage.trim();
+                            if (!hp.startsWith('http://') && !hp.startsWith('https://')) {
+                                hp = 'https://' + hp;
+                            }
+                            websiteUrl = hp;
+                        } else if (repo.description) {
+                            const match = repo.description.match(/https?:\/\/[^\s]+/i);
+                            if (match) {
+                                websiteUrl = match[0];
+                            }
+                        }
+
+                        // Check if project is already present
+                        const exists = this.portfolioItems.some(item => item.title.toLowerCase() === repo.name.toLowerCase());
+                        if (!exists) {
+                            this.portfolioItems.push({
+                                imgSrc: imgSrc,
+                                websiteUrl: websiteUrl,
+                                title: repo.name,
+                                description: repo.description || 'Open-source repository on GitHub',
+                                link: websiteUrl || repo.html_url,
+                                repoUrl: repo.html_url,
+                                category: category,
+                                stars: repo.stargazers_count,
+                                forks: repo.forks_count
+                            });
+                        }
+                    });
+                }
             } catch (e) { console.error("Repos fetch failed", e); }
 
             // 3. Start Typewriter
             this.type();
 
-                // 4. Trigger UI Sequential Animations
-                setTimeout(() => this.showHeroContent = true, 300);
-                setTimeout(() => this.showAboutContent = true, 500);
-                setTimeout(() => this.showStats[0] = true, 700);
-                setTimeout(() => this.showStats[1] = true, 900);
-                setTimeout(() => this.showStats[2] = true, 1100);
-                setTimeout(() => this.showStats[3] = true, 1300);
+            // 4. Trigger UI Sequential Animations
+            setTimeout(() => this.showHeroContent = true, 300);
+            setTimeout(() => this.showAboutContent = true, 500);
+            setTimeout(() => this.showStats[0] = true, 700);
+            setTimeout(() => this.showStats[1] = true, 900);
+            setTimeout(() => this.showStats[2] = true, 1100);
+            setTimeout(() => this.showStats[3] = true, 1300);
 
             // 5. Handle Hash Scroll on load
             if (window.location.hash) {
@@ -136,8 +290,80 @@ document.addEventListener('alpine:init', () => {
         },
 
         get filteredItems() {
-            if (this.activeFilter === '0') return this.portfolioItems;
-            return this.portfolioItems.filter(item => item.filter === this.activeFilter);
+            if (this.activeFilter === 'all' || this.activeFilter === '0') return this.portfolioItems;
+            return this.portfolioItems.filter(item => item.category === this.activeFilter);
+        },
+
+        updateCircularFavicon(avatarUrl) {
+            if (!avatarUrl) return;
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = () => {
+                try {
+                    const size = 128;
+                    const canvas = document.createElement('canvas');
+                    canvas.width = size;
+                    canvas.height = size;
+                    const ctx = canvas.getContext('2d');
+                    if (!ctx) return;
+
+                    ctx.clearRect(0, 0, size, size);
+
+                    const center = size / 2;
+                    const radius = size / 2 - 4;
+
+                    // Clip into smooth circle
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(center, center, radius, 0, Math.PI * 2, true);
+                    ctx.closePath();
+                    ctx.clip();
+
+                    // Draw image inside circle
+                    ctx.drawImage(img, 0, 0, size, size);
+                    ctx.restore();
+
+                    // Draw outer circular border ring
+                    ctx.beginPath();
+                    ctx.arc(center, center, radius, 0, Math.PI * 2, true);
+                    ctx.lineWidth = 6;
+                    ctx.strokeStyle = '#2563EB';
+                    ctx.stroke();
+
+                    const faviconDataUrl = canvas.toDataURL('image/png');
+                    const iconLinks = document.querySelectorAll("link[rel*='icon']");
+                    iconLinks.forEach(link => {
+                        link.href = faviconDataUrl;
+                        link.type = 'image/png';
+                    });
+                } catch (e) {
+                    console.warn("Canvas favicon generation fallback to SVG:", e);
+                    this.setSvgFavicon(avatarUrl);
+                }
+            };
+            img.onerror = () => {
+                this.setSvgFavicon(avatarUrl);
+            };
+            img.src = avatarUrl;
+        },
+
+        setSvgFavicon(avatarUrl) {
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <defs>
+                    <clipPath id="circle-clip">
+                        <circle cx="50" cy="50" r="46"/>
+                    </clipPath>
+                </defs>
+                <circle cx="50" cy="50" r="49" fill="#2563eb"/>
+                <circle cx="50" cy="50" r="46" fill="#ffffff"/>
+                <image href="${avatarUrl}" width="100" height="100" clip-path="url(#circle-clip)" preserveAspectRatio="xMidYMid slice"/>
+            </svg>`;
+            const dataUrl = `data:image/svg+xml,${encodeURIComponent(svg)}`;
+            const iconLinks = document.querySelectorAll("link[rel*='icon']");
+            iconLinks.forEach(link => {
+                link.href = dataUrl;
+                link.type = 'image/svg+xml';
+            });
         }
     }));
 });
