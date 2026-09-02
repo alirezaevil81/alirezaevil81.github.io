@@ -300,70 +300,48 @@ document.addEventListener('alpine:init', () => {
             img.crossOrigin = 'anonymous';
             img.onload = () => {
                 try {
-                    const size = 128;
+                    const size = 192; // High-resolution crisp icon
                     const canvas = document.createElement('canvas');
                     canvas.width = size;
                     canvas.height = size;
                     const ctx = canvas.getContext('2d');
                     if (!ctx) return;
 
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
                     ctx.clearRect(0, 0, size, size);
 
                     const center = size / 2;
-                    const radius = size / 2 - 4;
+                    const radius = size / 2; // Full edge-to-edge
 
-                    // Clip into smooth circle
+                    // Clip into perfect circle taking 100% of favicon area
                     ctx.save();
                     ctx.beginPath();
                     ctx.arc(center, center, radius, 0, Math.PI * 2, true);
                     ctx.closePath();
                     ctx.clip();
 
-                    // Draw image inside circle
+                    // Draw image filling entire canvas
                     ctx.drawImage(img, 0, 0, size, size);
                     ctx.restore();
 
-                    // Draw outer circular border ring
+                    // Subtle anti-aliased border ring for visibility on all tab themes
                     ctx.beginPath();
-                    ctx.arc(center, center, radius, 0, Math.PI * 2, true);
-                    ctx.lineWidth = 6;
-                    ctx.strokeStyle = '#2563EB';
+                    ctx.arc(center, center, radius - 1.5, 0, Math.PI * 2, true);
+                    ctx.lineWidth = 3;
+                    ctx.strokeStyle = 'rgba(37, 99, 235, 0.9)';
                     ctx.stroke();
 
                     const faviconDataUrl = canvas.toDataURL('image/png');
                     const iconLinks = document.querySelectorAll("link[rel*='icon']");
                     iconLinks.forEach(link => {
                         link.href = faviconDataUrl;
-                        link.type = 'image/png';
                     });
                 } catch (e) {
-                    console.warn("Canvas favicon generation fallback to SVG:", e);
-                    this.setSvgFavicon(avatarUrl);
+                    console.warn("Canvas favicon generation fallback:", e);
                 }
             };
-            img.onerror = () => {
-                this.setSvgFavicon(avatarUrl);
-            };
             img.src = avatarUrl;
-        },
-
-        setSvgFavicon(avatarUrl) {
-            const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-                <defs>
-                    <clipPath id="circle-clip">
-                        <circle cx="50" cy="50" r="46"/>
-                    </clipPath>
-                </defs>
-                <circle cx="50" cy="50" r="49" fill="#2563eb"/>
-                <circle cx="50" cy="50" r="46" fill="#ffffff"/>
-                <image href="${avatarUrl}" width="100" height="100" clip-path="url(#circle-clip)" preserveAspectRatio="xMidYMid slice"/>
-            </svg>`;
-            const dataUrl = `data:image/svg+xml,${encodeURIComponent(svg)}`;
-            const iconLinks = document.querySelectorAll("link[rel*='icon']");
-            iconLinks.forEach(link => {
-                link.href = dataUrl;
-                link.type = 'image/svg+xml';
-            });
         }
     }));
 });
