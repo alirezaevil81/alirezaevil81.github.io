@@ -1,3 +1,8 @@
+@import "tailwindcss";
+
+/* Tailwind CSS v4 Class-based Dark Mode configuration */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Alpine.js cloak */
 [x-cloak] {
     display: none !important;

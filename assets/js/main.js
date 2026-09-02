@@ -7,6 +7,71 @@ document.addEventListener('alpine:init', () => {
         activeSection: 'hero',
         user: null,
 
+        // Theme Management State (light | dark | system)
+        theme: localStorage.getItem('theme') || 'system',
+
+        setTheme(mode) {
+            this.theme = mode;
+            localStorage.setItem('theme', mode);
+            this.applyTheme();
+            this.updateHeroBg();
+            this.updatePortfolioImages();
+        },
+
+        getIsDark() {
+            if (this.theme === 'dark') return true;
+            if (this.theme === 'light') return false;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches;
+        },
+
+        getThemeImages(type) {
+            const isDark = this.getIsDark();
+            const modeKey = isDark ? 'dark' : 'light';
+            if (this.imageAssets && this.imageAssets[modeKey] && Array.isArray(this.imageAssets[modeKey][type]) && this.imageAssets[modeKey][type].length > 0) {
+                return this.imageAssets[modeKey][type];
+            }
+            if (this.imageAssets && Array.isArray(this.imageAssets[type]) && this.imageAssets[type].length > 0) {
+                return this.imageAssets[type];
+            }
+            return [];
+        },
+
+        updateHeroBg() {
+            const bgList = this.getThemeImages('backgrounds');
+            if (bgList.length > 0) {
+                this.heroBg = bgList[Math.floor(Math.random() * bgList.length)];
+            }
+        },
+
+        updatePortfolioImages() {
+            const placeholders = this.getThemeImages('placeholderImgs');
+            if (!placeholders || placeholders.length === 0) return;
+
+            let nonCustomCounter = 0;
+            this.portfolioItems.forEach(item => {
+                if (!item.isCustomImg) {
+                    if (item.placeholderIndex === undefined) {
+                        item.placeholderIndex = nonCustomCounter;
+                    }
+                    nonCustomCounter++;
+                    const newSrc = placeholders[item.placeholderIndex % placeholders.length];
+                    if (item.imgSrc !== newSrc) {
+                        item.imgLoaded = false;
+                        item.imgSrc = newSrc;
+                    }
+                }
+            });
+        },
+
+        applyTheme() {
+            let isDark = this.getIsDark();
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        },
+
         // GitHub Preloader State
         isLoading: true,
         loadingProgress: 15,
@@ -183,28 +248,13 @@ document.addEventListener('alpine:init', () => {
         activeFilter: 'all',
         isCategoryDropdownOpen: false,
         portfolioItems: [
-            { imgSrc: 'assets/img/portfolio/compressorsepah.webp', title: 'Compressorsepah', description: 'Site for selling compressors and industrial tools', link: 'https://compressorsepah.ir', category: 'WordPress', websiteUrl: 'https://compressorsepah.ir', iframeFailed: false, iframeLoaded: false },
-            { imgSrc: 'assets/img/portfolio/azadpc.webp', title: 'AzadPc', description: 'Site for shop pc and laptop gaming', link: 'https://azadpc.com', category: 'WordPress', websiteUrl: 'https://azadpc.com', iframeFailed: false, iframeLoaded: false },
+            { imgSrc: 'assets/img/portfolio/compressorsepah.webp', title: 'Compressorsepah', description: 'Site for selling compressors and industrial tools', link: 'https://compressorsepah.ir', category: 'WordPress', websiteUrl: 'https://compressorsepah.ir', iframeLoaded: false, imgLoaded: false, isCustomImg: true },
+            { imgSrc: 'assets/img/portfolio/azadpc.webp', title: 'AzadPc', description: 'Site for shop pc and laptop gaming', link: 'https://azadpc.com', category: 'WordPress', websiteUrl: 'https://azadpc.com', iframeLoaded: false, imgLoaded: false, isCustomImg: true },
         ],
 
         handleIframeLoad(item, event) {
             if (!item) return;
             item.iframeLoaded = true;
-        },
-
-        handleIframeError(item) {
-            if (!item) return;
-            item.iframeFailed = true;
-            item.iframeLoaded = false;
-        },
-
-        startIframeTimeout(item) {
-            if (!item || !item.websiteUrl) return;
-            setTimeout(() => {
-                if (!item.iframeLoaded) {
-                    item.iframeFailed = true;
-                }
-            }, 6000);
         },
 
         // Brand colors for specific tech stacks and categories
@@ -322,6 +372,16 @@ document.addEventListener('alpine:init', () => {
         },
 
         async init() {
+            // Apply initial theme & watch system color scheme preference
+            this.applyTheme();
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                if (this.theme === 'system') {
+                    this.applyTheme();
+                    this.updateHeroBg();
+                    this.updatePortfolioImages();
+                }
+            });
+
             // Set initial circular avatar favicon
             this.updateCircularFavicon('https://github.com/alirezaevil81.png');
 
@@ -345,11 +405,6 @@ document.addEventListener('alpine:init', () => {
                 });
             };
 
-            // 0. Start Iframe Check for initial items
-            this.portfolioItems.forEach(item => {
-                if (item.websiteUrl) this.startIframeTimeout(item);
-            });
-
             // Initial Handshake step
             this.loadingProgress = 25;
             if (this.loadingLogs[0]) this.loadingLogs[0].done = true;
@@ -363,9 +418,8 @@ document.addEventListener('alpine:init', () => {
 
                 if (imageRes.status === 'fulfilled' && imageRes.value) {
                     this.imageAssets = imageRes.value;
-                    if (this.imageAssets.backgrounds && this.imageAssets.backgrounds.length > 0) {
-                        this.heroBg = this.imageAssets.backgrounds[Math.floor(Math.random() * this.imageAssets.backgrounds.length)];
-                    }
+                    this.updateHeroBg();
+                    this.updatePortfolioImages();
                 }
 
                 if (userRes.status === 'fulfilled' && userRes.value) {
@@ -387,22 +441,29 @@ document.addEventListener('alpine:init', () => {
                 if (repoRes.ok) {
                     const repos = await repoRes.json();
                     if (Array.isArray(repos)) {
+                        let nonCustomCount = 0;
                         repos.forEach((repo) => {
                             if (repo.name.toLowerCase() === 'alirezaevil81') return;
 
                             let category = repo.language || 'Open Source';
                             let imgSrc = '';
+                            let isCustomImg = false;
 
                             const repoNameLower = repo.name.toLowerCase();
                             if (repo.id === 825470024 || repoNameLower.includes('bilmakh')) {
                                 imgSrc = 'assets/img/portfolio/bilmakh.webp';
+                                isCustomImg = true;
                             } else if (repo.id === 756756391 || repoNameLower.includes('freepik')) {
                                 imgSrc = 'assets/img/portfolio/freepik-geter.webp';
+                                isCustomImg = true;
                             } else if (repo.id === 1047266466 || repoNameLower.includes('weblog')) {
                                 imgSrc = 'assets/img/portfolio/weblog-plus.webp';
+                                isCustomImg = true;
                             } else {
-                                const placeholders = this.imageAssets?.placeholderImgs || ['https://github.blog/wp-content/uploads/2025/03/github_logo_invertocat_dark_3.png?w=1024'];
-                                imgSrc = placeholders[Math.floor(Math.random() * placeholders.length)];
+                                isCustomImg = false;
+                                const placeholders = this.getThemeImages('placeholderImgs');
+                                const fallbackList = placeholders.length > 0 ? placeholders : ['https://github.blog/wp-content/uploads/2025/03/github_logo_invertocat_dark_3.png?w=1024'];
+                                imgSrc = fallbackList[nonCustomCount % fallbackList.length];
                             }
 
                             let websiteUrl = null;
@@ -423,6 +484,8 @@ document.addEventListener('alpine:init', () => {
                             if (!exists) {
                                 const newItem = {
                                     imgSrc: imgSrc,
+                                    isCustomImg: isCustomImg,
+                                    placeholderIndex: isCustomImg ? undefined : nonCustomCount,
                                     websiteUrl: websiteUrl,
                                     title: repo.name,
                                     description: repo.description || 'Open-source repository on GitHub',
@@ -431,13 +494,14 @@ document.addEventListener('alpine:init', () => {
                                     category: category,
                                     stars: repo.stargazers_count,
                                     forks: repo.forks_count,
-                                    iframeFailed: false,
-                                    iframeLoaded: false
+                                    iframeLoaded: false,
+                                    imgLoaded: false
                                 };
+                                if (!isCustomImg) nonCustomCount++;
                                 this.portfolioItems.push(newItem);
-                                if (websiteUrl) this.startIframeTimeout(newItem);
                             }
                         });
+                        this.updatePortfolioImages();
                     }
                 }
             } catch (e) {
