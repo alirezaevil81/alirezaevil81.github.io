@@ -154,41 +154,7 @@
     </div>
 </div>
 
-<!-- Mobile & Tablet Sticky App Bar (Visible on < 1024px) -->
-<div class="lg:hidden fixed top-0 left-0 right-0 z-40 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80 px-4 py-2.5 flex items-center justify-between transition-all duration-300 shadow-md">
-    <!-- Brand / Profile Quick Info -->
-    <a href="#hero" class="flex items-center gap-2.5 min-w-0" @click="isMobileMenuOpen = false">
-        <div class="relative w-8 h-8 rounded-full overflow-hidden border border-blue-500/50 shrink-0">
-            <img :src="user?.avatar_url || 'assets/img/alireza-haraji-profile.jpg'"
-                 alt="Alireza Haraji"
-                 class="w-full h-full object-cover">
-        </div>
-        <div class="min-w-0">
-            <div class="flex items-center gap-1.5">
-                <span class="text-xs sm:text-sm font-bold text-white tracking-tight truncate" x-text="user?.name || 'Alireza Haraji'"></span>
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
-            </div>
-            <span class="text-[10px] text-slate-400 font-mono block uppercase tracking-wider" x-text="activeSection"></span>
-        </div>
-    </a>
-
-    <!-- Action Pill & Hamburger Button -->
-    <div class="flex items-center gap-2">
-        <a href="#portfolio"
-           class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-blue-600/20 border border-blue-500/30 text-blue-400 text-xs font-semibold hover:bg-blue-600 hover:text-white transition-all">
-            <i class="fa-solid fa-briefcase text-[10px]"></i>
-            <span>Works</span>
-        </a>
-        <button class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-900 border border-slate-700/80 text-white hover:bg-slate-800 active:scale-95 transition-all shadow-xs focus:outline-none"
-                aria-label="Toggle Navigation Menu"
-                @click="isMobileMenuOpen = !isMobileMenuOpen">
-            <i x-show="!isMobileMenuOpen" class="fa-solid fa-bars text-sm"></i>
-            <i x-show="isMobileMenuOpen" class="fa-solid fa-xmark text-sm"></i>
-        </button>
-    </div>
-</div>
-
-<!-- Header Section (Fixed Left Sidebar on Desktop, Off-Canvas Drawer on Mobile/Tablet) -->
+<!-- Header Section -->
 <header id="header"
         class="fixed top-0 left-0 bottom-0 w-72 transition-all duration-500 ease-in-out bg-slate-950/95 backdrop-blur-2xl text-white z-50 flex flex-col justify-between border-r border-slate-800/80 lg:left-0 shadow-2xl"
         :class="{ '-left-72': !isMobileMenuOpen, 'left-0': isMobileMenuOpen }"
@@ -198,15 +164,13 @@
     <div class="absolute top-0 left-0 w-full h-48 bg-radial-[at_top_center] from-blue-600/15 via-transparent to-transparent pointer-events-none"></div>
     <div class="absolute bottom-0 left-0 w-full h-48 bg-radial-[at_bottom_center] from-indigo-600/10 via-transparent to-transparent pointer-events-none"></div>
 
-    <!-- Close Button for Drawer on Mobile/Tablet -->
-    <div class="lg:hidden flex items-center justify-between p-4 border-b border-slate-800/80">
-        <span class="text-xs font-bold font-mono text-slate-400 uppercase tracking-wider">Navigation Menu</span>
-        <button class="w-8 h-8 rounded-lg bg-slate-900 text-slate-400 hover:text-white flex items-center justify-center border border-slate-800"
-                @click="isMobileMenuOpen = false"
-                aria-label="Close menu">
-            <i class="fa-solid fa-xmark text-sm"></i>
-        </button>
-    </div>
+    <!-- Mobile Floating Toggle Button -->
+    <button class="header-toggle lg:hidden w-12 h-12 flex items-center justify-center rounded-r-2xl bg-blue-600 text-white absolute top-5 -right-12 shadow-xl shadow-blue-600/40 focus:outline-none transition-transform hover:scale-105 active:scale-95 border border-blue-400/30"
+            aria-label="Toggle Navigation Menu"
+            @click="isMobileMenuOpen = !isMobileMenuOpen">
+        <i x-show="!isMobileMenuOpen" class="fa-solid fa-bars text-lg"></i>
+        <i x-show="isMobileMenuOpen" class="fa-solid fa-xmark text-lg"></i>
+    </button>
 
     <!-- Top & Middle Content (Scrollable) -->
     <div class="flex-1 overflow-y-auto w-full px-5 pt-8 pb-4 flex flex-col items-center relative z-10 scrollbar-thin scrollbar-thumb-slate-800">
@@ -367,7 +331,7 @@
 
     <!-- Hero Section -->
     <section id="hero"
-             class="relative min-h-[100dvh] flex flex-col items-center justify-center text-white text-center overflow-hidden bg-slate-950 px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 lg:pt-16 pb-24 sm:pb-28 lg:pb-24">
+             class="relative min-h-[100dvh] flex flex-col items-center justify-center text-white text-center overflow-hidden bg-slate-950 px-4 sm:px-6 pt-16 sm:pt-20 pb-28 sm:pb-32">
         <!-- Hero Background Image with subtle scale transition -->
         <div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-105"
              :style="`background-image: url('${heroBg}')`"></div>

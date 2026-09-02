@@ -325,106 +325,143 @@ document.addEventListener('alpine:init', () => {
             // Set initial circular avatar favicon
             this.updateCircularFavicon('https://github.com/alirezaevil81.png');
 
-            // Step 1: Initial Handshake
-            setTimeout(() => {
-                if (this.loadingProgress < 40) this.loadingProgress = 40;
-                if (this.loadingLogs[1]) this.loadingLogs[1].done = true;
-            }, 250);
+            // Promise waiting for full page asset/DOM loading (window load event)
+            const windowPageLoadPromise = new Promise((resolve) => {
+                if (document.readyState === 'complete') {
+                    resolve();
+                } else {
+                    window.addEventListener('load', () => resolve(), { once: true });
+                }
+            });
+
+            // Helper to preload critical image
+            const preloadImage = (url) => {
+                if (!url) return Promise.resolve();
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.onload = () => resolve();
+                    img.onerror = () => resolve();
+                    img.src = url;
+                });
+            };
 
             // 0. Start Iframe Check for initial items
             this.portfolioItems.forEach(item => {
                 if (item.websiteUrl) this.startIframeTimeout(item);
             });
 
-            // 1. Fetch Image Assets first (needed for placeholders)
-            try {
-                const imageRes = await fetch('/assets/data/images.json');
-                this.imageAssets = await imageRes.json();
-                this.heroBg = this.imageAssets.backgrounds[Math.floor(Math.random() * this.imageAssets.backgrounds.length)];
-            } catch (e) { console.error("Image assets fetch failed", e); }
+            // Initial Handshake step
+            this.loadingProgress = 25;
+            if (this.loadingLogs[0]) this.loadingLogs[0].done = true;
 
-            // 2. Fetch GitHub User Data
+            // Step 1: Fetch Image Assets & GitHub User Data in parallel
             try {
-                const response = await fetch('https://api.github.com/users/alirezaevil81');
-                this.user = await response.json();
-                if (this.user?.avatar_url) {
-                    this.updateCircularFavicon(this.user.avatar_url);
+                const [imageRes, userRes] = await Promise.allSettled([
+                    fetch('/assets/data/images.json').then(res => res.json()),
+                    fetch('https://api.github.com/users/alirezaevil81').then(res => res.json())
+                ]);
+
+                if (imageRes.status === 'fulfilled' && imageRes.value) {
+                    this.imageAssets = imageRes.value;
+                    if (this.imageAssets.backgrounds && this.imageAssets.backgrounds.length > 0) {
+                        this.heroBg = this.imageAssets.backgrounds[Math.floor(Math.random() * this.imageAssets.backgrounds.length)];
+                    }
                 }
-            } catch (e) { console.error("Github fetch failed", e); }
 
-            // Step 2: Repositories & Tree Resolution
-            if (this.loadingProgress < 70) this.loadingProgress = 70;
-            if (this.loadingLogs[2]) this.loadingLogs[2].done = true;
+                if (userRes.status === 'fulfilled' && userRes.value) {
+                    this.user = userRes.value;
+                    if (this.user?.avatar_url) {
+                        this.updateCircularFavicon(this.user.avatar_url);
+                    }
+                }
+            } catch (e) {
+                console.error("Initial data fetch error:", e);
+            }
 
+            this.loadingProgress = 55;
+            if (this.loadingLogs[1]) this.loadingLogs[1].done = true;
+
+            // Step 2: Fetch Repositories
             try {
                 const repoRes = await fetch('https://api.github.com/users/alirezaevil81/repos?per_page=100&sort=updated');
-                let repos = await repoRes.json();
-                
-                if (Array.isArray(repos)) {
-                    repos.forEach((repo) => {
-                        // Skip profile repo if it is just a README or the current host itself unless desired
-                        if (repo.name.toLowerCase() === 'alirezaevil81') return;
+                if (repoRes.ok) {
+                    const repos = await repoRes.json();
+                    if (Array.isArray(repos)) {
+                        repos.forEach((repo) => {
+                            if (repo.name.toLowerCase() === 'alirezaevil81') return;
 
-                        let category = repo.language || 'Open Source';
-                        let imgSrc = '';
+                            let category = repo.language || 'Open Source';
+                            let imgSrc = '';
 
-                        const repoNameLower = repo.name.toLowerCase();
-                        if (repo.id === 825470024 || repoNameLower.includes('bilmakh')) {
-                            imgSrc = 'assets/img/portfolio/bilmakh.webp';
-                        } else if (repo.id === 756756391 || repoNameLower.includes('freepik')) {
-                            imgSrc = 'assets/img/portfolio/freepik-geter.webp';
-                        } else if (repo.id === 1047266466 || repoNameLower.includes('weblog')) {
-                            imgSrc = 'assets/img/portfolio/weblog-plus.webp';
-                        } else {
-                            const placeholders = this.imageAssets?.placeholderImgs || ['https://github.blog/wp-content/uploads/2025/03/github_logo_invertocat_dark_3.png?w=1024'];
-                            imgSrc = placeholders[Math.floor(Math.random() * placeholders.length)];
-                        }
-
-                        let websiteUrl = null;
-                        if (repo.homepage && typeof repo.homepage === 'string' && repo.homepage.trim() !== '') {
-                            let hp = repo.homepage.trim();
-                            if (!hp.startsWith('http://') && !hp.startsWith('https://')) {
-                                hp = 'https://' + hp;
+                            const repoNameLower = repo.name.toLowerCase();
+                            if (repo.id === 825470024 || repoNameLower.includes('bilmakh')) {
+                                imgSrc = 'assets/img/portfolio/bilmakh.webp';
+                            } else if (repo.id === 756756391 || repoNameLower.includes('freepik')) {
+                                imgSrc = 'assets/img/portfolio/freepik-geter.webp';
+                            } else if (repo.id === 1047266466 || repoNameLower.includes('weblog')) {
+                                imgSrc = 'assets/img/portfolio/weblog-plus.webp';
+                            } else {
+                                const placeholders = this.imageAssets?.placeholderImgs || ['https://github.blog/wp-content/uploads/2025/03/github_logo_invertocat_dark_3.png?w=1024'];
+                                imgSrc = placeholders[Math.floor(Math.random() * placeholders.length)];
                             }
-                            websiteUrl = hp;
-                        } else if (repo.description) {
-                            const match = repo.description.match(/https?:\/\/[^\s]+/i);
-                            if (match) {
-                                websiteUrl = match[0];
-                            }
-                        }
 
-                        // Check if project is already present
-                        const exists = this.portfolioItems.some(item => item.title.toLowerCase() === repo.name.toLowerCase());
-                        if (!exists) {
-                            const newItem = {
-                                imgSrc: imgSrc,
-                                websiteUrl: websiteUrl,
-                                title: repo.name,
-                                description: repo.description || 'Open-source repository on GitHub',
-                                link: websiteUrl || repo.html_url,
-                                repoUrl: repo.html_url,
-                                category: category,
-                                stars: repo.stargazers_count,
-                                forks: repo.forks_count,
-                                iframeFailed: false,
-                                iframeLoaded: false
-                            };
-                            this.portfolioItems.push(newItem);
-                            if (websiteUrl) this.startIframeTimeout(newItem);
-                        }
-                    });
+                            let websiteUrl = null;
+                            if (repo.homepage && typeof repo.homepage === 'string' && repo.homepage.trim() !== '') {
+                                let hp = repo.homepage.trim();
+                                if (!hp.startsWith('http://') && !hp.startsWith('https://')) {
+                                    hp = 'https://' + hp;
+                                }
+                                websiteUrl = hp;
+                            } else if (repo.description) {
+                                const match = repo.description.match(/https?:\/\/[^\s]+/i);
+                                if (match) {
+                                    websiteUrl = match[0];
+                                }
+                            }
+
+                            const exists = this.portfolioItems.some(item => item.title.toLowerCase() === repo.name.toLowerCase());
+                            if (!exists) {
+                                const newItem = {
+                                    imgSrc: imgSrc,
+                                    websiteUrl: websiteUrl,
+                                    title: repo.name,
+                                    description: repo.description || 'Open-source repository on GitHub',
+                                    link: websiteUrl || repo.html_url,
+                                    repoUrl: repo.html_url,
+                                    category: category,
+                                    stars: repo.stargazers_count,
+                                    forks: repo.forks_count,
+                                    iframeFailed: false,
+                                    iframeLoaded: false
+                                };
+                                this.portfolioItems.push(newItem);
+                                if (websiteUrl) this.startIframeTimeout(newItem);
+                            }
+                        });
+                    }
                 }
-            } catch (e) { console.error("Repos fetch failed", e); }
+            } catch (e) {
+                console.error("Repos fetch error:", e);
+            }
 
-            // Step 3: Complete Preloader
+            this.loadingProgress = 80;
+            if (this.loadingLogs[2]) this.loadingLogs[2].done = true;
+
+            // Step 3: Ensure complete window load and critical hero background/avatar preload
+            await Promise.allSettled([
+                windowPageLoadPromise,
+                this.heroBg ? preloadImage(this.heroBg) : Promise.resolve(),
+                this.user?.avatar_url ? preloadImage(this.user.avatar_url) : Promise.resolve()
+            ]);
+
+            // Step 4: Page load is 100% complete
             this.loadingProgress = 100;
             if (this.loadingLogs[3]) this.loadingLogs[3].done = true;
 
             setTimeout(() => {
                 this.isLoading = false;
 
-                // 3. Start Typewriter & Sequential Animations
+                // Start Typewriter & Sequential Animations
                 this.type();
                 setTimeout(() => this.showHeroContent = true, 100);
                 setTimeout(() => this.showAboutContent = true, 300);
@@ -432,25 +469,26 @@ document.addEventListener('alpine:init', () => {
                 setTimeout(() => this.showStats[1] = true, 700);
                 setTimeout(() => this.showStats[2] = true, 900);
                 setTimeout(() => this.showStats[3] = true, 1100);
-            }, 450);
 
-            // Safety fallback in case of hanging network requests
+                // Handle Hash Scroll on load
+                if (window.location.hash) {
+                    const section = document.querySelector(window.location.hash);
+                    if (section) setTimeout(() => { window.scrollTo({ top: section.offsetTop, behavior: 'smooth' }); }, 150);
+                }
+            }, 350);
+
+            // Safety fallback in case external third-party APIs get blocked/timeout
             setTimeout(() => {
                 if (this.isLoading) {
                     this.loadingProgress = 100;
+                    if (this.loadingLogs[3]) this.loadingLogs[3].done = true;
                     this.isLoading = false;
                     this.type();
                     this.showHeroContent = true;
                     this.showAboutContent = true;
                     this.showStats = [true, true, true, true];
                 }
-            }, 2500);
-
-            // 5. Handle Hash Scroll on load
-            if (window.location.hash) {
-                const section = document.querySelector(window.location.hash);
-                if (section) setTimeout(() => { window.scrollTo({ top: section.offsetTop, behavior: 'smooth' }); }, 100);
-            }
+            }, 8000);
         },
 
         handleScroll() {
