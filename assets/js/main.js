@@ -21,6 +21,329 @@ const registerPortfolioApp = () => {
             following: 18
         },
 
+        // Language State (fa | en)
+        lang: localStorage.getItem('app_lang') || 'fa',
+
+        setLang(newLang) {
+            if (this.lang === newLang) return;
+            this.isMobileMenuOpen = false;
+            this.lang = newLang;
+            localStorage.setItem('app_lang', newLang);
+            this.applyLang();
+        },
+
+        toggleLang() {
+            this.setLang(this.lang === 'fa' ? 'en' : 'fa');
+        },
+
+        applyLang() {
+            document.documentElement.lang = this.lang;
+            document.documentElement.dir = this.lang === 'fa' ? 'rtl' : 'ltr';
+            document.title = this.lang === 'fa' 
+                ? 'رزومه علی رضا هرجی | Alireza Haraji Resume' 
+                : 'Alireza Haraji | Resume & Portfolio';
+            
+            this.typedStrings = this.lang === 'fa' ? this.typedStringsFa : this.typedStringsEn;
+            this.stringIndex = 0;
+            this.typedText = '';
+            this.isDeleting = false;
+            if (this.typeTimeout) {
+                clearTimeout(this.typeTimeout);
+                this.type();
+            }
+        },
+
+        t(key) {
+            if (!key) return '';
+            const keys = key.split('.');
+            let current = this.translations[this.lang] || this.translations['fa'];
+            for (const k of keys) {
+                if (current && current[k] !== undefined) {
+                    current = current[k];
+                } else {
+                    let fallback = this.translations['en'];
+                    for (const fk of keys) {
+                        if (fallback && fallback[fk] !== undefined) {
+                            fallback = fallback[fk];
+                        } else {
+                            return key;
+                        }
+                    }
+                    return fallback;
+                }
+            }
+            return current;
+        },
+
+        getLocalized(obj) {
+            if (!obj) return '';
+            if (typeof obj === 'string') return obj;
+            return obj[this.lang] || obj['fa'] || obj['en'] || '';
+        },
+
+        translations: {
+            fa: {
+                nav: {
+                    home: 'خانه',
+                    about: 'درباره من',
+                    skills: 'مهارت‌ها و استک',
+                    resume: 'سوابق و تجربیات',
+                    portfolio: 'نمونه‌کارها',
+                    ready: 'آماده همکاری',
+                    role: 'توسعه‌دهنده بک‌اند و نرم‌افزار',
+                    github: 'پروفایل گیت‌هاب',
+                    email: 'ارسال ایمیل',
+                    website: 'وب‌سایت شخصی',
+                    quickNav: 'دسترسی سریع'
+                },
+                hero: {
+                    badge: 'آماده برای پروژه‌ها و همکاری‌های جدید',
+                    prefix: 'من',
+                    name: 'علی رضا هرجی',
+                    suffix: '',
+                    subtitle: 'متخصص در طراحی و پیاده‌سازی معماری‌های پایدار بک‌اند، توسعه REST APIهای پرسرعت، بهینه‌سازی دیتابیس و برنامه‌نویسی وب‌اپلیکیشن‌های مدرن.',
+                    ctaPortfolio: 'مشاهده نمونه‌کارها',
+                    ctaAbout: 'درباره من',
+                    scroll: 'اسکرول به پایین'
+                },
+                about: {
+                    badge: 'بیوگرافی و هویت حرفه‌ای',
+                    title: 'درباره من',
+                    subtitle: 'توسعه‌دهنده پرانگیزه بک‌اند متعهد به مهندسی سرویس‌های پایدار، نرم‌افزارهای مقیاس‌پذیر و کدهای تمیز و قابل نگهداری.',
+                    bio: 'توسعه‌دهنده پویا و خلاق PHP و Python با تمرکز عمیق بر معماری راه‌حل‌های کارآمد سمت سرور، ساخت REST APIهای مقیاس‌پذیر، بهینه‌سازی دیتابیس‌های پرترافیک و همکاری موثر در تیم‌های چابک (Agile).',
+                    headline: 'متخصص بک‌اند · توسعه‌دهنده پایتون و PHP · معمار API',
+                    available: 'آماده همکاری',
+                    busy: 'مشغول در پروژه',
+                    emailMe: 'ارسال ایمیل',
+                    backgroundTitle: 'پیشینه و تجارب حرفه‌ای',
+                    location: 'محل سکونت',
+                    locationVal: 'ایران، مازندران، نوشهر',
+                    seniority: 'سطح تخصص',
+                    seniorityVal: 'توسعه‌دهنده سطح میانی بک‌اند',
+                    ageExp: 'سن و سابقه',
+                    ageExpVal: 'ساله · بیش از ۵ سال تجربه',
+                    website: 'وب‌سایت',
+                    email: 'ایمیل',
+                    workStatus: 'وضعیت کاری',
+                    workStatusAvailable: 'آماده همکاری / دورکاری',
+                    workStatusBusy: 'مشغول در پروژه فعلی',
+                    githubMetrics: 'شاخص‌های زنده گیت‌هاب',
+                    liveSync: 'همگام‌سازی زنده',
+                    followers: 'دنبال‌کنندگان',
+                    following: 'دنبال‌شوندگان',
+                    publicRepos: 'مخازن عمومی',
+                    publicGists: 'گیست‌های عمومی'
+                },
+                skills: {
+                    badge: 'توانمندی‌ها و استک فنی',
+                    title: 'تسلط و مهارت‌های فنی',
+                    subtitle: 'نگاهی جامع به فناوری‌های بنیادین، الگوهای معماری، فریم‌ورک‌ها و متدولوژی‌های مهندسی نرم‌افزار.',
+                    coreLanguages: 'زبان‌های اصلی و تخصص‌های کلیدی',
+                    masteryAssessment: 'ارزیابی تسلط',
+                    expert: 'تسلط عالی',
+                    advanced: 'تسلط پیشرفته',
+                    proficient: 'ماهر',
+                    ecosystem: 'اکوسیستم، فریم‌ورک‌ها و ابزارها',
+                    categorizedStack: 'استک دسته‌بندی‌شده',
+                    mindsetTitle: 'طرز فکر مهندسی و رویه‌های حرفه‌ای',
+                    mindsetSubtitle: 'اصول معماری، استانداردهای امنیتی، راهکارهای کارایی بالا و فرهنگ کار تیمی که جریان کار روزانه من را هدایت می‌کنند.',
+                    standard: 'استاندارد',
+                    guarantee1Title: 'رویکرد تست‌محور',
+                    guarantee1Sub: 'پایدار و منعطف',
+                    guarantee2Title: 'مستندسازی تمیز',
+                    guarantee2Sub: 'خوانا و قابل نگهداری',
+                    guarantee3Title: 'تمرکز بر امنیت',
+                    guarantee3Sub: 'دفاع چندلایه',
+                    guarantee4Title: 'کارایی حداکثری',
+                    guarantee4Sub: 'تاخیر بهینه‌شده'
+                },
+                resume: {
+                    badge: 'کارنامه حرفه‌ای',
+                    title: 'سوابق و تجربیات کاری',
+                    subtitle: 'مروری جامع بر مسیر رشد فنی، تجربیات کاری حرفه‌ای و سوابق تحصیلی.',
+                    stat1: 'سال سابقه کار',
+                    stat2: 'حوزه تخصصی اصلی',
+                    stat3: 'یادگیری مستمر',
+                    stat4: 'همکاری چابک تیمی',
+                    summaryTitle: 'خلاصه حرفه‌ای',
+                    summarySub: 'دید کلی و نقاط قوت محوری',
+                    summaryText: 'توسعه‌دهنده پویای بک‌اند مسلط بر پایتون و PHP با سابقه مشخص در توسعه وب‌سرویس‌های کارآمد، اصلاح و بازسازی ساختار کدهای قدیمی و راهنمایی تیم‌ها در رعایت بهترین الگوهای کدنویسی. متخصص در مدیریت دیتابیس، ساخت APIهای مقیاس‌پذیر و بهینه‌سازی پیوسته عملکرد سرور.',
+                    badge1: 'معماری بک‌اند',
+                    badge2: 'مهندسی API',
+                    badge3: 'راهبری تیم',
+                    badge4: 'مدیریت پایگاه‌داده',
+                    educationTitle: 'تحصیلات و آموزش',
+                    experienceTitle: 'سوابق شغلی',
+                    present: 'اکنون',
+                    skillsLabel: 'مهارت‌ها:'
+                },
+                portfolio: {
+                    title: 'نمونه‌کارها و پروژه‌ها',
+                    subtitle: 'ویترینی از پروژه‌های اخیر، تلفیقی از کدهای تمیز و طراحی کارآمد.',
+                    filterLabel: 'فیلتر بر اساس دسته‌بندی',
+                    all: 'همه پروژه‌ها',
+                    allProjects: 'همه پروژه‌ها',
+                    visitWebsite: 'مشاهده وب‌سایت',
+                    viewProject: 'مشاهده پروژه',
+                    liveWebsite: 'وب‌سایت زنده',
+                    loadingImg: 'در حال بارگذاری تصویر...',
+                    explore: 'مشاهده',
+                    emptyState: 'هیچ پروژه‌ای در این دسته‌بندی یافت نشد.',
+                    noProjects: 'هیچ پروژه‌ای در این دسته‌بندی یافت نشد.',
+                    showAll: 'نمایش همه پروژه‌ها'
+                },
+                footer: {
+                    badge: 'آماده برای فرصت‌های جدید',
+                    ctaTitle: 'پروژه یا چالشی در حوزه مهندسی نرم‌افزار دارید؟',
+                    ctaSub: 'بیایید برای ساخت معماری‌های پایدار بک‌اند، APIهای پرسرعت یا پلتفرم‌های سفارشی وب همکاری کنیم.',
+                    readyTitle: 'پروژه یا چالشی در حوزه مهندسی نرم‌افزار دارید؟',
+                    readySubtitle: 'بیایید برای ساخت معماری‌های پایدار بک‌اند، APIهای پرسرعت یا پلتفرم‌های سفارشی وب همکاری کنیم.',
+                    getInTouch: 'ارتباط با من',
+                    githubProfile: 'پروفایل گیت‌هاب',
+                    role: 'توسعه‌دهنده بک‌اند و نرم‌افزار',
+                    bio: 'متمرکز بر توسعه سیستم‌های مقیاس‌پذیر بک‌اند با PHP و Python، میکروسرویس‌های تمیز، بهینه‌سازی دیتابیس و راه‌حل‌های پایدار وب.',
+                    navTitle: 'دسترسی سریع',
+                    quickNav: 'دسترسی سریع',
+                    techTitle: 'استک فنی محوری',
+                    coreStack: 'استک فنی محوری',
+                    rights: 'تمامی حقوق محفوظ است.',
+                    allRights: 'تمامی حقوق محفوظ است.',
+                    craftedWith: 'طراحی و توسعه با',
+                    using: 'با Tailwind مدرن و Alpine.js'
+                }
+            },
+            en: {
+                nav: {
+                    home: 'Home',
+                    about: 'About Me',
+                    skills: 'Skills & Stack',
+                    resume: 'Experience',
+                    portfolio: 'Portfolio',
+                    ready: 'Available for work',
+                    role: 'Backend & Software Dev',
+                    github: 'GitHub Profile',
+                    email: 'Send Email',
+                    website: 'Personal Website',
+                    quickNav: 'Quick Navigation'
+                },
+                hero: {
+                    badge: 'Available for New Projects & Collaborations',
+                    prefix: "Hi, I'm a",
+                    name: 'Alireza Haraji',
+                    suffix: '',
+                    subtitle: 'Specializing in robust backend architectures, high-performance APIs, database optimization, and modern web application development.',
+                    ctaPortfolio: 'Explore My Work',
+                    ctaAbout: 'About Me',
+                    scroll: 'Scroll Down'
+                },
+                about: {
+                    badge: 'Biography & Persona',
+                    title: 'About Me',
+                    subtitle: 'Passionate Backend Engineer dedicated to architecting reliable services, scalable web apps, and clean maintainable code.',
+                    bio: 'Dynamic PHP & Python Developer with a strong focus on architecting efficient backend solutions, building scalable RESTful APIs, optimizing high-traffic databases, and collaborating effectively in modern Agile teams.',
+                    headline: 'Backend Specialist · Python & PHP Developer · API Architect',
+                    available: 'Available',
+                    busy: 'Currently Engaged',
+                    emailMe: 'Email Me',
+                    backgroundTitle: 'Professional Background',
+                    location: 'Location',
+                    locationVal: 'Nowshahr, Mazandaran',
+                    seniority: 'Seniority',
+                    seniorityVal: 'Mid-Level Backend Dev',
+                    ageExp: 'Age & Experience',
+                    ageExpVal: 'Yrs Old · 5+ Yrs Exp',
+                    website: 'Website',
+                    email: 'Email',
+                    workStatus: 'Work Status',
+                    workStatusAvailable: 'Available / Remote',
+                    workStatusBusy: 'Currently Engaged',
+                    githubMetrics: 'GitHub Real-Time Metrics',
+                    liveSync: 'Live Sync',
+                    followers: 'Followers',
+                    following: 'Following',
+                    publicRepos: 'Public Repos',
+                    publicGists: 'Public Gists'
+                },
+                skills: {
+                    badge: 'Capabilities & Tech Stack',
+                    title: 'Technical Proficiency',
+                    subtitle: 'A comprehensive overview of core technologies, architectural paradigms, frameworks, and engineering methodologies.',
+                    coreLanguages: 'Core Languages & Primary Specializations',
+                    masteryAssessment: 'Mastery Assessment',
+                    expert: 'Expert Proficiency',
+                    advanced: 'Advanced Proficiency',
+                    proficient: 'Proficient',
+                    ecosystem: 'Ecosystem, Frameworks & Tooling',
+                    categorizedStack: 'Categorized Stack',
+                    mindsetTitle: 'Engineering Mindset & Professional Practices',
+                    mindsetSubtitle: 'The architectural principles, security standards, performance guidelines, and collaboration culture that guide my daily development workflow.',
+                    standard: 'Standard',
+                    guarantee1Title: 'Test-Driven Mindset',
+                    guarantee1Sub: 'Reliable & Resilient',
+                    guarantee2Title: 'Clean Documentation',
+                    guarantee2Sub: 'Readable & Maintainable',
+                    guarantee3Title: 'Security Focused',
+                    guarantee3Sub: 'Defense in Depth',
+                    guarantee4Title: 'High Performance',
+                    guarantee4Sub: 'Optimized Latency'
+                },
+                resume: {
+                    badge: 'Curriculum Vitae',
+                    title: 'My Resume & Experience',
+                    subtitle: 'A comprehensive overview of my technical journey, professional development experience, and academic background.',
+                    stat1: 'Years Experience',
+                    stat2: 'Core Tech Stacks',
+                    stat3: 'Dedicated Learner',
+                    stat4: 'Team Collaboration',
+                    summaryTitle: 'Professional Summary',
+                    summarySub: 'Overview & Core Strengths',
+                    summaryText: 'Dynamic Python and PHP backend developer with a solid track record in building efficient web services, refactoring architectures, and mentoring teams in coding best practices. Expert in database management, scalable API development, and continuous performance optimization.',
+                    badge1: 'Backend Architecture',
+                    badge2: 'API Engineering',
+                    badge3: 'Team Mentorship',
+                    badge4: 'Database Management',
+                    educationTitle: 'Education & Training',
+                    experienceTitle: 'Work Experience',
+                    present: 'Present',
+                    skillsLabel: 'Skills:'
+                },
+                portfolio: {
+                    title: 'Featured Works',
+                    subtitle: 'A showcase of my recent projects, blending clean code with functional design.',
+                    filterLabel: 'Filter by Category',
+                    all: 'All Projects',
+                    allProjects: 'All Projects',
+                    visitWebsite: 'Visit Website',
+                    viewProject: 'View Project',
+                    liveWebsite: 'Live Website',
+                    loadingImg: 'Loading image...',
+                    explore: 'Explore',
+                    emptyState: 'No projects found in this category.',
+                    noProjects: 'No projects found in this category.',
+                    showAll: 'Show All Projects'
+                },
+                footer: {
+                    badge: 'Ready for New Opportunities',
+                    ctaTitle: 'Have a project or engineering challenge?',
+                    ctaSub: "Let's collaborate to build resilient backend architectures, high-performance APIs, or custom web platforms.",
+                    readyTitle: 'Have a project or engineering challenge?',
+                    readySubtitle: "Let's collaborate to build resilient backend architectures, high-performance APIs, or custom web platforms.",
+                    getInTouch: 'Get in Touch',
+                    githubProfile: 'GitHub Profile',
+                    role: 'Backend & Software Engineer',
+                    bio: 'Focused on crafting scalable PHP & Python backend systems, clean microservices, database optimizations, and robust web solutions.',
+                    navTitle: 'Quick Navigation',
+                    quickNav: 'Quick Navigation',
+                    techTitle: 'Core Tech Stack',
+                    coreStack: 'Core Tech Stack',
+                    rights: 'All rights reserved.',
+                    allRights: 'All rights reserved.',
+                    craftedWith: 'Crafted with',
+                    using: 'using Modern Tailwind & Alpine.js'
+                }
+            }
+        },
+
         // Theme Management State (light | dark | system)
         theme: localStorage.getItem('theme') || 'system',
 
@@ -99,9 +422,12 @@ const registerPortfolioApp = () => {
         
         // Typewriter Logic
         typedText: '',
-        typedStrings: ['PHP Developer', 'JavaScript Developer', 'WordPress Developer', 'Laravel Developer', 'Python Developer'],
+        typedStringsEn: ['PHP Developer', 'Python Developer', 'Laravel Developer', 'WordPress Developer', 'Backend Specialist', 'API & Web Architect'],
+        typedStringsFa: ['برنامه‌نویس PHP هستم', 'برنامه‌نویس پایتون هستم', 'برنامه‌نویس لاراول هستم', 'برنامه‌نویس وردپرس هستم', 'توسعه‌دهنده بک‌اند هستم', 'معمار وب و API هستم'],
+        typedStrings: ['برنامه‌نویس PHP هستم', 'برنامه‌نویس پایتون هستم', 'برنامه‌نویس لاراول هستم', 'برنامه‌نویس وردپرس هستم', 'توسعه‌دهنده بک‌اند هستم', 'معمار وب و API هستم'],
         stringIndex: 0,
         isDeleting: false,
+        typeTimeout: null,
 
         // UI States for animations
         showHeroContent: false,
@@ -118,7 +444,10 @@ const registerPortfolioApp = () => {
                 iconBg: 'bg-indigo-50 text-indigo-600', 
                 barGradient: 'from-indigo-500 to-indigo-700',
                 badgeColor: 'text-indigo-700 bg-indigo-50 border-indigo-200',
-                tagline: 'Backend Architecture, REST APIs & Eloquent ORM'
+                tagline: {
+                    fa: 'معماری بک‌اند، REST API و Eloquent ORM',
+                    en: 'Backend Architecture, REST APIs & Eloquent ORM'
+                }
             },
             { 
                 name: 'Python / Django', 
@@ -128,7 +457,10 @@ const registerPortfolioApp = () => {
                 iconBg: 'bg-blue-50 text-blue-600', 
                 barGradient: 'from-blue-600 to-yellow-500',
                 badgeColor: 'text-blue-700 bg-blue-50 border-blue-200',
-                tagline: 'Algorithms, Data Processing & Middleware Systems'
+                tagline: {
+                    fa: 'الگوریتم‌ها، پردازش داده و سیستم‌های میان‌افزاری',
+                    en: 'Algorithms, Data Processing & Middleware Systems'
+                }
             },
             { 
                 name: 'WordPress / CMS', 
@@ -138,7 +470,10 @@ const registerPortfolioApp = () => {
                 iconBg: 'bg-sky-50 text-sky-600', 
                 barGradient: 'from-sky-500 to-blue-700',
                 badgeColor: 'text-sky-700 bg-sky-50 border-sky-200',
-                tagline: 'Custom Plugin Development, WooCommerce & Headless'
+                tagline: {
+                    fa: 'توسعه افزونه‌های اختصاصی، ووکامرس و هدلس',
+                    en: 'Custom Plugin Development, WooCommerce & Headless'
+                }
             },
             { 
                 name: 'MySQL & Databases', 
@@ -148,7 +483,10 @@ const registerPortfolioApp = () => {
                 iconBg: 'bg-emerald-50 text-emerald-600', 
                 barGradient: 'from-emerald-500 to-teal-700',
                 badgeColor: 'text-emerald-700 bg-emerald-50 border-emerald-200',
-                tagline: 'Schema Design, Query Optimization & Data Integrity'
+                tagline: {
+                    fa: 'طراحی اسکیما، بهینه‌سازی کوئری و یکپارچگی داده‌ها',
+                    en: 'Schema Design, Query Optimization & Data Integrity'
+                }
             },
             { 
                 name: 'JavaScript & Web APIs', 
@@ -158,7 +496,10 @@ const registerPortfolioApp = () => {
                 iconBg: 'bg-amber-50 text-amber-500', 
                 barGradient: 'from-amber-400 to-yellow-600',
                 badgeColor: 'text-amber-700 bg-amber-50 border-amber-200',
-                tagline: 'Modern ES6+, DOM Manipulation & Alpine.js'
+                tagline: {
+                    fa: 'اکمااسکریپت مدرن، تعامل با DOM و Alpine.js',
+                    en: 'Modern ES6+, DOM Manipulation & Alpine.js'
+                }
             },
             { 
                 name: 'HTML5 & Modern CSS / Tailwind', 
@@ -168,30 +509,33 @@ const registerPortfolioApp = () => {
                 iconBg: 'bg-orange-50 text-orange-600', 
                 barGradient: 'from-orange-500 to-red-600',
                 badgeColor: 'text-orange-700 bg-orange-50 border-orange-200',
-                tagline: 'Semantic Architecture, Tailwind CSS & Responsive UI'
+                tagline: {
+                    fa: 'ساختار معنایی، Tailwind CSS و رابط کاربری واکنش‌گرا',
+                    en: 'Semantic Architecture, Tailwind CSS & Responsive UI'
+                }
             }
         ],
         skillCategories: [
             { 
-                title: 'Backend & Databases', 
+                title: { fa: 'بک‌اند و دیتابیس‌ها', en: 'Backend & Databases' }, 
                 icon: 'fa-solid fa-server',
                 color: 'text-blue-600 bg-blue-50 border-blue-200',
                 skills: ['MySQL', 'PostgreSQL', 'MongoDB', 'Redis', 'Node.js', 'RESTful APIs', 'Database Indexing'] 
             },
             { 
-                title: 'Frameworks & CMS', 
+                title: { fa: 'فریم‌ورک‌ها و CMS', en: 'Frameworks & CMS' }, 
                 icon: 'fa-solid fa-layer-group',
                 color: 'text-indigo-600 bg-indigo-50 border-indigo-200',
                 skills: ['Laravel', 'Django', 'FastAPI', 'Flask', 'WordPress', 'WooCommerce', 'Blade', 'Symfony'] 
             },
             { 
-                title: 'Core Architecture', 
+                title: { fa: 'معماری و مهندسی نرم‌افزار', en: 'Core Architecture' }, 
                 icon: 'fa-solid fa-cubes-stacked',
                 color: 'text-emerald-600 bg-emerald-50 border-emerald-200',
                 skills: ['OOP (Object-Oriented)', 'Design Patterns', 'Socket Programming', 'Multithreading', 'Microservices', 'API Security'] 
             },
             { 
-                title: 'DevOps & Engineering', 
+                title: { fa: 'دوآپس و ابزارهای توسعه', en: 'DevOps & Engineering' }, 
                 icon: 'fa-solid fa-terminal',
                 color: 'text-amber-600 bg-amber-50 border-amber-200',
                 skills: ['Git / GitHub', 'Docker', 'Linux / Bash', 'CI/CD Pipelines', 'Agile / Scrum', 'Unit Testing', 'Postman', 'SEO'] 
@@ -199,58 +543,186 @@ const registerPortfolioApp = () => {
         ],
         softSkills: [
             { 
-                category: 'Code Craftsmanship',
-                title: 'Clean Architecture & SOLID', 
-                description: 'Structuring scalable codebases with strict separation of concerns, DRY principles, and maintainable design patterns.',
+                category: { fa: 'مهندسی کد', en: 'Code Craftsmanship' },
+                title: { fa: 'معماری تمیز و اصول SOLID', en: 'Clean Architecture & SOLID' }, 
+                description: {
+                    fa: 'ساختاردهی کدهای مقیاس‌پذیر با تفکیک وظایف، اصول DRY و الگوهای طراحی خوانا و قابل نگهداری.',
+                    en: 'Structuring scalable codebases with strict separation of concerns, DRY principles, and maintainable design patterns.'
+                },
                 icon: 'fa-solid fa-code',
                 color: 'text-blue-600 bg-blue-50 border-blue-200/80',
                 accentBar: 'bg-blue-600',
-                tag: 'Maintainability'
+                tag: { fa: 'نگهداری_پذیری', en: 'Maintainability' }
             },
             { 
-                category: 'System Quality',
-                title: 'Performance & Caching', 
-                description: 'Optimizing high-throughput query execution, database indexing, latency reduction, and memory caching strategies.',
+                category: { fa: 'کیفیت سیستم', en: 'System Quality' },
+                title: { fa: 'کارایی و بهینه‌سازی کش', en: 'Performance & Caching' }, 
+                description: {
+                    fa: 'بهینه‌سازی اجرای کوئری‌های پرترافیک، ایندکس‌گذاری دیتابیس، کاهش تاخیر و استراتژی‌های کشینگ حافظه.',
+                    en: 'Optimizing high-throughput query execution, database indexing, latency reduction, and memory caching strategies.'
+                },
                 icon: 'fa-solid fa-gauge-high',
                 color: 'text-indigo-600 bg-indigo-50 border-indigo-200/80',
                 accentBar: 'bg-indigo-600',
-                tag: 'High Throughput'
+                tag: { fa: 'توان_پردازشی_بالا', en: 'High Throughput' }
             },
             { 
-                category: 'Security First',
-                title: 'Secure Coding & OWASP', 
-                description: 'Implementing rigorous input sanitization, token-based authentication, rate limiting, and defensive API design.',
+                category: { fa: 'امنیت در اولویت', en: 'Security First' },
+                title: { fa: 'کدنویسی امن و استانداردهای OWASP', en: 'Secure Coding & OWASP' }, 
+                description: {
+                    fa: 'اعتبارسنجی دقیق ورودی‌ها، احراز هویت توکن‌محور، محدودسازی نرخ درخواست و طراحی تدافعی API.',
+                    en: 'Implementing rigorous input sanitization, token-based authentication, rate limiting, and defensive API design.'
+                },
                 icon: 'fa-solid fa-shield-halved',
                 color: 'text-emerald-600 bg-emerald-50 border-emerald-200/80',
                 accentBar: 'bg-emerald-600',
-                tag: 'Security by Design'
+                tag: { fa: 'امنیت_محور', en: 'Security by Design' }
             },
             { 
-                category: 'Agile Culture',
-                title: 'Agile & Team Mentorship', 
-                description: 'Active participation in sprint workflows, backlog grooming, constructive peer reviews, and onboarding junior developers.',
+                category: { fa: 'فرهنگ چابک', en: 'Agile Culture' },
+                title: { fa: 'متدولوژی چابک و منتورینگ تیم', en: 'Agile & Team Mentorship' }, 
+                description: {
+                    fa: 'مشارکت فعال در اسپرینت‌ها، مدیریت بک‌لاگ، بازبینی سازنده کدها و همراهی و راهنمایی توسعه‌دهندگان.',
+                    en: 'Active participation in sprint workflows, backlog grooming, constructive peer reviews, and onboarding junior developers.'
+                },
                 icon: 'fa-solid fa-users-gear',
                 color: 'text-amber-600 bg-amber-50 border-amber-200/80',
                 accentBar: 'bg-amber-600',
-                tag: 'Collaboration'
+                tag: { fa: 'همکاری_تیمی', en: 'Collaboration' }
             },
             { 
-                category: 'Operational Reliability',
-                title: 'Troubleshooting & Observability', 
-                description: 'Rapid root-cause analysis, production error tracking, structured logging, and preventive debugging in live services.',
+                category: { fa: 'پایداری عملیاتی', en: 'Operational Reliability' },
+                title: { fa: 'عیب‌یابی و قابلیت مشاهده‌پذیری', en: 'Troubleshooting & Observability' }, 
+                description: {
+                    fa: 'تحلیل سریع ریشه خطاها، ردیابی خطاهای پروداکشن، لاگ‌گذاری ساختاریافته و دیباگ پیشگیرانه در سیستم‌های زنده.',
+                    en: 'Rapid root-cause analysis, production error tracking, structured logging, and preventive debugging in live services.'
+                },
                 icon: 'fa-solid fa-screwdriver-wrench',
                 color: 'text-rose-600 bg-rose-50 border-rose-200/80',
                 accentBar: 'bg-rose-600',
-                tag: 'Zero Downtime'
+                tag: { fa: 'پایداری_حداکثری', en: 'Zero Downtime' }
             },
             { 
-                category: 'Problem Solving',
-                title: 'Algorithmic Problem-Solving', 
-                description: 'Breaking down complex business logic into efficient, testable, and optimized algorithms for data transformation.',
+                category: { fa: 'حل مسئله', en: 'Problem Solving' },
+                title: { fa: 'حل مسئله و تفکر الگوریتمی', en: 'Algorithmic Problem-Solving' }, 
+                description: {
+                    fa: 'تجزیه منطق پیچیده کسب‌وکار به الگوریتم‌های کارآمد، قابل تست و بهینه جهت پردازش و تبدیل داده‌ها.',
+                    en: 'Breaking down complex business logic into efficient, testable, and optimized algorithms for data transformation.'
+                },
                 icon: 'fa-solid fa-brain',
                 color: 'text-sky-600 bg-sky-50 border-sky-200/80',
                 accentBar: 'bg-sky-600',
-                tag: 'Analytical'
+                tag: { fa: 'تفکر_تحلیلی', en: 'Analytical' }
+            }
+        ],
+
+        // Education & Experience Data
+        education: [
+            {
+                period: { fa: '۱۴۰۰ — اکنون', en: '2021 — Present' },
+                location: { fa: 'ایران، مازندران، نوشهر', en: 'Nowshahr, Mazandaran' },
+                title: { fa: 'مهندسی نرم‌افزار خودآموخته', en: 'Self-Taught Software Engineering' },
+                description: {
+                    fa: 'مطالعه عمیق مبانی علوم کامپیوتر، ساختمان داده‌ها، الگوریتم‌ها، پارادایم‌های مدرن پایتون و PHP، اصول کد تمیز و امنیت وب.',
+                    en: 'Intensive study in computer science fundamentals, data structures, algorithms, modern Python and PHP paradigms, clean code principles, and web security.'
+                }
+            }
+        ],
+
+        experiences: [
+            {
+                role: { fa: 'توسعه‌دهنده پایتون', en: 'Python Developer' },
+                tag: 'PYTHON',
+                tagClass: 'bg-[#1E3A5F] text-[#FFD43B] border border-[#FFD43B]/40',
+                badgeClass: 'bg-blue-50 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 border-blue-200/70 dark:border-blue-700/60',
+                dotClass: 'bg-blue-600',
+                period: { fa: '۱۴۰۱ — اکنون', en: '2022 — Present' },
+                subtitle: { fa: 'مهندسی بک‌اند و سرویس‌های میان‌افزاری', en: 'Backend Engineering & Middleware' },
+                bullets: [
+                    {
+                        label: { fa: 'الگوریتم‌ها و پردازش داده:', en: 'Algorithm & Data Processing:' },
+                        text: {
+                            fa: 'طراحی و پیاده‌سازی الگوریتم‌های با راندمان بالا برای پردازش مجموعه‌داده‌های پیچیده.',
+                            en: 'Designed and implemented high-efficiency algorithms for processing complex datasets.'
+                        }
+                    },
+                    {
+                        label: { fa: 'مربی‌گری تیم:', en: 'Team Mentorship:' },
+                        text: {
+                            fa: 'راهنمایی و منتورینگ توسعه‌دهندگان در زمینه معماری تمیز پایتون، استانداردهای PEP8 و آزمون‌نویسی.',
+                            en: 'Mentored junior developers on Python clean architecture, PEP8 standards, and testing practices.'
+                        }
+                    },
+                    {
+                        label: { fa: 'اسپرینت‌های چابک:', en: 'Agile Sprints:' },
+                        text: {
+                            fa: 'مشارکت فعال با تیم‌های چندرشته‌ای در برنامه‌ریزی اسپرینت، تخمین استوری‌ها و مدیریت بک‌لاگ.',
+                            en: 'Collaborated actively with cross-functional teams in sprint planning, story estimation, and backlog grooming.'
+                        }
+                    },
+                    {
+                        label: { fa: 'سرویس‌های میان‌افزار و پایداری:', en: 'Middleware & Stability:' },
+                        text: {
+                            fa: 'پایش، عیب‌یابی و حفظ پایداری عملیاتی مداوم سرویس‌های میان‌افزاری سمت سرور.',
+                            en: 'Monitored, diagnosed, and maintained continuous operational readiness of middleware services.'
+                        }
+                    }
+                ],
+                skills: ['Python', 'Data Processing', 'Middleware', 'Agile / Scrum']
+            },
+            {
+                role: { fa: 'توسعه‌دهنده PHP و وب‌مستر', en: 'PHP Developer & Webmaster' },
+                tag: 'PHP',
+                tagClass: 'bg-[#6366F1] text-white',
+                badgeClass: 'bg-indigo-50 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 border-indigo-200/70 dark:border-indigo-700/60',
+                dotClass: 'bg-indigo-600',
+                period: { fa: '۱۳۹۸ — اکنون', en: '2019 — Present' },
+                subtitle: { fa: 'وب‌اپلیکیشن‌ها و راهکارهای تجارت الکترونیک', en: 'Web Applications & E-Commerce Solutions' },
+                bullets: [
+                    {
+                        label: { fa: 'ارتقای فریم‌ورک:', en: 'Framework Enhancement:' },
+                        text: {
+                            fa: 'ارتقای قابلیت‌های هسته فریم‌ورک اختصاصی و افزایش چشمگیر بهره‌وری وب‌اپلیکیشن‌ها.',
+                            en: 'Delivered core improvements to proprietary framework, significantly boosting web application efficiency.'
+                        }
+                    },
+                    {
+                        label: { fa: 'فروشگاه‌های مقیاس‌پذیر:', en: 'Scalable E-Commerce:' },
+                        text: {
+                            fa: 'توسعه و سفارشی‌سازی سامانه‌های مقیاس‌پذیر فروشگاهی با افزایش نرخ تبدیل و توان پردازش سفارشات.',
+                            en: 'Developed and customized scalable e-commerce systems that elevated conversions and store throughput.'
+                        }
+                    },
+                    {
+                        label: { fa: 'سرویس‌های بک‌اند و API:', en: 'Backend Components & APIs:' },
+                        text: {
+                            fa: 'ساخت سرویس‌های سمت سرور جهت ارتباط واسط کاربری با APIهای جانبی و منطق بیزنس.',
+                            en: 'Built back-end services connecting web interfaces to external APIs and server-side logic.'
+                        }
+                    },
+                    {
+                        label: { fa: 'پلاگین‌های اختصاصی وردپرس:', en: 'WordPress Custom Plugins:' },
+                        text: {
+                            fa: 'توسعه افزونه‌ها و ادغام‌های اختصاصی وردپرس جهت ایجاد قابلیت‌های سفارشی و ارتقای عملکرد.',
+                            en: 'Developed specialized custom WordPress plugins and integrations for enhanced functionality.'
+                        }
+                    },
+                    {
+                        label: { fa: 'ریفکتورینگ کدهای قدیمی:', en: 'Legacy Refactoring:' },
+                        text: {
+                            fa: 'بهینه‌سازی کدهای قدیمی برای خوانایی بیشتر، افزایش سرعت کوئری‌های دیتابیس و ارتقای امنیت.',
+                            en: 'Optimized legacy codebases for enhanced readability, database query performance, and security.'
+                        }
+                    },
+                    {
+                        label: { fa: 'عیب‌یابی در پروداکشن:', en: 'Production Troubleshooting:' },
+                        text: {
+                            fa: 'تشخیص و رفع فوری اختلالات فنی حساس در محیط‌های عملیاتی زنده.',
+                            en: 'Rapidly diagnosed and resolved mission-critical technical issues in live environments.'
+                        }
+                    }
+                ],
+                skills: ['PHP', 'WordPress Plugins', 'REST APIs', 'MySQL', 'Performance Tuning']
             }
         ],
 
@@ -262,8 +734,34 @@ const registerPortfolioApp = () => {
         activeFilter: 'all',
         isCategoryDropdownOpen: false,
         portfolioItems: [
-            { imgSrc: 'assets/img/portfolio/compressorsepah.webp', title: 'Compressorsepah', description: 'Site for selling compressors and industrial tools', link: 'https://compressorsepah.ir', category: 'WordPress', websiteUrl: 'https://compressorsepah.ir', iframeLoaded: false, imgLoaded: false, isCustomImg: true },
-            { imgSrc: 'assets/img/portfolio/azadpc.webp', title: 'AzadPc', description: 'Site for shop pc and laptop gaming', link: 'https://azadpc.com', category: 'WordPress', websiteUrl: 'https://azadpc.com', iframeLoaded: false, imgLoaded: false, isCustomImg: true },
+            { 
+                imgSrc: 'assets/img/portfolio/compressorsepah.webp', 
+                title: 'Compressorsepah', 
+                description: {
+                    fa: 'فروشگاه آنلاین انواع کمپرسور و ابزارآلات صنعتی با طراحی واکنش‌گرا و عملکرد بهینه‌شده',
+                    en: 'Site for selling compressors and industrial tools with optimized performance'
+                }, 
+                link: 'https://compressorsepah.ir', 
+                category: 'WordPress', 
+                websiteUrl: 'https://compressorsepah.ir', 
+                iframeLoaded: false, 
+                imgLoaded: false, 
+                isCustomImg: true 
+            },
+            { 
+                imgSrc: 'assets/img/portfolio/azadpc.webp', 
+                title: 'AzadPc', 
+                description: {
+                    fa: 'فروشگاه تخصصی قطعات کامپیوتر، لپ‌تاپ و سیستم‌های گیمینگ حرفه‌ای',
+                    en: 'Site for shop pc and laptop gaming'
+                }, 
+                link: 'https://azadpc.com', 
+                category: 'WordPress', 
+                websiteUrl: 'https://azadpc.com', 
+                iframeLoaded: false, 
+                imgLoaded: false, 
+                isCustomImg: true 
+            },
         ],
 
         handleIframeLoad(item, event) {
@@ -386,6 +884,9 @@ const registerPortfolioApp = () => {
         },
 
         async init() {
+            // Apply initial language & direction
+            this.applyLang();
+
             // Apply initial theme & watch system color scheme preference
             this.applyTheme();
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
@@ -596,6 +1097,8 @@ const registerPortfolioApp = () => {
         },
 
         type() {
+            if (!this.typedStrings || this.typedStrings.length === 0) return;
+            if (this.stringIndex >= this.typedStrings.length) this.stringIndex = 0;
             let current = this.typedStrings[this.stringIndex];
             this.typedText = this.isDeleting 
                 ? current.substring(0, this.typedText.length - 1) 
@@ -611,7 +1114,8 @@ const registerPortfolioApp = () => {
                 this.stringIndex = (this.stringIndex + 1) % this.typedStrings.length;
                 speed = 500;
             }
-            setTimeout(() => this.type(), speed);
+            if (this.typeTimeout) clearTimeout(this.typeTimeout);
+            this.typeTimeout = setTimeout(() => this.type(), speed);
         },
 
         get age() {

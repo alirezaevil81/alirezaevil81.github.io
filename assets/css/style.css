@@ -17,6 +17,126 @@ html, body {
     overflow-x: hidden;
 }
 
+html[lang="fa"], [dir="rtl"] {
+    font-family: 'Yekan', 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+html[lang="en"], [dir="ltr"] {
+    font-family: 'Mona Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* GitHub Monospace Typography for code elements */
+code, kbd, samp, pre {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* RTL Layout positioning for sidebar and main content */
+@media (min-width: 1024px) {
+    html[dir="rtl"] #header {
+        left: auto !important;
+        right: 0 !important;
+        border-right: none !important;
+        border-left: 1px solid rgba(226, 232, 240, 0.8) !important;
+    }
+    html[dir="rtl"].dark #header {
+        border-left-color: rgba(30, 41, 59, 0.8) !important;
+    }
+    html[dir="rtl"] main {
+        margin-left: 0 !important;
+        margin-right: 18rem !important; /* 72 in Tailwind is 18rem */
+    }
+    html[dir="rtl"] #footer {
+        margin-left: 0 !important;
+        margin-right: 18rem !important;
+    }
+}
+
+@media (max-width: 1023px) {
+    /* RTL Mobile Sidebar rules */
+    html[dir="rtl"] #header {
+        left: auto !important;
+        border-right: none !important;
+        border-left: 1px solid rgba(226, 232, 240, 0.8) !important;
+    }
+    html[dir="rtl"].dark #header {
+        border-left-color: rgba(30, 41, 59, 0.8) !important;
+    }
+    html[dir="rtl"] #header.sidebar-closed {
+        right: -18rem !important;
+        left: auto !important;
+    }
+    html[dir="rtl"] #header.sidebar-open {
+        right: 0 !important;
+        left: auto !important;
+    }
+
+    /* LTR Mobile Sidebar rules */
+    html[dir="ltr"] #header {
+        right: auto !important;
+    }
+    html[dir="ltr"] #header.sidebar-closed {
+        left: -18rem !important;
+        right: auto !important;
+    }
+    html[dir="ltr"] #header.sidebar-open {
+        left: 0 !important;
+        right: auto !important;
+    }
+
+    /* Mobile Floating Toggle Button Positioning & Styling */
+    html[dir="rtl"] .header-toggle {
+        left: -3rem !important;
+        right: auto !important;
+        border-top-left-radius: 1rem !important;
+        border-bottom-left-radius: 1rem !important;
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        cursor: pointer !important;
+    }
+    html[dir="ltr"] .header-toggle {
+        right: -3rem !important;
+        left: auto !important;
+        border-top-right-radius: 1rem !important;
+        border-bottom-right-radius: 1rem !important;
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+        cursor: pointer !important;
+    }
+}
+
+/* RTL Timeline adjustments */
+html[dir="rtl"] .relative.pl-6 {
+    padding-left: 0 !important;
+    padding-right: 1.5rem !important;
+}
+@media (min-width: 640px) {
+    html[dir="rtl"] .relative.sm\:pl-8 {
+        padding-left: 0 !important;
+        padding-right: 2rem !important;
+    }
+}
+html[dir="rtl"] .before\:left-2::before,
+html[dir="rtl"] .before\:left-2\.5::before {
+    left: auto !important;
+    right: 0.5rem !important;
+}
+@media (min-width: 640px) {
+    html[dir="rtl"] .sm\:before\:left-2\.5::before {
+        left: auto !important;
+        right: 0.625rem !important;
+    }
+}
+html[dir="rtl"] .-left-6 {
+    left: auto !important;
+    right: -1.5rem !important;
+}
+@media (min-width: 640px) {
+    html[dir="rtl"] .sm\:-left-8 {
+        left: auto !important;
+        right: -2rem !important;
+    }
+}
+
 /* Smooth scrolling support */
 @media (prefers-reduced-motion: reduce) {
     html {
