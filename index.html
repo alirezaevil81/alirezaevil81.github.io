@@ -51,392 +51,1092 @@
       @scroll.window="handleScroll"
       @resize.window="handleResize">
 
-<!-- Header Section -->
+<!-- GitHub Themed Modern Responsive Preloader -->
+<div x-show="isLoading"
+     x-transition:leave="transition ease-out duration-600"
+     x-transition:leave-start="opacity-100 scale-100"
+     x-transition:leave-end="opacity-0 scale-95 pointer-events-none"
+     class="fixed inset-0 z-[100] bg-slate-950 flex items-center justify-center p-4 sm:p-6 select-none overflow-hidden"
+     id="preloader">
+
+    <!-- Ambient Glowing Background Elements -->
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-indigo-600/15 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-96 bg-radial from-slate-900/40 via-transparent to-transparent pointer-events-none"></div>
+
+    <!-- Terminal Window Container -->
+    <div class="w-full max-w-lg bg-slate-900/90 border border-slate-800/90 rounded-3xl shadow-2xl backdrop-blur-2xl overflow-hidden relative z-10 transition-all duration-300">
+        
+        <!-- Terminal Titlebar -->
+        <div class="px-4 sm:px-5 py-3.5 bg-slate-950/80 border-b border-slate-800/80 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-rose-500/80 shadow-2xs"></span>
+                <span class="w-3 h-3 rounded-full bg-amber-500/80 shadow-2xs"></span>
+                <span class="w-3 h-3 rounded-full bg-emerald-500/80 shadow-2xs"></span>
+            </div>
+            <div class="flex items-center gap-2 text-xs font-mono font-medium text-slate-400 truncate">
+                <i class="fa-brands fa-github text-slate-300"></i>
+                <span class="truncate">alirezaevil81/portfolio</span>
+                <span class="text-slate-600">·</span>
+                <span class="text-blue-400 font-semibold">zsh</span>
+            </div>
+            <div class="flex items-center gap-1.5 text-[11px] font-mono text-slate-500">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="hidden sm:inline">live</span>
+            </div>
+        </div>
+
+        <!-- Terminal Body -->
+        <div class="p-5 sm:p-6 space-y-4">
+            <!-- Header Brand inside Terminal -->
+            <div class="flex items-center justify-between gap-3 pb-3 border-b border-slate-800/60">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="w-10 h-10 rounded-2xl bg-slate-800/80 border border-slate-700/60 text-slate-200 flex items-center justify-center text-xl shadow-inner shrink-0">
+                        <i class="fa-brands fa-github"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <h2 class="text-sm font-bold text-white tracking-tight truncate">Alireza Haraji</h2>
+                        <div class="flex items-center gap-2 text-xs text-slate-400 font-mono">
+                            <i class="fa-solid fa-code-branch text-blue-400 text-[10px]"></i>
+                            <span>main</span>
+                            <span class="text-slate-600">@</span>
+                            <span class="text-slate-300">v2.4.0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Percentage Counter -->
+                <div class="text-right shrink-0">
+                    <span class="text-xl sm:text-2xl font-black font-mono text-emerald-400 tracking-tight" x-text="loadingProgress + '%'"></span>
+                    <span class="text-[10px] uppercase font-bold text-slate-500 tracking-wider block">Syncing</span>
+                </div>
+            </div>
+
+            <!-- Terminal Execution Logs -->
+            <div class="space-y-2 py-1 font-mono text-xs sm:text-[13px] leading-relaxed">
+                <template x-for="(log, idx) in loadingLogs" :key="idx">
+                    <div class="flex items-start gap-2.5 transition-all duration-300"
+                         :class="log.done ? 'text-slate-300' : (idx === loadingLogs.findIndex(l => !l.done) ? 'text-blue-400 font-semibold' : 'text-slate-600')">
+                        <span class="shrink-0 mt-0.5">
+                            <i x-show="log.done" class="fa-solid fa-check text-emerald-400 text-[11px]"></i>
+                            <i x-show="!log.done && idx === loadingLogs.findIndex(l => !l.done)" class="fa-solid fa-circle-notch fa-spin text-blue-400 text-[11px]"></i>
+                            <i x-show="!log.done && idx !== loadingLogs.findIndex(l => !l.done)" class="fa-regular fa-circle text-slate-700 text-[10px]"></i>
+                        </span>
+                        <span class="break-all" x-text="log.text"></span>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Sleek GitHub Linear Progress Bar -->
+            <div class="space-y-2 pt-2">
+                <div class="w-full bg-slate-950 rounded-full h-2 overflow-hidden p-0.5 border border-slate-800">
+                    <div class="h-full rounded-full bg-linear-to-r from-blue-500 via-indigo-500 to-emerald-400 transition-all duration-300 ease-out shadow-xs"
+                         :style="`width: ${loadingProgress}%`"></div>
+                </div>
+            </div>
+
+            <!-- Terminal Footer Status Bar -->
+            <div class="pt-2 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-slate-500 border-t border-slate-800/60">
+                <div class="flex items-center gap-2">
+                    <span class="inline-flex items-center gap-1 text-slate-400">
+                        <i class="fa-solid fa-server text-blue-400 text-[10px]"></i>
+                        <span>GitHub REST API</span>
+                    </span>
+                    <span>·</span>
+                    <span class="text-emerald-400">HTTP 200 OK</span>
+                </div>
+                <div class="text-slate-400">
+                    <span class="animate-pulse">●</span> Ready
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Mobile & Tablet Sticky App Bar (Visible on < 1024px) -->
+<div class="lg:hidden fixed top-0 left-0 right-0 z-40 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80 px-4 py-2.5 flex items-center justify-between transition-all duration-300 shadow-md">
+    <!-- Brand / Profile Quick Info -->
+    <a href="#hero" class="flex items-center gap-2.5 min-w-0" @click="isMobileMenuOpen = false">
+        <div class="relative w-8 h-8 rounded-full overflow-hidden border border-blue-500/50 shrink-0">
+            <img :src="user?.avatar_url || 'assets/img/alireza-haraji-profile.jpg'"
+                 alt="Alireza Haraji"
+                 class="w-full h-full object-cover">
+        </div>
+        <div class="min-w-0">
+            <div class="flex items-center gap-1.5">
+                <span class="text-xs sm:text-sm font-bold text-white tracking-tight truncate" x-text="user?.name || 'Alireza Haraji'"></span>
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+            </div>
+            <span class="text-[10px] text-slate-400 font-mono block uppercase tracking-wider" x-text="activeSection"></span>
+        </div>
+    </a>
+
+    <!-- Action Pill & Hamburger Button -->
+    <div class="flex items-center gap-2">
+        <a href="#portfolio"
+           class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-blue-600/20 border border-blue-500/30 text-blue-400 text-xs font-semibold hover:bg-blue-600 hover:text-white transition-all">
+            <i class="fa-solid fa-briefcase text-[10px]"></i>
+            <span>Works</span>
+        </a>
+        <button class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-900 border border-slate-700/80 text-white hover:bg-slate-800 active:scale-95 transition-all shadow-xs focus:outline-none"
+                aria-label="Toggle Navigation Menu"
+                @click="isMobileMenuOpen = !isMobileMenuOpen">
+            <i x-show="!isMobileMenuOpen" class="fa-solid fa-bars text-sm"></i>
+            <i x-show="isMobileMenuOpen" class="fa-solid fa-xmark text-sm"></i>
+        </button>
+    </div>
+</div>
+
+<!-- Header Section (Fixed Left Sidebar on Desktop, Off-Canvas Drawer on Mobile/Tablet) -->
 <header id="header"
-        class="fixed top-0 left-0 bottom-0 w-72 transition-all duration-500 ease-in-out bg-slate-950/95 backdrop-blur-xl text-white z-50 flex flex-col border-r border-white/5 lg:left-0"
+        class="fixed top-0 left-0 bottom-0 w-72 transition-all duration-500 ease-in-out bg-slate-950/95 backdrop-blur-2xl text-white z-50 flex flex-col justify-between border-r border-slate-800/80 lg:left-0 shadow-2xl"
         :class="{ '-left-72': !isMobileMenuOpen, 'left-0': isMobileMenuOpen }"
         @click.outside="if (window.innerWidth < 1024) isMobileMenuOpen = false">
-    <button class="header-toggle lg:hidden w-12 h-12 flex items-center justify-center rounded-r-xl bg-blue-600 text-white absolute top-6 -right-12 shadow-xl shadow-blue-500/40 focus:outline-none transition-transform hover:scale-105"
-            @click="isMobileMenuOpen = !isMobileMenuOpen">
-        <i x-show="!isMobileMenuOpen" class="fa-solid fa-bars"></i>
-        <i x-show="isMobileMenuOpen" class="fa-solid fa-xmark"></i>
-    </button>
+    
+    <!-- Ambient Sidebar Lighting -->
+    <div class="absolute top-0 left-0 w-full h-48 bg-radial-[at_top_center] from-blue-600/15 via-transparent to-transparent pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-full h-48 bg-radial-[at_bottom_center] from-indigo-600/10 via-transparent to-transparent pointer-events-none"></div>
 
-    <div class="flex-1 overflow-y-auto w-full pt-12 pb-8 flex flex-col items-center">
-        <div class="profile-img mb-4 relative group">
-            <div class="absolute inset-0 bg-blue-500 rounded-full blur-lg opacity-20 group-hover:opacity-40 transition-opacity"></div>
-            <img :src="user?.avatar_url || 'assets/img/alireza-haraji-profile.jpg'"
-                 alt="عکس پروفایل علی رضا هرجی | Alireza Haraji Profile Photo"
-                 title="علیرضا هرجی متخصص"
-                 class="relative img-fluid rounded-full w-32 h-32 object-cover border-4 border-slate-800 ring-2 ring-blue-500/50 group-hover:ring-blue-500 transition-all duration-500"
-                 loading="lazy"
-            >
+    <!-- Close Button for Drawer on Mobile/Tablet -->
+    <div class="lg:hidden flex items-center justify-between p-4 border-b border-slate-800/80">
+        <span class="text-xs font-bold font-mono text-slate-400 uppercase tracking-wider">Navigation Menu</span>
+        <button class="w-8 h-8 rounded-lg bg-slate-900 text-slate-400 hover:text-white flex items-center justify-center border border-slate-800"
+                @click="isMobileMenuOpen = false"
+                aria-label="Close menu">
+            <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+    </div>
+
+    <!-- Top & Middle Content (Scrollable) -->
+    <div class="flex-1 overflow-y-auto w-full px-5 pt-8 pb-4 flex flex-col items-center relative z-10 scrollbar-thin scrollbar-thumb-slate-800">
+        
+        <!-- Profile Avatar with Status -->
+        <div class="profile-img mb-3 relative group">
+            <div class="absolute -inset-1 bg-linear-to-r from-blue-600 to-indigo-600 rounded-full blur-sm opacity-50 group-hover:opacity-80 transition duration-500"></div>
+            <div class="relative w-28 h-28 rounded-full overflow-hidden border-2 border-slate-800 ring-2 ring-blue-500/40 group-hover:ring-blue-500 transition-all duration-300">
+                <img :src="user?.avatar_url || 'assets/img/alireza-haraji-profile.jpg'"
+                     alt="عکس پروفایل علی رضا هرجی | Alireza Haraji Profile Photo"
+                     title="علیرضا هرجی متخصص"
+                     class="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-500"
+                     loading="lazy"
+                >
+            </div>
+            <!-- Live Active Status Dot -->
+            <div class="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-slate-900 flex items-center justify-center border border-slate-700 shadow-md">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            </div>
         </div>
 
-        <a href="index.html" class="logo flex flex-col items-center justify-center mb-8">
-            <h1 class="text-2xl font-black tracking-tighter text-white" x-text="user?.name || 'ALIREZA HARAJI'"></h1>
-            <div class="h-1 w-12 bg-blue-500 rounded-full mt-1"></div>
+        <!-- Name & Headline -->
+        <a href="#hero" class="logo flex flex-col items-center justify-center text-center mb-4 group" @click="isMobileMenuOpen = false">
+            <h1 class="text-xl font-black tracking-tight text-white group-hover:text-blue-400 transition-colors" x-text="user?.name || 'Alireza Haraji'"></h1>
+            <span class="text-xs font-semibold text-slate-400 mt-0.5 tracking-wide">Backend & Software Dev</span>
         </a>
 
-        <div class="social-links text-center mb-10 flex space-x-2">
-            <a href="https://t.me/alirezaharaji"
-               class="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 text-gray-400 hover:bg-blue-600 hover:text-white transition-all duration-300"><i
-                    class="fa-brands fa-telegram text-lg"></i></a>
-            <a href="https://github.com/alirezaevil81"
-               class="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 text-gray-400 hover:bg-gray-700 hover:text-white transition-all duration-300"><i
-                    class="fa-brands fa-github text-lg"></i></a>
-            <a href="https://www.linkedin.com/in/alirezaharaji/"
-               class="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 text-gray-400 hover:bg-blue-700 hover:text-white transition-all duration-300"><i
-                    class="fa-brands fa-linkedin text-lg"></i></a>
-            <a :href="user?.blog ? 'https://' + user.blog : '#'"
-               class="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 text-gray-400 hover:bg-emerald-600 hover:text-white transition-all duration-300"><i
-                    class="fa-solid fa-globe text-lg"></i></a>
+        <!-- Social Media Quick Bar -->
+        <div class="social-links text-center mb-6 flex items-center justify-center gap-1.5 w-full">
+            <a href="https://t.me/alirezaharaji" target="_blank" rel="noopener noreferrer"
+               aria-label="Telegram"
+               class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:bg-[#229ED9] hover:border-[#229ED9] hover:text-white transition-all duration-300 shadow-2xs">
+                <i class="fa-brands fa-telegram text-sm"></i>
+            </a>
+            <a :href="user?.html_url || 'https://github.com/alirezaevil81'" target="_blank" rel="noopener noreferrer"
+               aria-label="GitHub Profile"
+               class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:bg-slate-800 hover:border-slate-700 hover:text-white transition-all duration-300 shadow-2xs">
+                <i class="fa-brands fa-github text-sm"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/alirezaharaji/" target="_blank" rel="noopener noreferrer"
+               aria-label="LinkedIn"
+               class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:text-white transition-all duration-300 shadow-2xs">
+                <i class="fa-brands fa-linkedin text-sm"></i>
+            </a>
+            <a :href="user?.blog ? (user.blog.startsWith('http') ? user.blog : 'https://' + user.blog) : 'https://exxondev.ir'" target="_blank" rel="noopener noreferrer"
+               aria-label="Website"
+               class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:bg-emerald-600 hover:border-emerald-600 hover:text-white transition-all duration-300 shadow-2xs">
+                <i class="fa-solid fa-globe text-sm"></i>
+            </a>
+            <a href="mailto:alirezask385@gmail.com"
+               aria-label="Email"
+               class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:bg-rose-600 hover:border-rose-600 hover:text-white transition-all duration-300 shadow-2xs">
+                <i class="fa-solid fa-envelope text-xs"></i>
+            </a>
         </div>
 
-        <nav id="navmenu" class="navmenu w-full px-4">
-            <ul class="flex flex-col space-y-1">
-                <li><a href="#hero"
-                       class="group flex items-center py-3 px-6 text-gray-400 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300 active"
-                       @click="isMobileMenuOpen = false"><i
-                        class="fa-solid fa-house mr-4 text-sm group-hover:text-blue-500 transition-colors"></i><span
-                        class="font-medium tracking-wide">Home</span></a></li>
-                <li><a href="#about"
-                       class="group flex items-center py-3 px-6 text-gray-400 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300"
-                       @click="isMobileMenuOpen = false"><i
-                        class="fa-solid fa-user mr-4 text-sm group-hover:text-blue-500 transition-colors"></i><span
-                        class="font-medium tracking-wide">About</span></a></li>
-                <li><a href="#skill"
-                       class="group flex items-center py-3 px-6 text-gray-400 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300"
-                       @click="isMobileMenuOpen = false"><i
-                        class="fa-solid fa-terminal mr-4 text-sm group-hover:text-blue-500 transition-colors"></i><span
-                        class="font-medium tracking-wide">Skills</span></a></li>
-                <li><a href="#resume"
-                       class="group flex items-center py-3 px-6 text-gray-400 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300"
-                       @click="isMobileMenuOpen = false"><i
-                        class="fa-solid fa-file-lines mr-4 text-sm group-hover:text-blue-500 transition-colors"></i><span
-                        class="font-medium tracking-wide">Resume</span></a></li>
-                <li><a href="#portfolio"
-                       class="group flex items-center py-3 px-6 text-gray-400 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300"
-                       @click="isMobileMenuOpen = false"><i
-                        class="fa-solid fa-images mr-4 text-sm group-hover:text-blue-500 transition-colors"></i><span
-                        class="font-medium tracking-wide">Portfolio</span></a></li>
+        <!-- Navigation Menu -->
+        <nav id="navmenu" class="navmenu w-full">
+            <ul class="flex flex-col space-y-1.5 w-full">
+                <!-- Home -->
+                <li>
+                    <a href="#hero"
+                       class="group flex items-center justify-between py-2.5 px-3.5 rounded-2xl transition-all duration-200"
+                       :class="activeSection === 'hero' ? 'bg-blue-600/15 text-blue-400 font-bold border border-blue-500/30 shadow-xs' : 'text-slate-400 hover:text-white hover:bg-slate-900/90 border border-transparent'"
+                       @click="isMobileMenuOpen = false">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <i class="fa-solid fa-house text-sm w-4 text-center transition-colors"
+                               :class="activeSection === 'hero' ? 'text-blue-400' : 'text-slate-500 group-hover:text-slate-300'"></i>
+                            <span class="text-xs sm:text-sm tracking-wide">Home</span>
+                        </div>
+                        <span class="w-1.5 h-1.5 rounded-full" :class="activeSection === 'hero' ? 'bg-blue-400' : 'opacity-0 group-hover:opacity-50 bg-slate-500'"></span>
+                    </a>
+                </li>
+
+                <!-- About -->
+                <li>
+                    <a href="#about"
+                       class="group flex items-center justify-between py-2.5 px-3.5 rounded-2xl transition-all duration-200"
+                       :class="activeSection === 'about' ? 'bg-blue-600/15 text-blue-400 font-bold border border-blue-500/30 shadow-xs' : 'text-slate-400 hover:text-white hover:bg-slate-900/90 border border-transparent'"
+                       @click="isMobileMenuOpen = false">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <i class="fa-solid fa-user text-sm w-4 text-center transition-colors"
+                               :class="activeSection === 'about' ? 'text-blue-400' : 'text-slate-500 group-hover:text-slate-300'"></i>
+                            <span class="text-xs sm:text-sm tracking-wide">About Me</span>
+                        </div>
+                        <span class="w-1.5 h-1.5 rounded-full" :class="activeSection === 'about' ? 'bg-blue-400' : 'opacity-0 group-hover:opacity-50 bg-slate-500'"></span>
+                    </a>
+                </li>
+
+                <!-- Skills -->
+                <li>
+                    <a href="#skill"
+                       class="group flex items-center justify-between py-2.5 px-3.5 rounded-2xl transition-all duration-200"
+                       :class="activeSection === 'skill' ? 'bg-blue-600/15 text-blue-400 font-bold border border-blue-500/30 shadow-xs' : 'text-slate-400 hover:text-white hover:bg-slate-900/90 border border-transparent'"
+                       @click="isMobileMenuOpen = false">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <i class="fa-solid fa-code text-sm w-4 text-center transition-colors"
+                               :class="activeSection === 'skill' ? 'text-blue-400' : 'text-slate-500 group-hover:text-slate-300'"></i>
+                            <span class="text-xs sm:text-sm tracking-wide">Skills & Stack</span>
+                        </div>
+                        <span class="w-1.5 h-1.5 rounded-full" :class="activeSection === 'skill' ? 'bg-blue-400' : 'opacity-0 group-hover:opacity-50 bg-slate-500'"></span>
+                    </a>
+                </li>
+
+                <!-- Resume -->
+                <li>
+                    <a href="#resume"
+                       class="group flex items-center justify-between py-2.5 px-3.5 rounded-2xl transition-all duration-200"
+                       :class="activeSection === 'resume' ? 'bg-blue-600/15 text-blue-400 font-bold border border-blue-500/30 shadow-xs' : 'text-slate-400 hover:text-white hover:bg-slate-900/90 border border-transparent'"
+                       @click="isMobileMenuOpen = false">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <i class="fa-solid fa-file-lines text-sm w-4 text-center transition-colors"
+                               :class="activeSection === 'resume' ? 'text-blue-400' : 'text-slate-500 group-hover:text-slate-300'"></i>
+                            <span class="text-xs sm:text-sm tracking-wide">Experience</span>
+                        </div>
+                        <span class="w-1.5 h-1.5 rounded-full" :class="activeSection === 'resume' ? 'bg-blue-400' : 'opacity-0 group-hover:opacity-50 bg-slate-500'"></span>
+                    </a>
+                </li>
+
+                <!-- Portfolio -->
+                <li>
+                    <a href="#portfolio"
+                       class="group flex items-center justify-between py-2.5 px-3.5 rounded-2xl transition-all duration-200"
+                       :class="activeSection === 'portfolio' ? 'bg-blue-600/15 text-blue-400 font-bold border border-blue-500/30 shadow-xs' : 'text-slate-400 hover:text-white hover:bg-slate-900/90 border border-transparent'"
+                       @click="isMobileMenuOpen = false">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <i class="fa-solid fa-cubes text-sm w-4 text-center transition-colors"
+                               :class="activeSection === 'portfolio' ? 'text-blue-400' : 'text-slate-500 group-hover:text-slate-300'"></i>
+                            <span class="text-xs sm:text-sm tracking-wide">Portfolio</span>
+                        </div>
+                        <span class="w-1.5 h-1.5 rounded-full" :class="activeSection === 'portfolio' ? 'bg-blue-400' : 'opacity-0 group-hover:opacity-50 bg-slate-500'"></span>
+                    </a>
+                </li>
             </ul>
         </nav>
+    </div>
+
+    <!-- Bottom Status Card -->
+    <div class="p-4 border-t border-slate-800/80 relative z-10">
+        <div class="p-3 rounded-2xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+            <div class="flex items-center gap-2 min-w-0">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+                <span class="text-[11px] font-semibold text-slate-300 truncate" x-text="user?.location || 'Nowshahr, Iran'"></span>
+            </div>
+            <a href="mailto:alirezask385@gmail.com"
+               class="text-[11px] font-bold text-blue-400 hover:text-blue-300 transition-colors shrink-0">
+                Contact <i class="fa-solid fa-arrow-right text-[9px] ml-0.5"></i>
+            </a>
+        </div>
     </div>
 </header>
 
 <!-- Overlay for Mobile Menu -->
-<div x-show="isMobileMenuOpen" x-transition.opacity class="fixed inset-0 bg-black/60 z-40 lg:hidden"
+<div x-show="isMobileMenuOpen" x-transition.opacity class="fixed inset-0 bg-black/70 backdrop-blur-xs z-40 lg:hidden"
      @click="isMobileMenuOpen = false"></div>
 
 <main class="transition-all duration-300 ease-in-out lg:ml-72 min-w-0">
 
     <!-- Hero Section -->
     <section id="hero"
-             class="relative min-h-[100dvh] h-screen flex items-center justify-center text-white text-center overflow-hidden bg-slate-900 px-4">
-        <div class="absolute inset-0 bg-cover bg-center"
+             class="relative min-h-[100dvh] flex flex-col items-center justify-center text-white text-center overflow-hidden bg-slate-950 px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 lg:pt-16 pb-24 sm:pb-28 lg:pb-24">
+        <!-- Hero Background Image with subtle scale transition -->
+        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-105"
              :style="`background-image: url('${heroBg}')`"></div>
-        <div class="absolute inset-0 bg-linear-to-t from-black/85 via-black/55 to-black/30"></div>
-        <!-- Gradient overlay -->
-        <div class="relative z-10 p-2 sm:p-4 max-w-4xl mx-auto w-full" x-show="showHeroContent"
+        
+        <!-- Multi-layer Rich Modern Dark Overlay -->
+        <div class="absolute inset-0 bg-slate-950/75 backdrop-blur-[2px]"></div>
+        <div class="absolute inset-0 bg-radial-[at_center_top] from-blue-600/20 via-transparent to-slate-950/90"></div>
+        <div class="absolute inset-0 bg-linear-to-b from-slate-950/60 via-transparent to-slate-950"></div>
+
+        <!-- Ambient Glow Elements -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[32rem] sm:w-[48rem] h-72 sm:h-96 bg-blue-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <!-- Main Hero Content Box -->
+        <div class="relative z-10 max-w-4xl mx-auto w-full flex flex-col items-center my-auto" x-show="showHeroContent"
              x-transition:enter="transition ease-out duration-1000"
-             x-transition:enter-start="opacity-0 transform -translate-y-10"
-             x-transition:enter-end="opacity-100 transform translate-y-0">
-            <h2 class="text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold mb-3 sm:mb-4 leading-tight tracking-tight text-shadow-lg break-words"
-                x-text="user?.name || 'Alireza Haraji'"></h2>
-            <p class="text-lg sm:text-2xl md:text-3xl font-medium text-slate-200">I'm <span class="text-blue-400 font-semibold" x-text="typedText"></span><span
-                    class="animate-pulse">|</span></p>
+             x-transition:enter-start="opacity-0 transform -translate-y-8 scale-95"
+             x-transition:enter-end="opacity-100 transform translate-y-0 scale-100">
+            
+            <!-- Live Availability Pill -->
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-white/15 backdrop-blur-md text-xs sm:text-sm font-semibold text-slate-200 mb-5 sm:mb-6 shadow-lg shadow-black/20">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Available for New Projects & Collaborations</span>
+            </div>
+
+            <!-- Main Heading with Name -->
+            <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-3 sm:mb-4 leading-tight tracking-tight text-white drop-shadow-md break-words"
+                x-text="user?.name || 'Alireza Haraji'"></h1>
+
+            <!-- Dynamic Typewriter Role Display -->
+            <div class="flex items-center justify-center flex-wrap gap-2 text-lg sm:text-2xl md:text-3xl font-medium text-slate-300 mb-4 sm:mb-6">
+                <span>I'm a</span>
+                <span class="font-bold text-transparent bg-clip-text bg-linear-to-r from-blue-400 via-indigo-300 to-sky-300 drop-shadow-xs" x-text="typedText"></span>
+                <span class="inline-block w-0.5 h-5 sm:h-7 bg-blue-400 animate-pulse ml-0.5"></span>
+            </div>
+
+            <!-- Subtitle / Value Proposition -->
+            <p class="max-w-2xl text-xs sm:text-sm md:text-base text-slate-400 mb-6 sm:mb-8 leading-relaxed font-normal px-2">
+                Specializing in robust backend architectures, high-performance APIs, database optimization, and modern web application development.
+            </p>
+
+            <!-- Call to Action Buttons -->
+            <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8 w-full max-w-md">
+                <a href="#portfolio"
+                   class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm shadow-xl shadow-blue-600/30 hover:shadow-blue-500/40 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer">
+                    <i class="fa-solid fa-briefcase text-xs"></i>
+                    <span>Explore My Work</span>
+                </a>
+                <a href="#about"
+                   class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs sm:text-sm border border-white/15 backdrop-blur-md hover:-translate-y-0.5 transition-all duration-300 cursor-pointer">
+                    <i class="fa-solid fa-user text-xs text-blue-400"></i>
+                    <span>About Me</span>
+                </a>
+            </div>
+
+            <!-- Core Technology Pills -->
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 text-xs text-slate-300">
+                <span class="px-3 py-1 rounded-xl bg-slate-900/70 border border-white/10 backdrop-blur-xs flex items-center gap-1.5">
+                    <i class="fa-brands fa-python text-yellow-400"></i> Python
+                </span>
+                <span class="px-3 py-1 rounded-xl bg-slate-900/70 border border-white/10 backdrop-blur-xs flex items-center gap-1.5">
+                    <i class="fa-brands fa-php text-indigo-400"></i> PHP & Laravel
+                </span>
+                <span class="px-3 py-1 rounded-xl bg-slate-900/70 border border-white/10 backdrop-blur-xs flex items-center gap-1.5">
+                    <i class="fa-brands fa-wordpress text-blue-400"></i> WordPress
+                </span>
+                <span class="px-3 py-1 rounded-xl bg-slate-900/70 border border-white/10 backdrop-blur-xs flex items-center gap-1.5">
+                    <i class="fa-solid fa-database text-emerald-400"></i> MySQL & APIs
+                </span>
+            </div>
         </div>
-        <!-- Scroll Down Indicator -->
-        <div class="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 text-white/80 hover:text-white animate-bounce">
-            <a href="#about" aria-label="Scroll down"><i class="fa-solid fa-angles-down text-2xl sm:text-3xl"></i></a>
-        </div>
+
+        <!-- Modern Scroll Down Indicator with Safe Clearance -->
+        <a href="#about"
+           aria-label="Scroll down to About section"
+           class="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-slate-400 hover:text-white transition-colors group cursor-pointer z-20">
+            <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-slate-400 group-hover:text-blue-400 transition-colors">Scroll</span>
+            <div class="w-5 h-8 sm:w-6 sm:h-9 rounded-full border-2 border-slate-500/70 group-hover:border-blue-400 flex items-start justify-center p-1 transition-colors">
+                <div class="w-1 h-1.5 sm:w-1.5 sm:h-2 bg-slate-400 group-hover:bg-blue-400 rounded-full animate-bounce"></div>
+            </div>
+        </a>
     </section><!-- /Hero Section -->
 
     <!-- About Section -->
-    <section id="about" class="py-14 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gray-100"
+    <section id="about" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50 relative overflow-hidden"
              x-show="showAboutContent"
              x-transition:enter="transition ease-out duration-1000"
              x-transition:enter-start="opacity-0 transform translate-y-10"
              x-transition:enter-end="opacity-100 transform translate-y-0">
-        <div class="container mx-auto max-w-7xl">
-            <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center mb-8 sm:mb-12 text-gray-900 tracking-wide">About Me</h2>
+        <!-- Subtle ambient background elements -->
+        <div class="absolute top-1/3 left-0 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-indigo-100/30 rounded-full blur-3xl pointer-events-none"></div>
 
-            <div class="flex flex-col lg:flex-row items-center lg:items-start gap-8 sm:gap-12 lg:gap-16 bg-white p-5 sm:p-8 md:p-12 rounded-2xl shadow-xl">
-                <div class="w-full lg:w-1/4 shrink-0 text-center">
-                    <img :src="user?.avatar_url || 'assets/img/alireza-haraji-profile.jpg'"
-                         class="rounded-full w-36 h-36 sm:w-44 sm:h-44 md:w-48 md:h-48 object-cover object-center shadow-2xl border-4 border-blue-600 mx-auto transform hover:scale-105 transition-all duration-300 grayscale hover:grayscale-0"
-                         alt="عکس پروفایل علی رضا هرجی | Alireza Haraji Profile Photo"
-                         title="علیرضا هرجی متخصص"
-                         loading="lazy"
-                    >
-                    <a :href="user?.html_url || '#'" target="_blank" rel="noopener noreferrer"
-                       class="inline-block text-lg sm:text-xl text-blue-600 hover:text-blue-800 hover:underline mt-4 font-semibold break-all">
-                        <i class="fa-brands fa-github mr-1.5"></i><span
-                            x-text="user?.login ? `@${user.login}` : ''"></span>
-                    </a>
-                </div>
-                <div class="w-full lg:w-3/4 text-center lg:text-left min-w-0">
-                    <h3 class="text-2xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-3 sm:mb-4 leading-tight break-words"
+        <div class="container mx-auto max-w-7xl relative z-10">
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+                <span class="inline-flex items-center gap-1.5 py-1 px-3.5 rounded-full text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200/60 mb-3 shadow-2xs">
+                    <i class="fa-solid fa-user-gear text-[11px]"></i>
+                    Biography & Persona
+                </span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">About Me</h2>
+                <p class="text-slate-600 mt-3 text-sm sm:text-base sm:leading-relaxed">
+                    Passionate Backend Engineer dedicated to architecting reliable services, scalable web apps, and clean maintainable code.
+                </p>
+            </div>
+
+            <!-- Main Asymmetric Bento Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+                
+                <!-- Left Column (4 cols): Profile Identity Card -->
+                <div class="lg:col-span-4 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-xs text-center relative group">
+                    
+                    <!-- Avatar with Active Status Pulse -->
+                    <div class="relative w-36 h-36 sm:w-44 sm:h-44 mx-auto mb-5">
+                        <img :src="user?.avatar_url || 'assets/img/alireza-haraji-profile.jpg'"
+                             class="rounded-full w-full h-full object-cover object-center shadow-lg border-4 border-blue-600/90 transition-transform duration-500 group-hover:scale-105"
+                             alt="عکس پروفایل علی رضا هرجی | Alireza Haraji Profile Photo"
+                             title="علیرضا هرجی متخصص"
+                             loading="lazy">
+                        
+                        <!-- Floating Availability Badge -->
+                        <div class="absolute bottom-2 right-2 flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 text-white text-[11px] font-bold border border-white/20 shadow-md backdrop-blur-xs">
+                            <span class="w-2 h-2 rounded-full" :class="user?.hireable !== false ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'"></span>
+                            <span x-text="user?.hireable !== false ? 'Available' : 'Busy'">Available</span>
+                        </div>
+                    </div>
+
+                    <!-- Identity Details -->
+                    <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight"
                         x-text="user?.name || 'Alireza Haraji'"></h3>
-                    <p class="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed mb-8 sm:mb-10 max-w-3xl mx-auto lg:mx-0"
-                       x-text="user?.bio || 'Dynamic PHP & Laravel Developer with a passion for building robust and scalable web applications.'"></p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-4 sm:gap-y-6 mb-8 sm:mb-12 text-gray-700 text-left">
-                        <div>
-                            <ul class="space-y-3 sm:space-y-4 text-sm sm:text-base">
-                                <li class="flex items-start sm:items-center break-all"><i
-                                        class="fa-solid fa-globe text-blue-500 w-5 h-5 mr-3 shrink-0 mt-0.5 sm:mt-0"></i> <div><strong
-                                        class="font-bold text-gray-800">Website:</strong> <a
-                                        :href="user?.blog ? 'https://' + user.blog : '#'" target="_blank"
-                                        rel="noopener noreferrer"
-                                        class="text-blue-600 hover:text-blue-800 hover:underline font-medium"><span
-                                        x-text="user?.blog || 'www.exxondev.ir'"></span></a></div></li>
-                                <li class="flex items-start sm:items-center"><i
-                                        class="fa-solid fa-location-dot text-blue-500 w-5 h-5 mr-3 shrink-0 mt-0.5 sm:mt-0"></i> <div><strong
-                                        class="font-bold text-gray-800">City:</strong> <span
-                                        x-text="user?.location || 'nowshahr, Mazandaran'" class="font-medium"></span></div>
-                                </li>
-                                <li class="flex items-start sm:items-center"><i
-                                        class="fa-solid fa-user text-blue-500 w-5 h-5 mr-3 shrink-0 mt-0.5 sm:mt-0"></i> <div><strong
-                                        class="font-bold text-gray-800">Age:</strong> <span x-text="age"
-                                                                                            class="font-medium"></span></div>
-                                </li>
-                            </ul>
+                    
+                    <a :href="user?.html_url || 'https://github.com/alirezaevil81'" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors mt-1 mb-4">
+                        <i class="fa-brands fa-github text-sm"></i>
+                        <span x-text="user?.login ? `@${user.login}` : '@alirezaevil81'"></span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-70"></i>
+                    </a>
+
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6 font-medium">
+                        Backend Specialist · Python & PHP Developer · API Architect
+                    </p>
+
+                    <!-- Quick Actions -->
+                    <div class="grid grid-cols-2 gap-2 pt-4 border-t border-slate-100">
+                        <a :href="user?.html_url || 'https://github.com/alirezaevil81'" target="_blank" rel="noopener noreferrer"
+                           class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-xs">
+                            <i class="fa-brands fa-github text-sm"></i>
+                            <span>GitHub</span>
+                        </a>
+                        <a href="mailto:alirezask385@gmail.com"
+                           class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-xs">
+                            <i class="fa-solid fa-envelope text-xs"></i>
+                            <span>Email Me</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Column (8 cols): Deep Dive, Info Grid & GitHub Metrics -->
+                <div class="lg:col-span-8 space-y-6">
+                    
+                    <!-- Bio Highlight Card -->
+                    <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-xs relative">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-sm shadow-2xs">
+                                <i class="fa-solid fa-quote-left"></i>
+                            </div>
+                            <h4 class="text-base sm:text-lg font-bold text-slate-900">Professional Background</h4>
                         </div>
-                        <div>
-                            <ul class="space-y-3 sm:space-y-4 text-sm sm:text-base">
-                                <li class="flex items-start sm:items-center"><i
-                                        class="fa-solid fa-graduation-cap text-blue-500 w-5 h-5 mr-3 shrink-0 mt-0.5 sm:mt-0"></i> <div><strong
-                                        class="font-bold text-gray-800">Degree:</strong> <span class="font-medium">Mid-Level</span></div>
-                                </li>
-                                <li class="flex items-start sm:items-center break-all"><i
-                                        class="fa-solid fa-envelope text-blue-500 w-5 h-5 mr-3 shrink-0 mt-0.5 sm:mt-0"></i> <div><strong
-                                        class="font-bold text-gray-800">Email:</strong> <a
-                                        href="mailto:alirezask385@gmail.com"
-                                        class="text-blue-600 hover:text-blue-800 hover:underline font-medium">alirezask385@gmail.com</a></div>
-                                </li>
-                                <li class="flex items-start sm:items-center"><i
-                                        class="fa-solid fa-circle-check text-blue-500 w-5 h-5 mr-3 shrink-0 mt-0.5 sm:mt-0"></i> <div><strong
-                                        class="font-bold text-gray-800">Hireable:</strong>
-                                    <span :class="user?.hireable ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'"
-                                          x-text="user?.hireable ? 'Available' : 'Unavailable'">Available</span></div>
-                                </li>
-                                <li class="flex items-start sm:items-center break-all" x-show="user?.twitter_username"><i
-                                        class="fa-brands fa-twitter text-blue-500 w-5 h-5 mr-3 shrink-0 mt-0.5 sm:mt-0"></i> <div><strong
-                                        class="font-bold text-gray-800">Twitter:</strong> <a
-                                        :href="`https://twitter.com/${user?.twitter_username}`" target="_blank"
-                                        rel="noopener noreferrer"
-                                        class="text-blue-600 hover:text-blue-800 hover:underline font-medium"><span
-                                        x-text="`@${user?.twitter_username}`"></span></a></div></li>
-                            </ul>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed"
+                           x-text="user?.bio || 'Dynamic PHP & Python Developer with a strong focus on architecting efficient backend solutions, building scalable RESTful APIs, optimizing high-traffic databases, and collaborating effectively in modern Agile teams.'"></p>
+                    </div>
+
+                    <!-- Key Attributes Bento Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5 sm:gap-4">
+                        
+                        <!-- Location -->
+                        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-2xs hover:border-blue-300 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-sm mb-3">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Location</span>
+                            <span class="text-sm font-bold text-slate-800 mt-0.5 block truncate" x-text="user?.location || 'Nowshahr, Mazandaran'"></span>
+                        </div>
+
+                        <!-- Role Level -->
+                        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-2xs hover:border-indigo-300 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm mb-3">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Seniority</span>
+                            <span class="text-sm font-bold text-slate-800 mt-0.5 block">Mid-Level Backend Dev</span>
+                        </div>
+
+                        <!-- Age / Experience -->
+                        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-2xs hover:border-emerald-300 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm mb-3">
+                                <i class="fa-solid fa-calendar-check"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Age & Experience</span>
+                            <span class="text-sm font-bold text-slate-800 mt-0.5 block"><span x-text="age"></span> Yrs Old · 5+ Yrs Exp</span>
+                        </div>
+
+                        <!-- Website / Domain -->
+                        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-2xs hover:border-blue-300 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center text-sm mb-3">
+                                <i class="fa-solid fa-globe"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Website</span>
+                            <a :href="user?.blog ? (user.blog.startsWith('http') ? user.blog : 'https://' + user.blog) : 'https://exxondev.ir'"
+                               target="_blank" rel="noopener noreferrer"
+                               class="text-sm font-bold text-blue-600 hover:underline mt-0.5 block truncate">
+                                <span x-text="user?.blog || 'exxondev.ir'"></span>
+                            </a>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-2xs hover:border-blue-300 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-sm mb-3">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Email</span>
+                            <a href="mailto:alirezask385@gmail.com" class="text-sm font-bold text-blue-600 hover:underline mt-0.5 block truncate">
+                                alirezask385@gmail.com
+                            </a>
+                        </div>
+
+                        <!-- Availability / Status -->
+                        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-2xs hover:border-emerald-300 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm mb-3">
+                                <i class="fa-solid fa-briefcase"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Work Status</span>
+                            <div class="flex items-center gap-1.5 mt-0.5">
+                                <span class="w-2 h-2 rounded-full" :class="user?.hireable !== false ? 'bg-emerald-500' : 'bg-amber-500'"></span>
+                                <span class="text-sm font-bold text-slate-800" x-text="user?.hireable !== false ? 'Available / Remote' : 'Currently Engaged'"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- GitHub Live Stats Cards -->
+                    <div class="bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/80 shadow-xs">
+                        <div class="flex items-center justify-between gap-3 mb-5">
+                            <div class="flex items-center gap-2.5">
+                                <i class="fa-brands fa-github text-slate-800 text-lg"></i>
+                                <h4 class="text-sm sm:text-base font-bold text-slate-900">GitHub Real-Time Metrics</h4>
+                            </div>
+                            <span class="text-xs text-slate-400 font-mono flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                Live Sync
+                            </span>
+                        </div>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                            <!-- Followers -->
+                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/60 text-center hover:bg-blue-50 hover:border-blue-200 transition-all duration-300"
+                                 x-show="showStats[0]" 
+                                 x-transition:enter="transition ease-out duration-500"
+                                 x-transition:enter-start="opacity-0 transform scale-90"
+                                 x-transition:enter-end="opacity-100 transform scale-100">
+                                <div class="w-8 h-8 mx-auto rounded-lg bg-blue-100/60 text-blue-600 flex items-center justify-center text-xs mb-2">
+                                    <i class="fa-solid fa-users"></i>
+                                </div>
+                                <div class="text-xl sm:text-2xl font-black text-slate-900 font-mono" x-text="user?.followers ?? '—'"></div>
+                                <div class="text-[11px] font-semibold text-slate-500 mt-0.5">Followers</div>
+                            </div>
+
+                            <!-- Following -->
+                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/60 text-center hover:bg-indigo-50 hover:border-indigo-200 transition-all duration-300"
+                                 x-show="showStats[1]" 
+                                 x-transition:enter="transition ease-out duration-500"
+                                 x-transition:enter-start="opacity-0 transform scale-90"
+                                 x-transition:enter-end="opacity-100 transform scale-100">
+                                <div class="w-8 h-8 mx-auto rounded-lg bg-indigo-100/60 text-indigo-600 flex items-center justify-center text-xs mb-2">
+                                    <i class="fa-solid fa-user-plus"></i>
+                                </div>
+                                <div class="text-xl sm:text-2xl font-black text-slate-900 font-mono" x-text="user?.following ?? '—'"></div>
+                                <div class="text-[11px] font-semibold text-slate-500 mt-0.5">Following</div>
+                            </div>
+
+                            <!-- Public Repos -->
+                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/60 text-center hover:bg-emerald-50 hover:border-emerald-200 transition-all duration-300"
+                                 x-show="showStats[2]" 
+                                 x-transition:enter="transition ease-out duration-500"
+                                 x-transition:enter-start="opacity-0 transform scale-90"
+                                 x-transition:enter-end="opacity-100 transform scale-100">
+                                <div class="w-8 h-8 mx-auto rounded-lg bg-emerald-100/60 text-emerald-600 flex items-center justify-center text-xs mb-2">
+                                    <i class="fa-solid fa-code-fork"></i>
+                                </div>
+                                <div class="text-xl sm:text-2xl font-black text-slate-900 font-mono" x-text="user?.public_repos ?? '—'"></div>
+                                <div class="text-[11px] font-semibold text-slate-500 mt-0.5">Public Repos</div>
+                            </div>
+
+                            <!-- Public Gists / Stars -->
+                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/60 text-center hover:bg-amber-50 hover:border-amber-200 transition-all duration-300"
+                                 x-show="showStats[3]" 
+                                 x-transition:enter="transition ease-out duration-500"
+                                 x-transition:enter-start="opacity-0 transform scale-90"
+                                 x-transition:enter-end="opacity-100 transform scale-100">
+                                <div class="w-8 h-8 mx-auto rounded-lg bg-amber-100/60 text-amber-600 flex items-center justify-center text-xs mb-2">
+                                    <i class="fa-solid fa-file-code"></i>
+                                </div>
+                                <div class="text-xl sm:text-2xl font-black text-slate-900 font-mono" x-text="user?.public_gists ?? 0"></div>
+                                <div class="text-[11px] font-semibold text-slate-500 mt-0.5">Public Gists</div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- GitHub Stats -->
-                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mt-8 sm:mt-12">
-                        <div class="group text-center p-3 sm:p-5 bg-gray-50 rounded-xl shadow-xs hover:shadow-md hover:bg-blue-50 transition-all duration-300 border-b-2 border-blue-500"
-                             x-show="showStats[0]" 
-                             x-transition:enter="transition ease-out duration-500"
-                             x-transition:enter-start="opacity-0 transform scale-90"
-                             x-transition:enter-end="opacity-100 transform scale-100">
-                            <i class="fa-solid fa-users text-blue-600 group-hover:text-blue-700 text-3xl sm:text-4xl mb-2 transition-colors duration-300"></i>
-                            <p class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 group-hover:text-gray-800" 
-                               x-text="user?.followers"></p>
-                            <p class="text-xs sm:text-sm text-gray-600">Followers</p>
-                        </div>
-                        <div class="group text-center p-3 sm:p-5 bg-gray-50 rounded-xl shadow-xs hover:shadow-md hover:bg-blue-50 transition-all duration-300 border-b-2 border-blue-500"
-                             x-show="showStats[1]" 
-                             x-transition:enter="transition ease-out duration-500"
-                             x-transition:enter-start="opacity-0 transform scale-90"
-                             x-transition:enter-end="opacity-100 transform scale-100">
-                            <i class="fa-solid fa-user-plus text-blue-600 group-hover:text-blue-700 text-3xl sm:text-4xl mb-2 transition-colors duration-300"></i>
-                            <p class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 group-hover:text-gray-800" 
-                               x-text="user?.following"></p>
-                            <p class="text-xs sm:text-sm text-gray-600">Following</p>
-                        </div>
-                        <div class="group text-center p-3 sm:p-5 bg-gray-50 rounded-xl shadow-xs hover:shadow-md hover:bg-blue-50 transition-all duration-300 border-b-2 border-blue-500"
-                             x-show="showStats[2]" 
-                             x-transition:enter="transition ease-out duration-500"
-                             x-transition:enter-start="opacity-0 transform scale-90"
-                             x-transition:enter-end="opacity-100 transform scale-100">
-                            <i class="fa-solid fa-folder text-blue-600 group-hover:text-blue-700 text-3xl sm:text-4xl mb-2 transition-colors duration-300"></i>
-                            <p class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 group-hover:text-gray-800" 
-                               x-text="user?.public_repos"></p>
-                            <p class="text-xs sm:text-sm text-gray-600">Public Repos</p>
-                        </div>
-                        <div class="group text-center p-3 sm:p-5 bg-gray-50 rounded-xl shadow-xs hover:shadow-md hover:bg-blue-50 transition-all duration-300 border-b-2 border-blue-500"
-                             x-show="showStats[3] && user?.public_gists"
-                             x-transition:enter="transition ease-out duration-500"
-                             x-transition:enter-start="opacity-0 transform scale-90"
-                             x-transition:enter-end="opacity-100 transform scale-100">
-                            <i class="fa-solid fa-code-branch text-blue-600 group-hover:text-blue-700 text-3xl sm:text-4xl mb-2 transition-colors duration-300"></i>
-                            <p class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 group-hover:text-gray-800"
-                               x-text="user?.public_gists"></p>
-                            <p class="text-xs sm:text-sm text-gray-600">Public Gists</p>
-                        </div>
-                    </div>
                 </div>
+
             </div>
         </div>
     </section><!-- /About Section -->
 
     <!-- Skill Section -->
-    <section id="skill" class="py-14 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        <div class="container mx-auto max-w-6xl">
-            <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center mb-3 sm:mb-4 text-gray-900 tracking-tight">Technical Proficiency</h2>
-            <p class="text-center text-gray-500 mb-10 sm:mb-16 max-w-2xl mx-auto text-sm sm:text-base">My technical toolkit is diverse, ranging from low-level backend logic to modern frontend aesthetics.</p>
+    <section id="skill" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-white relative overflow-hidden">
+        <!-- Subtle ambient background glows -->
+        <div class="absolute top-1/4 right-0 w-96 h-96 bg-blue-50/50 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 left-0 w-96 h-96 bg-indigo-50/50 rounded-full blur-3xl pointer-events-none"></div>
 
-            <!-- Main Expertise (Progress Bars) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 lg:gap-x-16 gap-y-6 sm:gap-y-8 mb-14 sm:mb-20">
-                <template x-for="skill in skills" :key="skill.name">
-                    <div class="w-full group p-3 sm:p-4 rounded-xl transition-all duration-300 hover:bg-gray-50 border border-transparent hover:border-gray-100">
-                        <div class="flex justify-between items-center mb-2.5 sm:mb-3">
-                            <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
-                                <i :class="skill.icon + ' ' + skill.color"
-                                   class="text-xl sm:text-2xl shrink-0 transition-transform duration-300 group-hover:scale-125"></i>
-                                <span class="text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider truncate"
-                                      x-text="skill.name"></span>
+        <div class="container mx-auto max-w-7xl relative z-10">
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+                <span class="inline-flex items-center gap-1.5 py-1 px-3.5 rounded-full text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200/60 mb-3 shadow-2xs">
+                    <i class="fa-solid fa-code text-[11px]"></i>
+                    Capabilities & Tech Stack
+                </span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">Technical Proficiency</h2>
+                <p class="text-slate-600 mt-3 text-sm sm:text-base sm:leading-relaxed">
+                    A comprehensive overview of core technologies, architectural paradigms, frameworks, and engineering methodologies.
+                </p>
+            </div>
+
+            <!-- Primary Tech Stacks Matrix (Bento Cards with Progress Indicators) -->
+            <div class="mb-14 sm:mb-20">
+                <div class="flex items-center justify-between gap-3 mb-6">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-blue-600 text-sm"></i>
+                        <h3 class="text-base sm:text-lg font-bold text-slate-900">Core Languages & Primary Specializations</h3>
+                    </div>
+                    <span class="text-xs font-semibold text-slate-400">Mastery Assessment</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    <template x-for="skill in skills" :key="skill.name">
+                        <div class="bg-slate-50/80 hover:bg-white p-5 sm:p-6 rounded-3xl border border-slate-200/80 hover:border-blue-300 shadow-2xs hover:shadow-md transition-all duration-300 group flex flex-col justify-between">
+                            <div>
+                                <!-- Top Row: Icon, Title & Badge -->
+                                <div class="flex items-start justify-between gap-3 mb-3">
+                                    <div class="flex items-center gap-3 min-w-0">
+                                        <div class="w-11 h-11 rounded-2xl flex items-center justify-center text-xl shadow-2xs transition-transform duration-300 group-hover:scale-110 shrink-0"
+                                             :class="skill.iconBg">
+                                            <i :class="skill.icon"></i>
+                                        </div>
+                                        <div class="min-w-0">
+                                            <h4 class="text-sm sm:text-base font-bold text-slate-900 truncate" x-text="skill.name"></h4>
+                                            <span class="text-[11px] font-semibold text-slate-400 block truncate" x-text="skill.numericLevel >= 90 ? 'Expert Proficiency' : (skill.numericLevel >= 80 ? 'Advanced Proficiency' : 'Proficient')"></span>
+                                        </div>
+                                    </div>
+                                    <span class="px-2.5 py-1 rounded-xl text-xs font-black font-mono border shrink-0"
+                                          :class="skill.badgeColor"
+                                          x-text="skill.level"></span>
+                                </div>
+
+                                <!-- Description / Tagline -->
+                                <p class="text-xs text-slate-500 leading-relaxed mb-4 line-clamp-2" x-text="skill.tagline"></p>
                             </div>
-                            <span class="text-xs sm:text-sm font-bold text-blue-600 shrink-0" x-text="skill.level"></span>
-                        </div>
-                        <div class="w-full bg-gray-100 rounded-full h-2.5 sm:h-3 overflow-hidden shadow-inner">
-                            <div class="bg-linear-to-r from-blue-500 to-blue-700 h-full rounded-full transition-all duration-1000 ease-out group-hover:from-blue-600 group-hover:to-blue-800"
-                                 :style="`width: ${skill.level}`"></div>
-                        </div>
-                    </div>
-                </template>
-            </div>
 
-            <!-- Additional Skills (Tag Cloud) -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-                <template x-for="cat in skillCategories" :key="cat.title">
-                    <div class="bg-gray-50 p-5 sm:p-6 rounded-2xl border border-gray-100 hover:shadow-lg transition-all duration-300">
-                        <h3 class="text-base sm:text-lg font-bold text-blue-600 mb-3 sm:mb-4 flex items-center">
-                            <i class="fa-solid fa-layer-group mr-2 text-xs"></i>
-                            <span x-text="cat.title"></span>
-                        </h3>
-                        <div class="flex flex-wrap gap-2">
-                            <template x-for="s in cat.skills" :key="s">
-                                <span class="px-2.5 sm:px-3 py-1 bg-white border border-gray-200 text-gray-600 text-xs font-semibold rounded-lg hover:border-blue-300 hover:text-blue-500 transition-colors cursor-default"
-                                      x-text="s"></span>
-                            </template>
+                            <!-- Progress Track -->
+                            <div>
+                                <div class="w-full bg-slate-200/70 rounded-full h-2 overflow-hidden p-0.5">
+                                    <div class="h-full rounded-full bg-linear-to-r transition-all duration-1000 ease-out"
+                                         :class="skill.barGradient"
+                                         :style="`width: ${skill.level}`"></div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </template>
-            </div>
-
-            <!-- Other Tags Section -->
-            <div class="mt-12 sm:mt-16 text-center">
-                <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-4 sm:mb-6">Soft Skills & Others</h3>
-                <div class="flex flex-wrap justify-center gap-2 sm:gap-3">
-                    <template x-for="tag in softSkills" :key="tag">
-                        <span class="px-3.5 sm:px-4 py-1.5 sm:py-2 bg-blue-50 text-blue-700 text-xs sm:text-sm font-medium rounded-full border border-blue-100"
-                              x-text="tag"></span>
                     </template>
                 </div>
             </div>
+
+            <!-- Categorized Ecosystem Matrix (4 Bento Blocks) -->
+            <div class="mb-14 sm:mb-20">
+                <div class="flex items-center justify-between gap-3 mb-6">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-cubes text-blue-600 text-sm"></i>
+                        <h3 class="text-base sm:text-lg font-bold text-slate-900">Ecosystem, Frameworks & Tooling</h3>
+                    </div>
+                    <span class="text-xs font-semibold text-slate-400">Categorized Stack</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                    <template x-for="cat in skillCategories" :key="cat.title">
+                        <div class="bg-white p-5 sm:p-6 rounded-3xl border border-slate-200/80 shadow-2xs hover:shadow-md hover:border-slate-300 transition-all duration-300 flex flex-col justify-between">
+                            <div>
+                                <!-- Header -->
+                                <div class="flex items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-100">
+                                    <div class="flex items-center gap-2.5 min-w-0">
+                                        <div class="w-8 h-8 rounded-xl flex items-center justify-center text-xs border"
+                                             :class="cat.color">
+                                            <i :class="cat.icon"></i>
+                                        </div>
+                                        <h4 class="text-xs sm:text-sm font-bold text-slate-900 truncate" x-text="cat.title"></h4>
+                                    </div>
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 text-slate-500 font-mono shrink-0"
+                                          x-text="cat.skills.length"></span>
+                                </div>
+
+                                <!-- Skill Chips -->
+                                <div class="flex flex-wrap gap-1.5 sm:gap-2">
+                                    <template x-for="s in cat.skills" :key="s">
+                                        <span class="px-2.5 py-1 bg-slate-50 hover:bg-blue-50 border border-slate-200/70 hover:border-blue-200 text-slate-700 hover:text-blue-700 text-xs font-medium rounded-xl transition-all duration-200 cursor-default"
+                                              x-text="s"></span>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Engineering Mindset & Professional Practices -->
+            <div class="bg-linear-to-b from-slate-50 to-white p-6 sm:p-10 md:p-12 rounded-3xl border border-slate-200/80 shadow-xs relative overflow-hidden">
+                <!-- Ambient decorative blob -->
+                <div class="absolute -top-20 -right-20 w-80 h-80 bg-blue-100/40 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- Section Sub-Header -->
+                <div class="text-center max-w-3xl mx-auto mb-8 sm:mb-12 relative z-10">
+                    <div class="w-12 h-12 mx-auto rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-3.5 shadow-2xs border border-blue-200/60">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 mb-2.5 tracking-tight">Engineering Mindset & Professional Practices</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-2xl mx-auto">
+                        The architectural principles, security standards, performance guidelines, and collaboration culture that guide my daily development workflow.
+                    </p>
+                </div>
+
+                <!-- Bento Grid of 6 Engineering Principles -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 relative z-10">
+                    <template x-for="item in softSkills" :key="item.title">
+                        <div class="bg-white p-6 rounded-3xl border border-slate-200/80 hover:border-slate-300 shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+                            <div>
+                                <!-- Top Row: Category & Icon -->
+                                <div class="flex items-center justify-between gap-3 mb-4">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400" x-text="item.category"></span>
+                                    <div class="w-10 h-10 rounded-2xl flex items-center justify-center text-base transition-transform duration-300 group-hover:scale-110 shrink-0 border"
+                                         :class="item.color">
+                                        <i :class="item.icon"></i>
+                                    </div>
+                                </div>
+
+                                <!-- Title -->
+                                <h4 class="text-base font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors" x-text="item.title"></h4>
+
+                                <!-- Description -->
+                                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-5" x-text="item.description"></p>
+                            </div>
+
+                            <!-- Bottom Tag & Visual Indicator -->
+                            <div class="flex items-center justify-between pt-3.5 border-t border-slate-100">
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-50 text-slate-600 text-[11px] font-bold font-mono border border-slate-200/60"
+                                      x-text="'#' + item.tag"></span>
+                                <span class="text-xs text-slate-400 font-semibold group-hover:text-blue-600 transition-colors flex items-center gap-1">
+                                    Standard <i class="fa-solid fa-check text-[10px] text-emerald-500"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Engineering Workflow Guarantee Banner -->
+                <div class="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-slate-200/80 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10">
+                    <div class="flex items-center gap-3 p-3 rounded-2xl bg-white/80 border border-slate-200/60">
+                        <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xs shrink-0">
+                            <i class="fa-solid fa-vial-circle-check"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="text-xs font-bold text-slate-900 block truncate">Test-Driven Mindset</span>
+                            <span class="text-[10px] text-slate-500 block truncate">Reliable & Resilient</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 rounded-2xl bg-white/80 border border-slate-200/60">
+                        <div class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs shrink-0">
+                            <i class="fa-solid fa-book-bookmark"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="text-xs font-bold text-slate-900 block truncate">Clean Documentation</span>
+                            <span class="text-[10px] text-slate-500 block truncate">Readable & Maintainable</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 rounded-2xl bg-white/80 border border-slate-200/60">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs shrink-0">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="text-xs font-bold text-slate-900 block truncate">Security Focused</span>
+                            <span class="text-[10px] text-slate-500 block truncate">Defense in Depth</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 rounded-2xl bg-white/80 border border-slate-200/60">
+                        <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xs shrink-0">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="text-xs font-bold text-slate-900 block truncate">High Performance</span>
+                            <span class="text-[10px] text-slate-500 block truncate">Optimized Latency</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
     </section><!-- /Skill Section -->
 
     <!-- Resume Section -->
-    <section id="resume" class="py-14 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div class="container mx-auto max-w-7xl">
-            <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center mb-3 sm:mb-4 text-gray-900 tracking-tight">My Resume</h2>
-            <p class="text-center text-gray-500 mb-10 sm:mb-16 max-w-2xl mx-auto text-sm sm:text-lg">A detailed overview of my professional journey, education, and key achievements.</p>
+    <section id="resume" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50 relative overflow-hidden">
+        <!-- Subtle decorative background gradient -->
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-blue-100/40 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-1/4 w-96 h-96 bg-indigo-100/40 rounded-full blur-3xl pointer-events-none"></div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-12 lg:gap-x-12">
-                <!-- Left Column: Summary & Education -->
-                <div class="space-y-8 sm:space-y-12">
-                    <div>
-                        <h3 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-6 border-b-2 border-blue-500 pb-2">Summary</h3>
-                        <div class="relative pl-6 sm:pl-8 border-l-2 sm:border-l-4 border-blue-500 pb-6 sm:pb-8 last:pb-0">
-                            <div class="absolute -left-2 sm:-left-2.5 top-0 w-4 h-4 sm:w-5 sm:h-5 bg-blue-500 rounded-full border-4 border-white shadow-md"></div>
-                            <p class="text-gray-700 leading-relaxed bg-white p-4 sm:p-6 rounded-xl shadow-xs text-sm sm:text-base">
-                                Dynamic Python and PHP developer with a proven track record at Webmaster,
-                                where I enhanced web application efficiency and spearheaded a team to mentor in coding best
-                                practices.
-                                Expert in database management and API development,
-                                I excel in fostering team collaboration and driving significant improvements in code quality
-                                and
-                                project management.
-                            </p>
+        <div class="container mx-auto max-w-7xl relative z-10">
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+                <span class="inline-flex items-center gap-1.5 py-1 px-3.5 rounded-full text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200/60 mb-3 shadow-2xs">
+                    <i class="fa-solid fa-briefcase text-[11px]"></i>
+                    Curriculum Vitae
+                </span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">My Resume & Experience</h2>
+                <p class="text-slate-600 mt-3 text-sm sm:text-base sm:leading-relaxed">
+                    A comprehensive overview of my technical journey, professional development experience, and academic background.
+                </p>
+            </div>
+
+            <!-- Quick Metrics Strip -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-12 sm:mb-16">
+                <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/70 shadow-2xs text-center">
+                    <div class="text-2xl sm:text-3xl font-extrabold text-blue-600 font-mono">5+</div>
+                    <div class="text-xs sm:text-sm font-medium text-slate-600 mt-1">Years Experience</div>
+                </div>
+                <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/70 shadow-2xs text-center">
+                    <div class="text-2xl sm:text-3xl font-extrabold text-indigo-600 font-mono">2</div>
+                    <div class="text-xs sm:text-sm font-medium text-slate-600 mt-1">Core Tech Stacks</div>
+                </div>
+                <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/70 shadow-2xs text-center">
+                    <div class="text-2xl sm:text-3xl font-extrabold text-emerald-600 font-mono">100%</div>
+                    <div class="text-xs sm:text-sm font-medium text-slate-600 mt-1">Dedicated Learner</div>
+                </div>
+                <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/70 shadow-2xs text-center">
+                    <div class="text-2xl sm:text-3xl font-extrabold text-amber-600 font-mono">Agile</div>
+                    <div class="text-xs sm:text-sm font-medium text-slate-600 mt-1">Team Collaboration</div>
+                </div>
+            </div>
+
+            <!-- Main Timeline Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+                
+                <!-- Left Column (5 Cols): Summary & Education -->
+                <div class="lg:col-span-5 space-y-8 sm:space-y-10">
+                    
+                    <!-- Executive Summary Card -->
+                    <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-xs relative">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg shadow-2xs">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900">Professional Summary</h3>
+                                <p class="text-xs text-slate-500">Overview & Core Strengths</p>
+                            </div>
+                        </div>
+
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-5">
+                            Dynamic <strong class="text-slate-900 font-semibold">Python</strong> and <strong class="text-slate-900 font-semibold">PHP</strong> backend developer with a solid track record in building efficient web services, refactoring architectures, and mentoring teams in coding best practices. Expert in database management, scalable API development, and continuous performance optimization.
+                        </p>
+
+                        <!-- Key Proficiency Badges -->
+                        <div class="flex flex-wrap gap-1.5 sm:gap-2 pt-2 border-t border-slate-100">
+                            <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-semibold">Backend Architecture</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-semibold">API Engineering</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-semibold">Team Mentorship</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-semibold">Database Management</span>
                         </div>
                     </div>
 
+                    <!-- Education Section -->
                     <div>
-                        <h3 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-6 border-b-2 border-blue-500 pb-2">Education</h3>
-                        <div class="relative pl-6 sm:pl-8 border-l-2 sm:border-l-4 border-blue-500 pb-6 sm:pb-8">
-                            <div class="absolute -left-2 sm:-left-2.5 top-0 w-4 h-4 sm:w-5 sm:h-5 bg-blue-500 rounded-full border-4 border-white shadow-md"></div>
-                            <h4 class="text-xl sm:text-2xl font-bold text-gray-800 mb-1">Bachelor of Science - Biological Sciences</h4>
-                            <h5 class="text-blue-600 font-semibold text-base sm:text-lg mb-1.5">2019 - 2021</h5>
-                            <p class="text-gray-600 text-sm sm:text-base italic">Iran, Tehran</p>
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg shadow-2xs">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Education & Training</h3>
                         </div>
-                        <div class="relative pl-6 sm:pl-8 border-l-2 sm:border-l-4 border-blue-500 pb-6 sm:pb-8 last:pb-0">
-                            <div class="absolute -left-2 sm:-left-2.5 top-0 w-4 h-4 sm:w-5 sm:h-5 bg-blue-500 rounded-full border-4 border-white shadow-md"></div>
-                            <h4 class="text-xl sm:text-2xl font-bold text-gray-800 mb-1">Self-study programming learning</h4>
-                            <h5 class="text-blue-600 font-semibold text-base sm:text-lg mb-1.5">2021 - Present</h5>
-                            <p class="text-gray-600 text-sm sm:text-base italic">Iran, Mazandaran, nowshahr</p>
+
+                        <!-- Education Timeline Items -->
+                        <div class="relative pl-6 sm:pl-8 space-y-6 before:content-[''] before:absolute before:left-2 sm:before:left-2.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-linear-to-b before:from-indigo-500 before:via-blue-400 before:to-slate-200">
+                            
+                            <!-- Item 1: Self-study -->
+                            <div class="relative group">
+                                <div class="absolute -left-6 sm:-left-8 top-1.5 w-4 h-4 sm:w-5 sm:h-5 bg-indigo-600 rounded-full border-4 border-white shadow-xs group-hover:scale-110 transition-transform"></div>
+                                <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-2xs group-hover:shadow-md transition-all">
+                                    <div class="flex items-center justify-between gap-2 mb-2 flex-wrap">
+                                        <span class="px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-xs font-bold font-mono border border-emerald-200">
+                                            2021 — Present
+                                        </span>
+                                        <span class="text-xs text-slate-500 flex items-center gap-1">
+                                            <i class="fa-solid fa-location-dot text-slate-400"></i> Nowshahr, Mazandaran
+                                        </span>
+                                    </div>
+                                    <h4 class="text-base sm:text-lg font-bold text-slate-900">Self-Taught Software Engineering</h4>
+                                    <p class="text-slate-600 text-xs sm:text-sm mt-1.5 leading-relaxed">
+                                        Intensive study in computer science fundamentals, data structures, algorithms, modern Python and PHP paradigms, clean code principles, and web security.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Item 2: Bachelor -->
+                            <div class="relative group">
+                                <div class="absolute -left-6 sm:-left-8 top-1.5 w-4 h-4 sm:w-5 sm:h-5 bg-blue-500 rounded-full border-4 border-white shadow-xs group-hover:scale-110 transition-transform"></div>
+                                <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-2xs group-hover:shadow-md transition-all">
+                                    <div class="flex items-center justify-between gap-2 mb-2 flex-wrap">
+                                        <span class="px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-700 text-xs font-bold font-mono border border-blue-200">
+                                            2019 — 2021
+                                        </span>
+                                        <span class="text-xs text-slate-500 flex items-center gap-1">
+                                            <i class="fa-solid fa-location-dot text-slate-400"></i> Tehran, Iran
+                                        </span>
+                                    </div>
+                                    <h4 class="text-base sm:text-lg font-bold text-slate-900">Bachelor of Science</h4>
+                                    <p class="text-slate-600 text-xs sm:text-sm mt-1">Biological Sciences</p>
+                                    <p class="text-slate-500 text-xs mt-2 italic leading-relaxed">
+                                        Developed analytical reasoning, scientific research methodologies, and complex problem-solving capabilities.
+                                    </p>
+                                </div>
+                            </div>
+
                         </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Column (7 Cols): Professional Experience -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg shadow-2xs">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">Work Experience</h3>
+                    </div>
+
+                    <!-- Experience Cards Timeline -->
+                    <div class="relative pl-6 sm:pl-8 space-y-8 before:content-[''] before:absolute before:left-2 sm:before:left-2.5 before:top-4 before:bottom-4 before:w-0.5 before:bg-linear-to-b before:from-blue-600 before:via-indigo-500 before:to-slate-200">
+                        
+                        <!-- Experience Card 1: Python Developer -->
+                        <div class="relative group">
+                            <div class="absolute -left-6 sm:-left-8 top-2 w-4 h-4 sm:w-5 sm:h-5 bg-blue-600 rounded-full border-4 border-white shadow-xs group-hover:scale-110 transition-transform"></div>
+                            
+                            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all duration-300">
+                                <!-- Top Bar -->
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 pb-4 border-b border-slate-100">
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <h4 class="text-lg sm:text-xl font-black text-slate-900">Python Developer</h4>
+                                            <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-[#1E3A5F] text-[#FFD43B] border border-[#FFD43B]/40">PYTHON</span>
+                                        </div>
+                                        <p class="text-xs sm:text-sm text-slate-500 mt-0.5 font-medium">Backend Engineering & Middleware</p>
+                                    </div>
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold font-mono border border-blue-200/70 w-fit">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse"></span>
+                                        2022 — Present
+                                    </span>
+                                </div>
+
+                                <!-- Responsibilities & Accomplishments -->
+                                <ul class="mt-5 space-y-3 text-slate-600 text-xs sm:text-sm leading-relaxed">
+                                    <li class="flex items-start gap-2.5">
+                                        <i class="fa-solid fa-circle-check text-blue-500 mt-1 shrink-0 text-xs"></i>
+                                        <span><strong class="text-slate-800 font-semibold">Algorithm & Data Processing:</strong> Designed and implemented high-efficiency algorithms for processing complex datasets.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2.5">
+                                        <i class="fa-solid fa-circle-check text-blue-500 mt-1 shrink-0 text-xs"></i>
+                                        <span><strong class="text-slate-800 font-semibold">Team Mentorship:</strong> Mentored junior developers on Python clean architecture, PEP8 standards, and testing practices.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2.5">
+                                        <i class="fa-solid fa-circle-check text-blue-500 mt-1 shrink-0 text-xs"></i>
+                                        <span><strong class="text-slate-800 font-semibold">Agile Sprints:</strong> Collaborated actively with cross-functional teams in sprint planning, story estimation, and backlog grooming.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2.5">
+                                        <i class="fa-solid fa-circle-check text-blue-500 mt-1 shrink-0 text-xs"></i>
+                                        <span><strong class="text-slate-800 font-semibold">Middleware & Stability:</strong> Monitored, diagnosed, and maintained continuous operational readiness of middleware services.</span>
+                                    </li>
+                                </ul>
+
+                                <!-- Tech Chips -->
+                                <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center gap-2">
+                                    <span class="text-[11px] font-bold uppercase text-slate-400 mr-1">Skills:</span>
+                                    <span class="px-2.5 py-1 rounded-md bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200/60">Python</span>
+                                    <span class="px-2.5 py-1 rounded-md bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200/60">Data Processing</span>
+                                    <span class="px-2.5 py-1 rounded-md bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200/60">Middleware</span>
+                                    <span class="px-2.5 py-1 rounded-md bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200/60">Agile / Scrum</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Experience Card 2: PHP Developer -->
+                        <div class="relative group">
+                            <div class="absolute -left-6 sm:-left-8 top-2 w-4 h-4 sm:w-5 sm:h-5 bg-indigo-600 rounded-full border-4 border-white shadow-xs group-hover:scale-110 transition-transform"></div>
+                            
+                            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-md transition-all duration-300">
+                                <!-- Top Bar -->
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 pb-4 border-b border-slate-100">
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <h4 class="text-lg sm:text-xl font-black text-slate-900">PHP Developer & Webmaster</h4>
+                                            <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-[#6366F1] text-white">PHP</span>
+                                        </div>
+                                        <p class="text-xs sm:text-sm text-slate-500 mt-0.5 font-medium">Web Applications & E-Commerce Solutions</p>
+                                    </div>
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-bold font-mono border border-indigo-200/70 w-fit">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
+                                        2019 — Present
+                                    </span>
+                                </div>
+
+                                <!-- Responsibilities & Accomplishments -->
+                                <ul class="mt-5 space-y-3 text-slate-600 text-xs sm:text-sm leading-relaxed">
+                                    <li class="flex items-start gap-2.5">
+                                        <i class="fa-solid fa-circle-check text-indigo-500 mt-1 shrink-0 text-xs"></i>
+                                        <span><strong class="text-slate-800 font-semibold">Framework Enhancement:</strong> Delivered core improvements to proprietary framework, significantly boosting web application efficiency.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2.5">
+                                        <i class="fa-solid fa-circle-check text-indigo-500 mt-1 shrink-0 text-xs"></i>
+                                        <span><strong class="text-slate-800 font-semibold">Scalable E-Commerce:</strong> Developed and customized scalable e-commerce systems that elevated conversions and store throughput.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2.5">
+                                        <i class="fa-solid fa-circle-check text-indigo-500 mt-1 shrink-0 text-xs"></i>
+                                        <span><strong class="text-slate-800 font-semibold">Backend Components & APIs:</strong> Built back-end services connecting web interfaces to external APIs and server-side logic.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2.5">
+                                        <i class="fa-solid fa-circle-check text-indigo-500 mt-1 shrink-0 text-xs"></i>
+                                        <span><strong class="text-slate-800 font-semibold">WordPress Custom Plugins:</strong> Developed specialized custom WordPress plugins and integrations for enhanced functionality.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2.5">
+                                        <i class="fa-solid fa-circle-check text-indigo-500 mt-1 shrink-0 text-xs"></i>
+                                        <span><strong class="text-slate-800 font-semibold">Legacy Refactoring:</strong> Optimized legacy codebases for enhanced readability, database query performance, and security.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2.5">
+                                        <i class="fa-solid fa-circle-check text-indigo-500 mt-1 shrink-0 text-xs"></i>
+                                        <span><strong class="text-slate-800 font-semibold">Production Troubleshooting:</strong> Rapidly diagnosed and resolved mission-critical technical issues in live environments.</span>
+                                    </li>
+                                </ul>
+
+                                <!-- Tech Chips -->
+                                <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center gap-2">
+                                    <span class="text-[11px] font-bold uppercase text-slate-400 mr-1">Skills:</span>
+                                    <span class="px-2.5 py-1 rounded-md bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200/60">PHP</span>
+                                    <span class="px-2.5 py-1 rounded-md bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200/60">WordPress Plugins</span>
+                                    <span class="px-2.5 py-1 rounded-md bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200/60">REST APIs</span>
+                                    <span class="px-2.5 py-1 rounded-md bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200/60">MySQL</span>
+                                    <span class="px-2.5 py-1 rounded-md bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200/60">Performance Tuning</span>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
-                <!-- Right Column: Professional Experience -->
-                <div class="space-y-8 sm:space-y-12">
-                    <h3 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-6 border-b-2 border-blue-500 pb-2">Professional Experience</h3>
-                    <div class="relative pl-6 sm:pl-8 border-l-2 sm:border-l-4 border-blue-500 pb-6 sm:pb-8">
-                        <div class="absolute -left-2 sm:-left-2.5 top-0 w-4 h-4 sm:w-5 sm:h-5 bg-blue-500 rounded-full border-4 border-white shadow-md"></div>
-                        <h4 class="text-xl sm:text-2xl font-bold text-gray-800 mb-1">PHP Developer</h4>
-                        <h5 class="text-blue-600 font-semibold text-base sm:text-lg mb-2">2019 - Present</h5>
-                        <ul class="list-none space-y-2 text-gray-700 mt-3 sm:mt-4 text-sm sm:text-base">
-                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
-                                Performed troubleshooting of technical issues within production environment.
-                            </li>
-                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
-                                Delivered improvements in proprietary framework, promoting significant efficiency boost.
-                            </li>
-                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
-                                Developed back-end components to connect applications with web services.
-                            </li>
-                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
-                                Built and maintained internal tools to streamline software development process.
-                            </li>
-                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
-                                Designed user-facing elements to integrate with web APIs and server-side logic.
-                            </li>
-                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
-                                Developed custom WordPress plugins for improved user experience.
-                            </li>
-                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
-                                Developed scalable e-commerce solutions that increased sales conversions.
-                            </li>
-                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
-                                Refactored legacy code for improved readability and performance optimizations.
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="relative pl-6 sm:pl-8 border-l-2 sm:border-l-4 border-blue-500 pb-6 sm:pb-8 last:pb-0">
-                        <div class="absolute -left-2 sm:-left-2.5 top-0 w-4 h-4 sm:w-5 sm:h-5 bg-blue-500 rounded-full border-4 border-white shadow-md"></div>
-                        <h4 class="text-xl sm:text-2xl font-bold text-gray-800 mb-1">Python Developer</h4>
-                        <h5 class="text-blue-600 font-semibold text-base sm:text-lg mb-2">2022 - Present</h5>
-                        <ul class="list-none space-y-2 text-gray-700 mt-3 sm:mt-4 text-sm sm:text-base">
-                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
-                                Collaborated closely with team to create story points and sprint planning.
-                            </li>
-                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
-                                Mentored junior developers on Python best practices and coding standards.
-                            </li>
-                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
-                                Developed efficient algorithms for complex data processing tasks.
-                            </li>
-                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
-                                Monitored and maintained operational readiness of middleware applications.
-                            </li>
-                            <li class="relative pl-5 before:content-['\2022'] before:absolute before:left-0 before:top-0 before:text-blue-500 before:font-bold">
-                                Excellent communication skills, both verbal and written.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
             </div>
         </div>
     </section><!-- /Resume Section -->
@@ -551,29 +1251,31 @@
                                       :class="getCategoryStyle(item.category).badge"
                                       x-text="item.category"></span>
 
-                                <!-- If project has a website in its About, show live iframe preview -->
-                                <template x-if="item.websiteUrl">
-                                    <div class="w-full h-full relative overflow-hidden bg-slate-950">
+                                <!-- Base Project Image (Always available as fallback) -->
+                                <img :src="item.imgSrc"
+                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                     :alt="item.title"
+                                     loading="lazy">
+
+                                <!-- If project has a website in its About and iframe has not failed, show live iframe preview -->
+                                <template x-if="item.websiteUrl && !item.iframeFailed">
+                                    <div class="w-full h-full absolute inset-0 overflow-hidden bg-slate-950 transition-opacity duration-500"
+                                         :class="item.iframeLoaded ? 'opacity-100' : 'opacity-0'">
                                         <iframe :src="item.websiteUrl"
                                                 :title="item.title + ' Preview'"
                                                 loading="lazy"
+                                                @load="handleIframeLoad(item, $event)"
+                                                @error="handleIframeError(item)"
                                                 class="w-[200%] h-[200%] transform origin-top-left scale-50 border-0 pointer-events-none select-none bg-white"
                                                 sandbox="allow-scripts allow-same-origin"></iframe>
                                         
                                         <!-- Live Site Indicator Badge -->
-                                        <div class="absolute bottom-2.5 right-2.5 z-20 flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-slate-950/85 backdrop-blur-xs text-white text-[10px] font-medium border border-white/10 shadow-xs">
+                                        <div x-show="item.iframeLoaded"
+                                             class="absolute bottom-2.5 right-2.5 z-20 flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-slate-950/85 backdrop-blur-xs text-white text-[10px] font-medium border border-white/10 shadow-xs">
                                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                                             <span>Live Website</span>
                                         </div>
                                     </div>
-                                </template>
-
-                                <!-- Fallback Static/Custom Image for projects without a website in About -->
-                                <template x-if="!item.websiteUrl">
-                                    <img :src="item.imgSrc"
-                                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                         :alt="item.title"
-                                         loading="lazy">
                                 </template>
 
                                 <!-- Hover Overlay Action (Desktop) -->
@@ -583,7 +1285,7 @@
                                     <a :href="item.link" target="_blank" rel="noopener noreferrer"
                                        class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-white font-medium text-xs sm:text-sm transition-all shadow-lg"
                                        :class="getCategoryStyle(item.category).activeBtn">
-                                        <span x-text="item.websiteUrl ? 'Visit Website' : 'View Project'"></span>
+                                        <span x-text="item.websiteUrl && !item.iframeFailed ? 'Visit Website' : 'View Project'"></span>
                                         <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
                                     </a>
                                 </div>
@@ -645,39 +1347,191 @@
 
 </main>
 
-<footer id="footer" class="lg:ml-72 py-8 text-center bg-gray-900 text-white transition-all duration-300 ease-in-out">
-    <div class="container mx-auto max-w-7xl">
-        <div class="mb-4">
-            <p class="text-lg font-semibold text-gray-300">
-                © <span
-                    x-text="user ? `${new Date(user.created_at).getFullYear()} - ${new Date().getFullYear()}` : new Date().getFullYear()"></span>
-                All rights reserved.
-            </p>
+<footer id="footer" class="lg:ml-72 bg-slate-950 text-slate-300 border-t border-slate-800/80 relative overflow-hidden transition-all duration-300 ease-in-out">
+    <!-- Ambient background glows -->
+    <div class="absolute top-0 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative z-10">
+        <!-- Top Banner: Collaborative CTA Card -->
+        <div class="bg-linear-to-r from-slate-900 via-slate-900/95 to-slate-900 p-6 sm:p-8 md:p-10 rounded-3xl border border-slate-800 shadow-xl mb-12 sm:mb-16 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+            <div class="max-w-xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold mb-3">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>Ready for New Opportunities</span>
+                </div>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight">Have a project or engineering challenge?</h3>
+                <p class="text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
+                    Let's collaborate to build resilient backend architectures, high-performance APIs, or custom web platforms.
+                </p>
+            </div>
+            <div class="flex flex-wrap items-center justify-center gap-3 shrink-0">
+                <a href="mailto:alirezask385@gmail.com"
+                   class="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-600/30 hover:shadow-blue-500/40 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
+                    <i class="fa-solid fa-paper-plane text-xs"></i>
+                    <span>Get in Touch</span>
+                </a>
+                <a :href="user?.html_url || 'https://github.com/alirezaevil81'" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs sm:text-sm border border-slate-700 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
+                    <i class="fa-brands fa-github text-sm"></i>
+                    <span>GitHub Profile</span>
+                </a>
+            </div>
         </div>
-        <p class="text-sm text-gray-500">
-            Designed & Developed with <i class="fa-solid fa-heart text-red-500 mx-1"></i> by <a href="#about"
-                                                                                                class="text-blue-400 hover:underline"
-                                                                                                x-text="user?.name || 'Alireza Haraji'"></a>
-        </p>
+
+        <!-- Main Footer Links & Info Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12 pb-12 border-b border-slate-800/80">
+            <!-- Col 1: Identity & Bio (5 cols) -->
+            <div class="lg:col-span-5 space-y-4 text-center md:text-left">
+                <div class="flex items-center justify-center md:justify-start gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-blue-600/20 border border-blue-500/30 text-blue-400 flex items-center justify-center text-lg font-black font-mono">
+                        &lt;/&gt;
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-black text-white tracking-tight" x-text="user?.name || 'Alireza Haraji'"></h4>
+                        <span class="text-xs text-blue-400 font-medium">Backend & Software Engineer</span>
+                    </div>
+                </div>
+
+                <p class="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-sm mx-auto md:mx-0">
+                    Focused on crafting scalable PHP & Python backend systems, clean microservices, database optimizations, and robust web solutions.
+                </p>
+
+                <!-- Social Links Pills -->
+                <div class="flex items-center justify-center md:justify-start gap-2.5 pt-2">
+                    <a :href="user?.html_url || 'https://github.com/alirezaevil81'" target="_blank" rel="noopener noreferrer"
+                       aria-label="GitHub Profile"
+                       class="w-9 h-9 rounded-xl bg-slate-900 hover:bg-blue-600 border border-slate-800 hover:border-blue-500 text-slate-300 hover:text-white flex items-center justify-center text-sm transition-all duration-300 shadow-2xs">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                    <a href="mailto:alirezask385@gmail.com"
+                       aria-label="Send Email"
+                       class="w-9 h-9 rounded-xl bg-slate-900 hover:bg-blue-600 border border-slate-800 hover:border-blue-500 text-slate-300 hover:text-white flex items-center justify-center text-sm transition-all duration-300 shadow-2xs">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                    <a :href="user?.blog ? (user.blog.startsWith('http') ? user.blog : 'https://' + user.blog) : 'https://exxondev.ir'"
+                       target="_blank" rel="noopener noreferrer"
+                       aria-label="Personal Website"
+                       class="w-9 h-9 rounded-xl bg-slate-900 hover:bg-blue-600 border border-slate-800 hover:border-blue-500 text-slate-300 hover:text-white flex items-center justify-center text-sm transition-all duration-300 shadow-2xs">
+                        <i class="fa-solid fa-globe"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Col 2: Navigation Links (3 cols) -->
+            <div class="lg:col-span-3 text-center md:text-left">
+                <h5 class="text-xs font-bold uppercase tracking-wider text-slate-200 mb-4">Quick Navigation</h5>
+                <ul class="space-y-2.5 text-xs sm:text-sm">
+                    <li>
+                        <a href="#hero" class="text-slate-400 hover:text-blue-400 transition-colors inline-flex items-center gap-1.5">
+                            <i class="fa-solid fa-chevron-right text-[10px] text-slate-600"></i> Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#about" class="text-slate-400 hover:text-blue-400 transition-colors inline-flex items-center gap-1.5">
+                            <i class="fa-solid fa-chevron-right text-[10px] text-slate-600"></i> About Me
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#skill" class="text-slate-400 hover:text-blue-400 transition-colors inline-flex items-center gap-1.5">
+                            <i class="fa-solid fa-chevron-right text-[10px] text-slate-600"></i> Skills & Proficiency
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#resume" class="text-slate-400 hover:text-blue-400 transition-colors inline-flex items-center gap-1.5">
+                            <i class="fa-solid fa-chevron-right text-[10px] text-slate-600"></i> Experience & Resume
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#portfolio" class="text-slate-400 hover:text-blue-400 transition-colors inline-flex items-center gap-1.5">
+                            <i class="fa-solid fa-chevron-right text-[10px] text-slate-600"></i> Projects Portfolio
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Core Technology Stack (4 cols) -->
+            <div class="lg:col-span-4 text-center md:text-left">
+                <h5 class="text-xs font-bold uppercase tracking-wider text-slate-200 mb-4">Core Tech Stack</h5>
+                <div class="flex flex-wrap justify-center md:justify-start gap-2">
+                    <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 text-xs font-medium">Python & Django</span>
+                    <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 text-xs font-medium">PHP & Laravel</span>
+                    <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 text-xs font-medium">MySQL & Redis</span>
+                    <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 text-xs font-medium">WordPress & CMS</span>
+                    <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 text-xs font-medium">RESTful APIs</span>
+                    <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 text-xs font-medium">Docker & Git</span>
+                    <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 text-xs font-medium">Linux & CI/CD</span>
+                </div>
+
+                <div class="mt-4 p-3 rounded-2xl bg-slate-900/60 border border-slate-800/80 text-left">
+                    <span class="text-[11px] font-semibold text-slate-400 flex items-center gap-1.5">
+                        <i class="fa-solid fa-location-dot text-blue-400"></i>
+                        <span x-text="user?.location || 'Nowshahr, Mazandaran, Iran'"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Copyright & Credits Strip -->
+        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 text-center sm:text-left">
+            <div>
+                <p>
+                    © <span x-text="user ? `${new Date(user.created_at).getFullYear()} - ${new Date().getFullYear()}` : `2019 - ${new Date().getFullYear()}`"></span>
+                    <strong class="text-slate-300 font-semibold" x-text="user?.name || 'Alireza Haraji'"></strong>. All rights reserved.
+                </p>
+            </div>
+            <div class="flex items-center gap-2">
+                <span>Crafted with</span>
+                <i class="fa-solid fa-heart text-rose-500 text-[10px]"></i>
+                <span>using Modern Tailwind & Alpine.js</span>
+            </div>
+        </div>
     </div>
 </footer>
 
-<!-- Back to Top Button -->
+<!-- Modern Back to Top Button with Dynamic Scroll Progress Ring -->
 <button id="scroll-top"
         type="button"
         aria-label="Scroll to top"
-        class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 group flex items-center gap-2 p-3 sm:p-3.5 bg-slate-900/85 hover:bg-blue-600 text-white backdrop-blur-md rounded-2xl shadow-xl shadow-slate-950/25 border border-white/15 transition-all duration-300 z-50 transform hover:-translate-y-1 hover:shadow-blue-600/35 active:scale-95 cursor-pointer"
+        class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 group flex items-center justify-center p-1.5 bg-slate-900/90 hover:bg-slate-900 text-white backdrop-blur-xl rounded-full shadow-2xl shadow-slate-950/40 border border-white/20 transition-all duration-300 z-50 transform hover:-translate-y-1.5 hover:shadow-blue-500/30 active:scale-90 cursor-pointer"
         x-show="showScrollTop"
         x-transition:enter="transition ease-out duration-300"
-        x-transition:enter-start="opacity-0 translate-y-8 scale-90"
+        x-transition:enter-start="opacity-0 translate-y-8 scale-75"
         x-transition:enter-end="opacity-100 translate-y-0 scale-100"
         x-transition:leave="transition ease-in duration-200"
         x-transition:leave-start="opacity-100 translate-y-0 scale-100"
-        x-transition:leave-end="opacity-0 translate-y-8 scale-90"
+        x-transition:leave-end="opacity-0 translate-y-8 scale-75"
         @click="window.scrollTo({top: 0, behavior: 'smooth'})"
         style="display: none;">
-    <i class="fa-solid fa-arrow-up text-base sm:text-lg group-hover:-translate-y-0.5 transition-transform duration-200"></i>
-    <span class="max-w-0 overflow-hidden whitespace-nowrap text-xs font-semibold group-hover:max-w-xs transition-all duration-300 ease-in-out opacity-0 group-hover:opacity-100 pr-1 hidden sm:inline-block">Back to Top</span>
+
+    <div class="relative w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center">
+        <!-- SVG Radial Progress Ring -->
+        <svg class="absolute inset-0 w-full h-full -rotate-90 pointer-events-none" viewBox="0 0 48 48">
+            <!-- Track Circle -->
+            <circle cx="24" cy="24" r="21"
+                    class="text-white/15"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    fill="none" />
+            <!-- Progress Circle -->
+            <circle cx="24" cy="24" r="21"
+                    class="text-blue-500 transition-all duration-150 ease-out"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-dasharray="131.95"
+                    :stroke-dashoffset="131.95 - (131.95 * scrollProgress / 100)"
+                    fill="none" />
+        </svg>
+
+        <!-- Upward Arrow Icon with Lift Animation -->
+        <i class="fa-solid fa-arrow-up text-sm sm:text-base text-white group-hover:text-blue-400 transform group-hover:-translate-y-1 transition-all duration-300 z-10"></i>
+
+        <!-- Percentage Tooltip / Badge on Hover -->
+        <div class="absolute -top-9 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-300 transform group-hover:-translate-y-0.5 bg-slate-900/95 text-[11px] font-bold font-mono text-blue-400 px-2 py-0.5 rounded-lg border border-white/10 shadow-lg whitespace-nowrap">
+            <span x-text="scrollProgress + '%'"></span>
+        </div>
+    </div>
 </button>
 
 <!-- Main Logic -->

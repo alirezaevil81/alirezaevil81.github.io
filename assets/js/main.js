@@ -3,7 +3,20 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('portfolioApp', () => ({
         isMobileMenuOpen: false,
         showScrollTop: false,
+        scrollProgress: 0,
+        activeSection: 'hero',
         user: null,
+
+        // GitHub Preloader State
+        isLoading: true,
+        loadingProgress: 15,
+        loadingStepIndex: 0,
+        loadingLogs: [
+            { text: 'git init --quiet && git remote add origin https://github.com/alirezaevil81.git', done: true },
+            { text: 'fetching remote repositories & live profile metadata...', done: false },
+            { text: 'resolving technical matrix & component trees...', done: false },
+            { text: 'production build synchronized successfully [branch: main] ✓', done: false }
+        ],
         
         // Typewriter Logic
         typedText: '',
@@ -18,23 +31,148 @@ document.addEventListener('alpine:init', () => {
 
         // Skill Data
         skills: [
-            { name: 'HTML', level: '100%', icon: 'fa-brands fa-html5', color: 'text-orange-500' },
-            { name: 'CSS', level: '90%', icon: 'fa-brands fa-css3-alt', color: 'text-blue-500' },
-            { name: 'JavaScript', level: '65%', icon: 'fa-brands fa-square-js', color: 'text-yellow-400' },
-            { name: 'PHP / Laravel', level: '80%', icon: 'fa-brands fa-php', color: 'text-indigo-600' },
-            { name: 'WordPress / CMS', level: '90%', icon: 'fa-brands fa-wordpress', color: 'text-blue-400' },
-            { name: 'Python / Django', level: '70%', icon: 'fa-brands fa-python', color: 'text-blue-600' }
+            { 
+                name: 'PHP / Laravel', 
+                level: '85%', 
+                numericLevel: 85,
+                icon: 'fa-brands fa-php', 
+                iconBg: 'bg-indigo-50 text-indigo-600', 
+                barGradient: 'from-indigo-500 to-indigo-700',
+                badgeColor: 'text-indigo-700 bg-indigo-50 border-indigo-200',
+                tagline: 'Backend Architecture, REST APIs & Eloquent ORM'
+            },
+            { 
+                name: 'Python / Django', 
+                level: '75%', 
+                numericLevel: 75,
+                icon: 'fa-brands fa-python', 
+                iconBg: 'bg-blue-50 text-blue-600', 
+                barGradient: 'from-blue-600 to-yellow-500',
+                badgeColor: 'text-blue-700 bg-blue-50 border-blue-200',
+                tagline: 'Algorithms, Data Processing & Middleware Systems'
+            },
+            { 
+                name: 'WordPress / CMS', 
+                level: '90%', 
+                numericLevel: 90,
+                icon: 'fa-brands fa-wordpress', 
+                iconBg: 'bg-sky-50 text-sky-600', 
+                barGradient: 'from-sky-500 to-blue-700',
+                badgeColor: 'text-sky-700 bg-sky-50 border-sky-200',
+                tagline: 'Custom Plugin Development, WooCommerce & Headless'
+            },
+            { 
+                name: 'MySQL & Databases', 
+                level: '85%', 
+                numericLevel: 85,
+                icon: 'fa-solid fa-database', 
+                iconBg: 'bg-emerald-50 text-emerald-600', 
+                barGradient: 'from-emerald-500 to-teal-700',
+                badgeColor: 'text-emerald-700 bg-emerald-50 border-emerald-200',
+                tagline: 'Schema Design, Query Optimization & Data Integrity'
+            },
+            { 
+                name: 'JavaScript & Web APIs', 
+                level: '70%', 
+                numericLevel: 70,
+                icon: 'fa-brands fa-square-js', 
+                iconBg: 'bg-amber-50 text-amber-500', 
+                barGradient: 'from-amber-400 to-yellow-600',
+                badgeColor: 'text-amber-700 bg-amber-50 border-amber-200',
+                tagline: 'Modern ES6+, DOM Manipulation & Alpine.js'
+            },
+            { 
+                name: 'HTML5 & Modern CSS / Tailwind', 
+                level: '95%', 
+                numericLevel: 95,
+                icon: 'fa-brands fa-html5', 
+                iconBg: 'bg-orange-50 text-orange-600', 
+                barGradient: 'from-orange-500 to-red-600',
+                badgeColor: 'text-orange-700 bg-orange-50 border-orange-200',
+                tagline: 'Semantic Architecture, Tailwind CSS & Responsive UI'
+            }
         ],
         skillCategories: [
-            { title: 'Backend & Databases', skills: ['MySQL', 'PostgreSQL', 'MongoDB', 'Redis', 'Node.js', 'RESTful API'] },
-            { title: 'Frameworks', skills: ['Laravel', 'Symfony', 'Django', 'Flask', 'FastAPI'] },
-            { title: 'Core Concepts', skills: ['OOP', 'Socket Programming', 'Multithreading', 'Design Patterns', 'Microservices'] },
-            { title: 'Tools & DevOps', skills: ['Git / GitHub', 'Docker', 'Agile/Scrum', 'CI/CD', 'SEO Optimization', 'Unit Testing'] }
+            { 
+                title: 'Backend & Databases', 
+                icon: 'fa-solid fa-server',
+                color: 'text-blue-600 bg-blue-50 border-blue-200',
+                skills: ['MySQL', 'PostgreSQL', 'MongoDB', 'Redis', 'Node.js', 'RESTful APIs', 'Database Indexing'] 
+            },
+            { 
+                title: 'Frameworks & CMS', 
+                icon: 'fa-solid fa-layer-group',
+                color: 'text-indigo-600 bg-indigo-50 border-indigo-200',
+                skills: ['Laravel', 'Django', 'FastAPI', 'Flask', 'WordPress', 'WooCommerce', 'Blade', 'Symfony'] 
+            },
+            { 
+                title: 'Core Architecture', 
+                icon: 'fa-solid fa-cubes-stacked',
+                color: 'text-emerald-600 bg-emerald-50 border-emerald-200',
+                skills: ['OOP (Object-Oriented)', 'Design Patterns', 'Socket Programming', 'Multithreading', 'Microservices', 'API Security'] 
+            },
+            { 
+                title: 'DevOps & Engineering', 
+                icon: 'fa-solid fa-terminal',
+                color: 'text-amber-600 bg-amber-50 border-amber-200',
+                skills: ['Git / GitHub', 'Docker', 'Linux / Bash', 'CI/CD Pipelines', 'Agile / Scrum', 'Unit Testing', 'Postman', 'SEO'] 
+            }
         ],
         softSkills: [
-            'Team Collaboration', 'Problem-Solving', 'Time Management', 'Self-Motivation', 
-            'Performance Optimization', 'Secure Coding', 'Webmastering', 'Responsive Design', 
-            'Data Migration', 'Agile Methodologies'
+            { 
+                category: 'Code Craftsmanship',
+                title: 'Clean Architecture & SOLID', 
+                description: 'Structuring scalable codebases with strict separation of concerns, DRY principles, and maintainable design patterns.',
+                icon: 'fa-solid fa-code',
+                color: 'text-blue-600 bg-blue-50 border-blue-200/80',
+                accentBar: 'bg-blue-600',
+                tag: 'Maintainability'
+            },
+            { 
+                category: 'System Quality',
+                title: 'Performance & Caching', 
+                description: 'Optimizing high-throughput query execution, database indexing, latency reduction, and memory caching strategies.',
+                icon: 'fa-solid fa-gauge-high',
+                color: 'text-indigo-600 bg-indigo-50 border-indigo-200/80',
+                accentBar: 'bg-indigo-600',
+                tag: 'High Throughput'
+            },
+            { 
+                category: 'Security First',
+                title: 'Secure Coding & OWASP', 
+                description: 'Implementing rigorous input sanitization, token-based authentication, rate limiting, and defensive API design.',
+                icon: 'fa-solid fa-shield-halved',
+                color: 'text-emerald-600 bg-emerald-50 border-emerald-200/80',
+                accentBar: 'bg-emerald-600',
+                tag: 'Security by Design'
+            },
+            { 
+                category: 'Agile Culture',
+                title: 'Agile & Team Mentorship', 
+                description: 'Active participation in sprint workflows, backlog grooming, constructive peer reviews, and onboarding junior developers.',
+                icon: 'fa-solid fa-users-gear',
+                color: 'text-amber-600 bg-amber-50 border-amber-200/80',
+                accentBar: 'bg-amber-600',
+                tag: 'Collaboration'
+            },
+            { 
+                category: 'Operational Reliability',
+                title: 'Troubleshooting & Observability', 
+                description: 'Rapid root-cause analysis, production error tracking, structured logging, and preventive debugging in live services.',
+                icon: 'fa-solid fa-screwdriver-wrench',
+                color: 'text-rose-600 bg-rose-50 border-rose-200/80',
+                accentBar: 'bg-rose-600',
+                tag: 'Zero Downtime'
+            },
+            { 
+                category: 'Problem Solving',
+                title: 'Algorithmic Problem-Solving', 
+                description: 'Breaking down complex business logic into efficient, testable, and optimized algorithms for data transformation.',
+                icon: 'fa-solid fa-brain',
+                color: 'text-sky-600 bg-sky-50 border-sky-200/80',
+                accentBar: 'bg-sky-600',
+                tag: 'Analytical'
+            }
         ],
 
         // Image Assets Logic
@@ -45,9 +183,29 @@ document.addEventListener('alpine:init', () => {
         activeFilter: 'all',
         isCategoryDropdownOpen: false,
         portfolioItems: [
-            { imgSrc: 'assets/img/portfolio/compressorsepah.webp', title: 'Compressorsepah', description: 'Site for selling compressors and industrial tools', link: 'https://compressorsepah.ir', category: 'WordPress', websiteUrl: 'https://compressorsepah.ir' },
-            { imgSrc: 'assets/img/portfolio/azadpc.webp', title: 'AzadPc', description: 'Site for shop pc and laptop gaming', link: 'https://azadpc.com', category: 'WordPress', websiteUrl: 'https://azadpc.com' },
+            { imgSrc: 'assets/img/portfolio/compressorsepah.webp', title: 'Compressorsepah', description: 'Site for selling compressors and industrial tools', link: 'https://compressorsepah.ir', category: 'WordPress', websiteUrl: 'https://compressorsepah.ir', iframeFailed: false, iframeLoaded: false },
+            { imgSrc: 'assets/img/portfolio/azadpc.webp', title: 'AzadPc', description: 'Site for shop pc and laptop gaming', link: 'https://azadpc.com', category: 'WordPress', websiteUrl: 'https://azadpc.com', iframeFailed: false, iframeLoaded: false },
         ],
+
+        handleIframeLoad(item, event) {
+            if (!item) return;
+            item.iframeLoaded = true;
+        },
+
+        handleIframeError(item) {
+            if (!item) return;
+            item.iframeFailed = true;
+            item.iframeLoaded = false;
+        },
+
+        startIframeTimeout(item) {
+            if (!item || !item.websiteUrl) return;
+            setTimeout(() => {
+                if (!item.iframeLoaded) {
+                    item.iframeFailed = true;
+                }
+            }, 6000);
+        },
 
         // Brand colors for specific tech stacks and categories
         categoryColors: {
@@ -167,6 +325,17 @@ document.addEventListener('alpine:init', () => {
             // Set initial circular avatar favicon
             this.updateCircularFavicon('https://github.com/alirezaevil81.png');
 
+            // Step 1: Initial Handshake
+            setTimeout(() => {
+                if (this.loadingProgress < 40) this.loadingProgress = 40;
+                if (this.loadingLogs[1]) this.loadingLogs[1].done = true;
+            }, 250);
+
+            // 0. Start Iframe Check for initial items
+            this.portfolioItems.forEach(item => {
+                if (item.websiteUrl) this.startIframeTimeout(item);
+            });
+
             // 1. Fetch Image Assets first (needed for placeholders)
             try {
                 const imageRes = await fetch('/assets/data/images.json');
@@ -182,6 +351,10 @@ document.addEventListener('alpine:init', () => {
                     this.updateCircularFavicon(this.user.avatar_url);
                 }
             } catch (e) { console.error("Github fetch failed", e); }
+
+            // Step 2: Repositories & Tree Resolution
+            if (this.loadingProgress < 70) this.loadingProgress = 70;
+            if (this.loadingLogs[2]) this.loadingLogs[2].done = true;
 
             try {
                 const repoRes = await fetch('https://api.github.com/users/alirezaevil81/repos?per_page=100&sort=updated');
@@ -224,7 +397,7 @@ document.addEventListener('alpine:init', () => {
                         // Check if project is already present
                         const exists = this.portfolioItems.some(item => item.title.toLowerCase() === repo.name.toLowerCase());
                         if (!exists) {
-                            this.portfolioItems.push({
+                            const newItem = {
                                 imgSrc: imgSrc,
                                 websiteUrl: websiteUrl,
                                 title: repo.name,
@@ -233,23 +406,45 @@ document.addEventListener('alpine:init', () => {
                                 repoUrl: repo.html_url,
                                 category: category,
                                 stars: repo.stargazers_count,
-                                forks: repo.forks_count
-                            });
+                                forks: repo.forks_count,
+                                iframeFailed: false,
+                                iframeLoaded: false
+                            };
+                            this.portfolioItems.push(newItem);
+                            if (websiteUrl) this.startIframeTimeout(newItem);
                         }
                     });
                 }
             } catch (e) { console.error("Repos fetch failed", e); }
 
-            // 3. Start Typewriter
-            this.type();
+            // Step 3: Complete Preloader
+            this.loadingProgress = 100;
+            if (this.loadingLogs[3]) this.loadingLogs[3].done = true;
 
-            // 4. Trigger UI Sequential Animations
-            setTimeout(() => this.showHeroContent = true, 300);
-            setTimeout(() => this.showAboutContent = true, 500);
-            setTimeout(() => this.showStats[0] = true, 700);
-            setTimeout(() => this.showStats[1] = true, 900);
-            setTimeout(() => this.showStats[2] = true, 1100);
-            setTimeout(() => this.showStats[3] = true, 1300);
+            setTimeout(() => {
+                this.isLoading = false;
+
+                // 3. Start Typewriter & Sequential Animations
+                this.type();
+                setTimeout(() => this.showHeroContent = true, 100);
+                setTimeout(() => this.showAboutContent = true, 300);
+                setTimeout(() => this.showStats[0] = true, 500);
+                setTimeout(() => this.showStats[1] = true, 700);
+                setTimeout(() => this.showStats[2] = true, 900);
+                setTimeout(() => this.showStats[3] = true, 1100);
+            }, 450);
+
+            // Safety fallback in case of hanging network requests
+            setTimeout(() => {
+                if (this.isLoading) {
+                    this.loadingProgress = 100;
+                    this.isLoading = false;
+                    this.type();
+                    this.showHeroContent = true;
+                    this.showAboutContent = true;
+                    this.showStats = [true, true, true, true];
+                }
+            }, 2500);
 
             // 5. Handle Hash Scroll on load
             if (window.location.hash) {
@@ -259,7 +454,25 @@ document.addEventListener('alpine:init', () => {
         },
 
         handleScroll() {
-            this.showScrollTop = window.scrollY > 100;
+            const scrollY = window.scrollY || document.documentElement.scrollTop;
+            this.showScrollTop = scrollY > 120;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            if (docHeight > 0) {
+                this.scrollProgress = Math.min(100, Math.max(0, Math.round((scrollY / docHeight) * 100)));
+            } else {
+                this.scrollProgress = 0;
+            }
+
+            // Active section scroll spy
+            const sections = ['portfolio', 'resume', 'skill', 'about', 'hero'];
+            const scrollPosition = scrollY + 240;
+            for (const id of sections) {
+                const el = document.getElementById(id);
+                if (el && el.offsetTop <= scrollPosition) {
+                    this.activeSection = id;
+                    break;
+                }
+            }
         },
 
         handleResize() {
