@@ -1,11 +1,25 @@
-document.addEventListener('alpine:init', () => {
+const registerPortfolioApp = () => {
+    if (typeof Alpine === 'undefined' || !Alpine.data) return;
     // ثبت کامپوننت اصلی رزومه
     Alpine.data('portfolioApp', () => ({
         isMobileMenuOpen: false,
         showScrollTop: false,
         scrollProgress: 0,
         activeSection: 'hero',
-        user: null,
+        user: {
+            login: 'alirezaevil81',
+            name: 'علی رضا هرجی',
+            avatar_url: 'https://avatars.githubusercontent.com/u/60322583?v=4',
+            bio: 'Dynamic PHP & Python Developer with a strong focus on architecting efficient backend solutions, building scalable RESTful APIs, optimizing high-traffic databases, and collaborating effectively in modern Agile teams.',
+            location: 'Nowshahr, Mazandaran',
+            blog: 'https://exxondev.ir',
+            html_url: 'https://github.com/alirezaevil81',
+            hireable: true,
+            created_at: '2021-04-10T00:00:00Z',
+            public_repos: 14,
+            followers: 12,
+            following: 18
+        },
 
         // Theme Management State (light | dark | system)
         theme: localStorage.getItem('theme') || 'system',
@@ -382,8 +396,8 @@ document.addEventListener('alpine:init', () => {
                 }
             });
 
-            // Set initial circular avatar favicon
-            this.updateCircularFavicon('https://github.com/alirezaevil81.png');
+            // Set initial circular avatar favicon from profile picture
+            this.updateCircularFavicon(this.user?.avatar_url || 'https://avatars.githubusercontent.com/u/60322583?v=4');
 
             // Promise waiting for full page asset/DOM loading (window load event)
             const windowPageLoadPromise = new Promise((resolve) => {
@@ -412,8 +426,8 @@ document.addEventListener('alpine:init', () => {
             // Step 1: Fetch Image Assets & GitHub User Data in parallel
             try {
                 const [imageRes, userRes] = await Promise.allSettled([
-                    fetch('/assets/data/images.json').then(res => res.json()),
-                    fetch('https://api.github.com/users/alirezaevil81').then(res => res.json())
+                    fetch('assets/data/images.json').then(res => res.ok ? res.json() : null),
+                    fetch('https://api.github.com/users/alirezaevil81').then(res => res.ok ? res.json() : null)
                 ]);
 
                 if (imageRes.status === 'fulfilled' && imageRes.value) {
@@ -422,8 +436,8 @@ document.addEventListener('alpine:init', () => {
                     this.updatePortfolioImages();
                 }
 
-                if (userRes.status === 'fulfilled' && userRes.value) {
-                    this.user = userRes.value;
+                if (userRes.status === 'fulfilled' && userRes.value && userRes.value.login) {
+                    this.user = Object.assign({}, this.user, userRes.value);
                     if (this.user?.avatar_url) {
                         this.updateCircularFavicon(this.user.avatar_url);
                     }
@@ -654,9 +668,25 @@ document.addEventListener('alpine:init', () => {
                     });
                 } catch (e) {
                     console.warn("Canvas favicon generation fallback:", e);
+                    const iconLinks = document.querySelectorAll("link[rel*='icon']");
+                    iconLinks.forEach(link => {
+                        link.href = avatarUrl;
+                    });
                 }
+            };
+            img.onerror = () => {
+                const iconLinks = document.querySelectorAll("link[rel*='icon']");
+                iconLinks.forEach(link => {
+                    link.href = avatarUrl;
+                });
             };
             img.src = avatarUrl;
         }
     }));
-});
+};
+
+if (window.Alpine) {
+    registerPortfolioApp();
+} else {
+    document.addEventListener('alpine:init', registerPortfolioApp);
+}

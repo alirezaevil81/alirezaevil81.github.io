@@ -5,3 +5,4 @@ package-lock.json
 server.js
 metadata.json
 .env.example
+bun.lock
