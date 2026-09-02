@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="fa" dir="rtl" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -8,7 +8,16 @@
     <meta name="keywords" content="علی رضا هرجی, Alireza Haraji, برنامه‌نویس, توسعه‌دهنده بک‌اند, رزومه, Laravel, PHP, Python, Backend Developer, Web Developer, API Architect">
     <meta name="author" content="علی رضا هرجی | Alireza Haraji">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8fafc">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#020617">
     <link rel="canonical" href="https://alirezaevil81.github.io/">
+    
+    <!-- Preconnections for Performance -->
+    <link rel="preconnect" href="https://avatars.githubusercontent.com">
+    <link rel="preconnect" href="https://api.github.com">
+    
+    <!-- Preload Critical LCP Asset -->
+    <link rel="preload" as="image" href="https://avatars.githubusercontent.com/u/60322583?v=4">
     
     <!-- Multi-language definitions (hreflang) -->
     <link rel="alternate" hreflang="fa" href="https://alirezaevil81.github.io/?lang=fa">
@@ -270,9 +279,11 @@
                      alt="علی رضا هرجی - توسعه‌دهنده بک‌اند و برنامه‌نویس وب | Alireza Haraji Backend Developer"
                      title="علی رضا هرجی | توسعه‌دهنده بک‌اند"
                      class="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-500"
-                     loading="lazy"
+                     width="112" height="112"
+                     fetchpriority="high"
                 >
             </div>
+
             <!-- Live Active Status Dot -->
             <div class="absolute bottom-1 w-4 h-4 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center border border-slate-200 dark:border-slate-700 shadow-md"
                  :class="lang === 'fa' ? 'left-1' : 'right-1'">
@@ -627,7 +638,9 @@
                              class="rounded-full w-full h-full object-cover object-center shadow-lg border-4 border-blue-600/90 transition-transform duration-500 group-hover:scale-105"
                              alt="علی رضا هرجی - توسعه‌دهنده نرم‌افزار | Alireza Haraji Software Developer"
                              title="علی رضا هرجی | توسعه‌دهنده نرم‌افزار"
+                             width="176" height="176"
                              loading="lazy">
+
                         
                         <!-- Floating Availability Badge -->
                         <div class="absolute bottom-2 right-2 flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 dark:bg-slate-950/90 text-white text-[11px] font-bold border border-white/20 dark:border-slate-700 shadow-md backdrop-blur-xs">
@@ -1330,6 +1343,7 @@
                                      class="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
                                      :class="item.imgLoaded ? 'opacity-100' : 'opacity-0'"
                                      :alt="item.title"
+                                     width="600" height="400"
                                      loading="lazy">
 
                                 <!-- If project has a website in its About, show live iframe preview -->
