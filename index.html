@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl" class="scroll-smooth">
+<html lang="en" dir="ltr" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>علی رضا هرجی | برنامه‌نویس وب و متخصص بک‌اند | Alireza Haraji</title>
-    <meta name="description" content="رزومه علی رضا هرجی، توسعه‌دهنده بک‌اند و برنامه‌نویس ارشد (PHP, Python, Laravel). طراح و پیاده‌ساز معماری‌های مقیاس‌پذیر و API‌های پرسرعت. | Alireza Haraji, Backend Developer & Web Architect.">
-    <meta name="keywords" content="علی رضا هرجی, Alireza Haraji, برنامه‌نویس, توسعه‌دهنده بک‌اند, رزومه, Laravel, PHP, Python, Backend Developer, Web Developer, API Architect">
-    <meta name="author" content="علی رضا هرجی | Alireza Haraji">
+    <title>Alireza Haraji | Resume & Portfolio | علی رضا هرجی</title>
+    <meta name="description" content="Alireza Haraji, Backend Developer & Web Architect (PHP, Python, Laravel). Architecting scalable systems and high-throughput APIs. | رزومه علی رضا هرجی، برنامه‌نویس وب و متخصص بک‌اند.">
+    <meta name="keywords" content="Alireza Haraji, Backend Developer, Web Developer, Laravel, PHP, Python, API Architect, علی رضا هرجی, برنامه‌نویس, رزومه">
+    <meta name="author" content="Alireza Haraji | علی رضا هرجی">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8fafc">
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#020617">
@@ -20,8 +20,8 @@
     <link rel="preload" as="image" href="https://avatars.githubusercontent.com/u/60322583?v=4">
     
     <!-- Multi-language definitions (hreflang) -->
-    <link rel="alternate" hreflang="fa" href="https://alirezaevil81.github.io/?lang=fa">
     <link rel="alternate" hreflang="en" href="https://alirezaevil81.github.io/?lang=en">
+    <link rel="alternate" hreflang="fa" href="https://alirezaevil81.github.io/?lang=fa">
     <link rel="alternate" hreflang="x-default" href="https://alirezaevil81.github.io/">
 
     <!-- Anti-flash Early Theme & Language Initialization -->
@@ -42,7 +42,7 @@
                 document.documentElement.classList.remove('dark');
             }
 
-            var storedLang = localStorage.getItem('app_lang') || 'fa';
+            var storedLang = localStorage.getItem('app_lang') || 'en';
             document.documentElement.lang = storedLang;
             document.documentElement.dir = storedLang === 'fa' ? 'rtl' : 'ltr';
         })();
@@ -429,8 +429,8 @@
      @click="isMobileMenuOpen = false"></div>
 
 <!-- Floating Top Controls: Language Switcher & Theme Quick Picker -->
-<div class="fixed top-4 sm:top-5 z-30 flex items-center gap-2.5 transition-all duration-300"
-     :class="lang === 'fa' ? 'left-4 sm:left-6' : 'right-4 sm:right-6'">
+<div id="floating-controls"
+     class="transition-all duration-300">
     
     <!-- Language Switcher Button -->
     <button type="button"
@@ -439,28 +439,50 @@
             aria-label="Toggle Language"
             :title="lang === 'fa' ? 'تغییر زبان به انگلیسی (Switch to English)' : 'تغییر زبان به فارسی (Switch to Persian)'"
             class="w-10 h-10 flex items-center justify-center rounded-full bg-white/80 dark:bg-slate-900/80 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-800/60 shadow-sm backdrop-blur-md hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer font-bold text-xs tracking-wider">
-        <span x-text="lang === 'fa' ? 'FA' : 'EN'"></span>
+        <span id="lang-btn-text" x-text="lang === 'fa' ? 'FA' : 'EN'">EN</span>
     </button>
+    <script>
+        (function() {
+            var l = localStorage.getItem('app_lang') || 'en';
+            var el = document.getElementById('lang-btn-text');
+            if (el) el.textContent = l === 'fa' ? 'FA' : 'EN';
+        })();
+    </script>
 
     <!-- Theme Quick Picker Dropdown -->
     <div class="relative" x-data="{ openThemeMenu: false }" @click.outside="openThemeMenu = false">
         <button type="button"
+                id="theme-toggle-btn"
                 @click="openThemeMenu = !openThemeMenu"
                 aria-label="Toggle Theme Menu"
                 class="w-10 h-10 flex items-center justify-center rounded-full bg-white/80 dark:bg-slate-900/80 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-800/60 shadow-sm backdrop-blur-md hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer">
-            <template x-if="theme === 'light'">
-                <i class="fa-solid fa-sun text-sm"></i>
-            </template>
-            <template x-if="theme === 'dark'">
-                <i class="fa-solid fa-moon text-sm"></i>
-            </template>
-            <template x-if="theme === 'system'">
-                <i class="fa-solid fa-desktop text-sm"></i>
-            </template>
+            <i id="theme-btn-icon"
+               class="fa-solid fa-desktop text-sm transition-transform duration-200"
+               :class="{
+                   'fa-sun text-amber-500': theme === 'light',
+                   'fa-moon text-blue-400': theme === 'dark',
+                   'fa-desktop text-slate-600 dark:text-slate-300': theme === 'system'
+               }"></i>
         </button>
+        <script>
+            (function() {
+                var icon = document.getElementById('theme-btn-icon');
+                if (icon) {
+                    var t = localStorage.getItem('theme') || 'system';
+                    if (t === 'light') {
+                        icon.className = 'fa-solid fa-sun text-amber-500 text-sm transition-transform duration-200';
+                    } else if (t === 'dark') {
+                        icon.className = 'fa-solid fa-moon text-blue-400 text-sm transition-transform duration-200';
+                    } else {
+                        icon.className = 'fa-solid fa-desktop text-slate-600 dark:text-slate-300 text-sm transition-transform duration-200';
+                    }
+                }
+            })();
+        </script>
 
         <!-- Dropdown Menu -->
-        <div x-show="openThemeMenu"
+        <div id="theme-dropdown-menu"
+             x-show="openThemeMenu"
              x-transition:enter="transition ease-out duration-200"
              x-transition:enter-start="opacity-0 translate-y-1 scale-95"
              x-transition:enter-end="opacity-100 translate-y-0 scale-100"
@@ -468,7 +490,6 @@
              x-transition:leave-start="opacity-100 translate-y-0 scale-100"
              x-transition:leave-end="opacity-0 translate-y-1 scale-95"
              class="absolute mt-2 w-36 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl p-1.5 z-50 text-xs font-medium space-y-0.5"
-             :class="lang === 'fa' ? 'left-0' : 'right-0'"
              style="display: none;">
             
             <button type="button"

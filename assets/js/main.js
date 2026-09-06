@@ -21,8 +21,8 @@ const registerPortfolioApp = () => {
             following: 18
         },
 
-        // Language State (fa | en)
-        lang: localStorage.getItem('app_lang') || 'fa',
+        // Language State (fa | en) - Default to English (en)
+        lang: localStorage.getItem('app_lang') || 'en',
 
         setLang(newLang) {
             if (this.lang === newLang) return;
@@ -424,7 +424,7 @@ const registerPortfolioApp = () => {
         typedText: '',
         typedStringsEn: ['PHP Developer', 'Python Developer', 'Laravel Developer', 'WordPress Developer', 'Backend Specialist', 'API & Web Architect'],
         typedStringsFa: ['برنامه‌نویس PHP هستم', 'برنامه‌نویس پایتون هستم', 'برنامه‌نویس لاراول هستم', 'برنامه‌نویس وردپرس هستم', 'توسعه‌دهنده بک‌اند هستم', 'معمار وب و API هستم'],
-        typedStrings: ['برنامه‌نویس PHP هستم', 'برنامه‌نویس پایتون هستم', 'برنامه‌نویس لاراول هستم', 'برنامه‌نویس وردپرس هستم', 'توسعه‌دهنده بک‌اند هستم', 'معمار وب و API هستم'],
+        typedStrings: ['PHP Developer', 'Python Developer', 'Laravel Developer', 'WordPress Developer', 'Backend Specialist', 'API & Web Architect'],
         stringIndex: 0,
         isDeleting: false,
         typeTimeout: null,
@@ -1127,13 +1127,13 @@ const registerPortfolioApp = () => {
             return this.portfolioItems.filter(item => item.category === this.activeFilter);
         },
 
-        updateCircularFavicon(avatarUrl) {
+        updateRoundedFavicon(avatarUrl) {
             if (!avatarUrl) return;
             const img = new Image();
             img.crossOrigin = 'anonymous';
             img.onload = () => {
                 try {
-                    const size = 192; // High-resolution crisp icon
+                    const size = 192; // Full crisp resolution, not downscaled
                     const canvas = document.createElement('canvas');
                     canvas.width = size;
                     canvas.height = size;
@@ -1144,25 +1144,42 @@ const registerPortfolioApp = () => {
                     ctx.imageSmoothingQuality = 'high';
                     ctx.clearRect(0, 0, size, size);
 
-                    const center = size / 2;
-                    const radius = size / 2; // Full edge-to-edge
+                    // Rounded corner radius: standard sleek app-icon curvature (~20%), edge-to-edge with 0 padding
+                    const cornerRadius = Math.round(size * 0.20); // ~38px
 
-                    // Clip into perfect circle taking 100% of favicon area
+                    const drawRoundedRect = (context, x, y, width, height, r) => {
+                        if (typeof context.roundRect === 'function') {
+                            context.beginPath();
+                            context.roundRect(x, y, width, height, r);
+                            context.closePath();
+                        } else {
+                            context.beginPath();
+                            context.moveTo(x + r, y);
+                            context.lineTo(x + width - r, y);
+                            context.quadraticCurveTo(x + width, y, x + width, y + r);
+                            context.lineTo(x + width, y + height - r);
+                            context.quadraticCurveTo(x + width, y + height, x + width - r, y + height);
+                            context.lineTo(x + r, y + height);
+                            context.quadraticCurveTo(x, y + height, x, y + height - r);
+                            context.lineTo(x, y + r);
+                            context.quadraticCurveTo(x, y, x + r, y);
+                            context.closePath();
+                        }
+                    };
+
+                    // 1. Clip full-size rounded rectangle with ZERO padding (starts at 0,0 and fills size x size)
                     ctx.save();
-                    ctx.beginPath();
-                    ctx.arc(center, center, radius, 0, Math.PI * 2, true);
-                    ctx.closePath();
+                    drawRoundedRect(ctx, 0, 0, size, size, cornerRadius);
                     ctx.clip();
 
-                    // Draw image filling entire canvas
+                    // 2. Draw image filling 100% of the canvas with zero padding
                     ctx.drawImage(img, 0, 0, size, size);
                     ctx.restore();
 
-                    // Subtle anti-aliased border ring for visibility on all tab themes
-                    ctx.beginPath();
-                    ctx.arc(center, center, radius - 1.5, 0, Math.PI * 2, true);
-                    ctx.lineWidth = 3;
-                    ctx.strokeStyle = 'rgba(37, 99, 235, 0.9)';
+                    // 3. Subtle anti-aliased perimeter ring for crisp visibility against dark or light browser tabs
+                    drawRoundedRect(ctx, 0.75, 0.75, size - 1.5, size - 1.5, cornerRadius);
+                    ctx.lineWidth = 1.5;
+                    ctx.strokeStyle = 'rgba(37, 99, 235, 0.75)';
                     ctx.stroke();
 
                     const faviconDataUrl = canvas.toDataURL('image/png');
@@ -1185,6 +1202,10 @@ const registerPortfolioApp = () => {
                 });
             };
             img.src = avatarUrl;
+        },
+
+        updateCircularFavicon(avatarUrl) {
+            return this.updateRoundedFavicon(avatarUrl);
         }
     }));
 };

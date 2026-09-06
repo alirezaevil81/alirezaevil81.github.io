@@ -137,6 +137,56 @@ html[dir="rtl"] .-left-6 {
     }
 }
 
+/* Floating Top Controls (Language Switcher & Theme Quick Picker) */
+#floating-controls {
+    position: fixed !important;
+    top: 1rem !important;
+    z-index: 35 !important;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@media (min-width: 640px) {
+    #floating-controls {
+        top: 1.25rem !important;
+    }
+}
+
+/* In English (LTR): Sidebar is on the LEFT (w-72), so floating controls MUST sit on the RIGHT */
+html[dir="ltr"] #floating-controls {
+    right: 1rem !important;
+    left: auto !important;
+}
+@media (min-width: 640px) {
+    html[dir="ltr"] #floating-controls {
+        right: 1.5rem !important;
+        left: auto !important;
+    }
+}
+
+/* In Persian (RTL): Sidebar is on the RIGHT (w-72), so floating controls MUST sit on the LEFT to never collide */
+html[dir="rtl"] #floating-controls {
+    left: 1rem !important;
+    right: auto !important;
+}
+@media (min-width: 640px) {
+    html[dir="rtl"] #floating-controls {
+        left: 1.5rem !important;
+        right: auto !important;
+    }
+}
+
+/* Dropdown alignment matching screen edge */
+html[dir="ltr"] #theme-dropdown-menu {
+    right: 0 !important;
+    left: auto !important;
+}
+html[dir="rtl"] #theme-dropdown-menu {
+    left: 0 !important;
+    right: auto !important;
+}
+
 /* Smooth scrolling support */
 @media (prefers-reduced-motion: reduce) {
     html {
