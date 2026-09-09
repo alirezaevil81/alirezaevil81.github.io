@@ -27,6 +27,10 @@ const registerPortfolioApp = () => {
             return Boolean(this.user && this.user.hireable === true);
         },
 
+        get displayName() {
+            return this.lang === 'fa' ? 'علیرضا هرجی' : (this.user?.name || 'Alireza Haraji');
+        },
+
         get userEmail() {
             return (this.user && this.user.email) ? this.user.email : 'alirezask385@gmail.com';
         },
@@ -63,6 +67,90 @@ const registerPortfolioApp = () => {
             return this.t('about.headline');
         },
 
+        socialAccounts: [
+            {
+                provider: 'telegram',
+                url: 'https://t.me/alirezaharaji',
+                title: 'Telegram',
+                icon: 'fa-brands fa-telegram',
+                hoverClass: 'hover:bg-[#229ED9] hover:border-[#229ED9] hover:text-white'
+            },
+            {
+                provider: 'linkedin',
+                url: 'https://www.linkedin.com/in/alirezaharaji/',
+                title: 'LinkedIn',
+                icon: 'fa-brands fa-linkedin',
+                hoverClass: 'hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:text-white'
+            },
+            {
+                provider: 'instagram',
+                url: 'https://instagram.com/alireza.haraji',
+                title: 'Instagram',
+                icon: 'fa-brands fa-instagram',
+                hoverClass: 'hover:bg-[#E4405F] hover:border-[#E4405F] hover:text-white'
+            }
+        ],
+
+        getSocialAccountMeta(provider, url) {
+            const lowerUrl = (url || '').toLowerCase();
+            const lowerProv = (provider || '').toLowerCase();
+
+            if (lowerProv === 'telegram' || lowerUrl.includes('t.me') || lowerUrl.includes('telegram.me')) {
+                return {
+                    title: 'Telegram',
+                    icon: 'fa-brands fa-telegram',
+                    hoverClass: 'hover:bg-[#229ED9] hover:border-[#229ED9] hover:text-white'
+                };
+            }
+            if (lowerProv === 'linkedin' || lowerUrl.includes('linkedin.com')) {
+                return {
+                    title: 'LinkedIn',
+                    icon: 'fa-brands fa-linkedin',
+                    hoverClass: 'hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:text-white'
+                };
+            }
+            if (lowerProv === 'instagram' || lowerUrl.includes('instagram.com')) {
+                return {
+                    title: 'Instagram',
+                    icon: 'fa-brands fa-instagram',
+                    hoverClass: 'hover:bg-[#E4405F] hover:border-[#E4405F] hover:text-white'
+                };
+            }
+            if (lowerProv === 'twitter' || lowerProv === 'x' || lowerUrl.includes('twitter.com') || lowerUrl.includes('x.com')) {
+                return {
+                    title: 'X (Twitter)',
+                    icon: 'fa-brands fa-x-twitter',
+                    hoverClass: 'hover:bg-black hover:border-black hover:text-white'
+                };
+            }
+            if (lowerProv === 'youtube' || lowerUrl.includes('youtube.com')) {
+                return {
+                    title: 'YouTube',
+                    icon: 'fa-brands fa-youtube',
+                    hoverClass: 'hover:bg-[#FF0000] hover:border-[#FF0000] hover:text-white'
+                };
+            }
+            if (lowerProv === 'reddit' || lowerUrl.includes('reddit.com')) {
+                return {
+                    title: 'Reddit',
+                    icon: 'fa-brands fa-reddit-alien',
+                    hoverClass: 'hover:bg-[#FF4500] hover:border-[#FF4500] hover:text-white'
+                };
+            }
+            if (lowerProv === 'facebook' || lowerUrl.includes('facebook.com')) {
+                return {
+                    title: 'Facebook',
+                    icon: 'fa-brands fa-facebook-f',
+                    hoverClass: 'hover:bg-[#1877F2] hover:border-[#1877F2] hover:text-white'
+                };
+            }
+            return {
+                title: provider || 'Social Link',
+                icon: 'fa-solid fa-link',
+                hoverClass: 'hover:bg-blue-600 hover:border-blue-600 hover:text-white'
+            };
+        },
+
         // Language State (fa | en) - Default to English (en)
         lang: localStorage.getItem('app_lang') || 'en',
 
@@ -82,7 +170,7 @@ const registerPortfolioApp = () => {
             document.documentElement.lang = this.lang;
             document.documentElement.dir = this.lang === 'fa' ? 'rtl' : 'ltr';
             document.title = this.lang === 'fa' 
-                ? 'رزومه علی رضا هرجی | Alireza Haraji Resume' 
+                ? 'رزومه علیرضا هرجی | Alireza Haraji' 
                 : 'Alireza Haraji | Resume & Portfolio';
             
             this.typedStrings = this.lang === 'fa' ? this.typedStringsFa : this.typedStringsEn;
@@ -143,7 +231,7 @@ const registerPortfolioApp = () => {
                     badgeAvailable: 'آماده برای پروژه‌ها و همکاری‌های جدید (Hireable)',
                     badgeBusy: 'در حال حاضر مشغول در پروژه',
                     prefix: 'من',
-                    name: 'علی رضا هرجی',
+                    name: 'علیرضا هرجی',
                     suffix: '',
                     subtitle: 'متخصص در طراحی و پیاده‌سازی معماری‌های پایدار بک‌اند، توسعه REST APIهای پرسرعت، بهینه‌سازی دیتابیس و برنامه‌نویسی وب‌اپلیکیشن‌های مدرن.',
                     ctaPortfolio: 'مشاهده نمونه‌کارها',
@@ -971,11 +1059,12 @@ const registerPortfolioApp = () => {
             this.loadingProgress = 25;
             if (this.loadingLogs[0]) this.loadingLogs[0].done = true;
 
-            // Step 1: Fetch Image Assets & GitHub User Data in parallel
+            // Step 1: Fetch Image Assets, GitHub User Data & Social Accounts in parallel
             try {
-                const [imageRes, userRes] = await Promise.allSettled([
+                const [imageRes, userRes, socialRes] = await Promise.allSettled([
                     fetch('assets/data/images.json').then(res => res.ok ? res.json() : null),
-                    fetch('https://api.github.com/users/alirezaevil81').then(res => res.ok ? res.json() : null)
+                    fetch('https://api.github.com/users/alirezaevil81').then(res => res.ok ? res.json() : null),
+                    fetch('https://api.github.com/users/alirezaevil81/social_accounts').then(res => res.ok ? res.json() : null)
                 ]);
 
                 if (imageRes.status === 'fulfilled' && imageRes.value) {
@@ -989,6 +1078,19 @@ const registerPortfolioApp = () => {
                     if (this.user?.avatar_url) {
                         this.updateCircularFavicon(this.user.avatar_url);
                     }
+                }
+
+                if (socialRes.status === 'fulfilled' && Array.isArray(socialRes.value) && socialRes.value.length > 0) {
+                    this.socialAccounts = socialRes.value.map(item => {
+                        const meta = this.getSocialAccountMeta(item.provider, item.url);
+                        return {
+                            provider: item.provider,
+                            url: item.url,
+                            title: meta.title,
+                            icon: meta.icon,
+                            hoverClass: meta.hoverClass
+                        };
+                    });
                 }
             } catch (e) {
                 console.error("Initial data fetch error:", e);
