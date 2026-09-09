@@ -456,23 +456,24 @@
                 @click="openThemeMenu = !openThemeMenu"
                 aria-label="Toggle Theme Menu"
                 class="w-10 h-10 flex items-center justify-center rounded-full bg-white/80 dark:bg-slate-900/80 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-800/60 shadow-sm backdrop-blur-md hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer">
-            <i id="theme-btn-icon"
-               class="fa-solid text-sm transition-transform duration-200"
-               :class="themeIconClass"></i>
+            <i id="theme-icon-light"
+               x-show="theme === 'light'"
+               class="fa-solid fa-sun text-amber-500 text-sm transition-transform duration-200"
+               style="display: none;"></i>
+            <i id="theme-icon-dark"
+               x-show="theme === 'dark'"
+               class="fa-solid fa-moon text-blue-400 text-sm transition-transform duration-200"
+               style="display: none;"></i>
+            <i id="theme-icon-system"
+               x-show="theme === 'system'"
+               class="fa-solid fa-desktop text-slate-600 dark:text-slate-300 text-sm transition-transform duration-200"
+               style="display: none;"></i>
         </button>
         <script>
             (function() {
-                var icon = document.getElementById('theme-btn-icon');
-                if (icon) {
-                    var t = localStorage.getItem('theme') || 'system';
-                    if (t === 'light') {
-                        icon.className = 'fa-solid fa-sun text-amber-500 text-sm transition-transform duration-200';
-                    } else if (t === 'dark') {
-                        icon.className = 'fa-solid fa-moon text-blue-400 text-sm transition-transform duration-200';
-                    } else {
-                        icon.className = 'fa-solid fa-desktop text-slate-600 dark:text-slate-300 text-sm transition-transform duration-200';
-                    }
-                }
+                var t = localStorage.getItem('theme') || 'system';
+                var el = document.getElementById('theme-icon-' + t);
+                if (el) el.style.display = 'inline-block';
             })();
         </script>
 

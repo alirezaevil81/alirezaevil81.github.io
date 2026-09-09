@@ -348,12 +348,6 @@ const registerPortfolioApp = () => {
         theme: localStorage.getItem('theme') || 'system',
         openThemeMenu: false,
 
-        get themeIconClass() {
-            if (this.theme === 'light') return 'fa-sun text-amber-500';
-            if (this.theme === 'dark') return 'fa-moon text-blue-400';
-            return 'fa-desktop text-slate-600 dark:text-slate-300';
-        },
-
         setTheme(mode) {
             this.theme = mode;
             localStorage.setItem('theme', mode);
