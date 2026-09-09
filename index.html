@@ -188,7 +188,7 @@
                         <i class="fa-brands fa-github"></i>
                     </div>
                     <div class="min-w-0">
-                        <div class="text-sm font-bold text-slate-900 dark:text-white tracking-tight truncate">Alireza Haraji</div>
+                        <div class="text-sm font-bold text-slate-900 dark:text-white tracking-tight truncate" x-text="user?.name || 'Alireza Haraji'">Alireza Haraji</div>
                         <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-mono">
                             <i class="fa-solid fa-code-branch text-blue-600 dark:text-blue-400 text-[10px]"></i>
                             <span>main</span>
@@ -239,7 +239,8 @@
                     <span class="text-emerald-600 dark:text-emerald-400 font-semibold">HTTP 200 OK</span>
                 </div>
                 <div class="text-slate-600 dark:text-slate-400">
-                    <span class="animate-pulse text-emerald-500 dark:text-emerald-400">●</span> Ready
+                    <span class="animate-pulse" :class="isHireable ? 'text-emerald-500 dark:text-emerald-400' : 'text-amber-500 dark:text-amber-400'">●</span>
+                    <span x-text="isHireable ? (lang === 'fa' ? 'آماده همکاری' : 'Ready / Available') : (lang === 'fa' ? 'مشغول در پروژه' : 'Engaged')">Ready</span>
                 </div>
             </div>
 
@@ -287,7 +288,8 @@
             <!-- Live Active Status Dot -->
             <div class="absolute bottom-1 w-4 h-4 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center border border-slate-200 dark:border-slate-700 shadow-md"
                  :class="lang === 'fa' ? 'left-1' : 'right-1'">
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="w-2.5 h-2.5 rounded-full"
+                      :class="isHireable ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'"></span>
             </div>
         </div>
 
@@ -314,12 +316,12 @@
                class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:text-white transition-all duration-300 shadow-2xs">
                 <i class="fa-brands fa-linkedin text-sm"></i>
             </a>
-            <a :href="user?.blog ? (user.blog.startsWith('http') ? user.blog : 'https://' + user.blog) : 'https://exxondev.ir'" target="_blank" rel="noopener noreferrer"
+            <a :href="userBlogUrl" target="_blank" rel="noopener noreferrer"
                aria-label="Website"
                class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-emerald-600 hover:border-emerald-600 hover:text-white transition-all duration-300 shadow-2xs">
                 <i class="fa-solid fa-globe text-sm"></i>
             </a>
-            <a href="mailto:alirezask385@gmail.com"
+            <a :href="'mailto:' + userEmail"
                aria-label="Email"
                class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-rose-600 hover:border-rose-600 hover:text-white transition-all duration-300 shadow-2xs">
                 <i class="fa-solid fa-envelope text-xs"></i>
@@ -413,9 +415,9 @@
         <div class="p-3 rounded-2xl bg-slate-100/90 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 flex items-center justify-between">
             <div class="flex items-center gap-2 min-w-0">
                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
-                <span class="text-[11px] font-semibold text-slate-700 dark:text-slate-300 truncate" x-text="lang === 'fa' ? 'ایران، مازندران، نوشهر' : (user?.location || 'Nowshahr, Iran')"></span>
+                <span class="text-[11px] font-semibold text-slate-700 dark:text-slate-300 truncate" x-text="userLocation"></span>
             </div>
-            <a href="mailto:alirezask385@gmail.com"
+            <a :href="'mailto:' + userEmail"
                class="text-[11px] font-bold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors shrink-0 flex items-center gap-1">
                 <span x-text="t('about.emailMe')">Contact</span>
                 <i class="fa-solid text-[9px]" :class="lang === 'fa' ? 'fa-arrow-left' : 'fa-arrow-right'"></i>
@@ -551,8 +553,9 @@
             
             <!-- Live Availability Pill -->
             <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 dark:bg-slate-900/80 border border-slate-200 dark:border-white/15 backdrop-blur-md text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 mb-5 sm:mb-6 shadow-md shadow-slate-200/50 dark:shadow-black/20">
-                <span class="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse"></span>
-                <span x-text="t('hero.badge')">Available for New Projects & Collaborations</span>
+                <span class="w-2 h-2 rounded-full"
+                      :class="isHireable ? 'bg-emerald-500 dark:bg-emerald-400 animate-pulse' : 'bg-amber-500 dark:bg-amber-400'"></span>
+                <span x-text="isHireable ? t('hero.badgeAvailable') : t('hero.badgeBusy')">Available for New Projects & Collaborations</span>
             </div>
 
             <!-- Main Heading with Name -->
@@ -662,8 +665,8 @@
                         
                         <!-- Floating Availability Badge -->
                         <div class="absolute bottom-2 right-2 flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 dark:bg-slate-950/90 text-white text-[11px] font-bold border border-white/20 dark:border-slate-700 shadow-md backdrop-blur-xs">
-                            <span class="w-2 h-2 rounded-full" :class="user?.hireable !== false ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'"></span>
-                            <span x-text="user?.hireable !== false ? t('about.available') : t('about.busy')">Available</span>
+                            <span class="w-2 h-2 rounded-full" :class="isHireable ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'"></span>
+                            <span x-text="isHireable ? t('about.available') : t('about.busy')">Available</span>
                         </div>
                     </div>
 
@@ -679,7 +682,7 @@
                     </a>
 
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6 font-medium"
-                       x-text="t('about.headline')">
+                       x-text="userBio">
                         Backend Specialist · Python & PHP Developer · API Architect
                     </p>
 
@@ -690,7 +693,7 @@
                             <i class="fa-brands fa-github text-sm"></i>
                             <span>GitHub</span>
                         </a>
-                        <a href="mailto:alirezask385@gmail.com"
+                        <a :href="'mailto:' + userEmail"
                            class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-xs">
                             <i class="fa-solid fa-envelope text-xs"></i>
                             <span x-text="t('about.emailMe')">Email Me</span>
@@ -722,7 +725,7 @@
                                 <i class="fa-solid fa-location-dot"></i>
                             </div>
                             <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block" x-text="t('about.location')">Location</span>
-                            <span class="text-sm font-bold text-slate-800 dark:text-slate-200 mt-0.5 block truncate" x-text="t('about.locationVal')"></span>
+                            <span class="text-sm font-bold text-slate-800 dark:text-slate-200 mt-0.5 block truncate" x-text="userLocation"></span>
                         </div>
 
                         <!-- Role Level -->
@@ -749,10 +752,10 @@
                                 <i class="fa-solid fa-globe"></i>
                             </div>
                             <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block" x-text="t('about.website')">Website</span>
-                            <a :href="user?.blog ? (user.blog.startsWith('http') ? user.blog : 'https://' + user.blog) : 'https://exxondev.ir'"
+                            <a :href="userBlogUrl"
                                target="_blank" rel="noopener noreferrer"
                                class="text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline mt-0.5 block truncate">
-                                <span x-text="user?.blog || 'exxondev.ir'"></span>
+                                <span x-text="userBlogTitle"></span>
                             </a>
                         </div>
 
@@ -762,20 +765,22 @@
                                 <i class="fa-solid fa-envelope"></i>
                             </div>
                             <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block" x-text="t('about.email')">Email</span>
-                            <a href="mailto:alirezask385@gmail.com" class="text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline mt-0.5 block truncate">
+                            <a :href="'mailto:' + userEmail" class="text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline mt-0.5 block truncate" x-text="userEmail">
                                 alirezask385@gmail.com
                             </a>
                         </div>
 
                         <!-- Availability / Status -->
-                        <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:border-emerald-300 dark:hover:border-emerald-500 transition-colors">
-                            <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-sm mb-3">
+                        <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xs transition-colors"
+                             :class="isHireable ? 'hover:border-emerald-300 dark:hover:border-emerald-500' : 'hover:border-amber-300 dark:hover:border-amber-500'">
+                            <div class="w-8 h-8 rounded-lg flex items-center justify-center text-sm mb-3"
+                                 :class="isHireable ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400' : 'bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400'">
                                 <i class="fa-solid fa-briefcase"></i>
                             </div>
                             <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block" x-text="t('about.workStatus')">Work Status</span>
                             <div class="flex items-center gap-1.5 mt-0.5">
-                                <span class="w-2 h-2 rounded-full" :class="user?.hireable !== false ? 'bg-emerald-500' : 'bg-amber-500'"></span>
-                                <span class="text-sm font-bold text-slate-800 dark:text-slate-200" x-text="user?.hireable !== false ? t('about.workStatusAvailable') : t('about.workStatusBusy')"></span>
+                                <span class="w-2 h-2 rounded-full" :class="isHireable ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'"></span>
+                                <span class="text-sm font-bold text-slate-800 dark:text-slate-200" x-text="isHireable ? t('about.workStatusAvailable') : t('about.workStatusBusy')"></span>
                             </div>
                         </div>
 
@@ -1462,9 +1467,11 @@
         <!-- Top Banner: Collaborative CTA Card -->
         <div class="bg-white dark:bg-slate-900 p-6 sm:p-8 md:p-10 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl mb-12 sm:mb-16 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-start transition-colors duration-300">
             <div class="max-w-xl">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold mb-3">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse"></span>
-                    <span x-text="t('footer.badge')">Ready for New Opportunities</span>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-semibold mb-3"
+                     :class="isHireable ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400' : 'bg-amber-500/10 border-amber-500/20 text-amber-600 dark:text-amber-400'">
+                    <span class="w-2 h-2 rounded-full"
+                          :class="isHireable ? 'bg-emerald-500 dark:bg-emerald-400 animate-pulse' : 'bg-amber-500 dark:bg-amber-400'"></span>
+                    <span x-text="isHireable ? t('footer.badge') : (lang === 'fa' ? 'مشغول در پروژه فعلی' : 'Engaged in Current Projects')">Ready for New Opportunities</span>
                 </div>
                 <h3 class="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight" x-text="t('footer.ctaTitle')">Have a project or engineering challenge?</h3>
                 <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed" x-text="t('footer.ctaSub')">
@@ -1472,7 +1479,7 @@
                 </p>
             </div>
             <div class="flex flex-wrap items-center justify-center gap-3 shrink-0">
-                <a href="mailto:alirezask385@gmail.com"
+                <a :href="'mailto:' + userEmail"
                    class="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-600/30 hover:shadow-blue-500/40 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
                     <i class="fa-solid fa-paper-plane text-xs"></i>
                     <span x-text="t('footer.getInTouch')">Get in Touch</span>
@@ -1510,12 +1517,12 @@
                        class="w-9 h-9 rounded-xl bg-white dark:bg-slate-900 hover:bg-blue-600 border border-slate-200 dark:border-slate-800 hover:border-blue-500 text-slate-600 dark:text-slate-300 hover:text-white flex items-center justify-center text-sm transition-all duration-300 shadow-2xs">
                         <i class="fa-brands fa-github"></i>
                     </a>
-                    <a href="mailto:alirezask385@gmail.com"
+                    <a :href="'mailto:' + userEmail"
                        aria-label="Send Email"
                        class="w-9 h-9 rounded-xl bg-white dark:bg-slate-900 hover:bg-blue-600 border border-slate-200 dark:border-slate-800 hover:border-blue-500 text-slate-600 dark:text-slate-300 hover:text-white flex items-center justify-center text-sm transition-all duration-300 shadow-2xs">
                         <i class="fa-solid fa-envelope"></i>
                     </a>
-                    <a :href="user?.blog ? (user.blog.startsWith('http') ? user.blog : 'https://' + user.blog) : 'https://exxondev.ir'"
+                    <a :href="userBlogUrl"
                        target="_blank" rel="noopener noreferrer"
                        aria-label="Personal Website"
                        class="w-9 h-9 rounded-xl bg-white dark:bg-slate-900 hover:bg-blue-600 border border-slate-200 dark:border-slate-800 hover:border-blue-500 text-slate-600 dark:text-slate-300 hover:text-white flex items-center justify-center text-sm transition-all duration-300 shadow-2xs">

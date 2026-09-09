@@ -8,17 +8,59 @@ const registerPortfolioApp = () => {
         activeSection: 'hero',
         user: {
             login: 'alirezaevil81',
-            name: 'علی رضا هرجی',
+            name: 'Alireza Haraji',
             avatar_url: 'https://avatars.githubusercontent.com/u/60322583?v=4',
-            bio: 'Dynamic PHP & Python Developer with a strong focus on architecting efficient backend solutions, building scalable RESTful APIs, optimizing high-traffic databases, and collaborating effectively in modern Agile teams.',
-            location: 'Nowshahr, Mazandaran',
-            blog: 'https://exxondev.ir',
+            bio: 'PHP & laravel Developer.',
+            location: 'Iran , Mazandaran',
+            blog: 'www.exxondev.ir',
+            email: null,
             html_url: 'https://github.com/alirezaevil81',
             hireable: true,
-            created_at: '2021-04-10T00:00:00Z',
-            public_repos: 14,
-            followers: 12,
-            following: 18
+            created_at: '2020-01-26T16:48:18Z',
+            public_repos: 20,
+            public_gists: 0,
+            followers: 45,
+            following: 5
+        },
+
+        get isHireable() {
+            return Boolean(this.user && this.user.hireable === true);
+        },
+
+        get userEmail() {
+            return (this.user && this.user.email) ? this.user.email : 'alirezask385@gmail.com';
+        },
+
+        get userLocation() {
+            if (this.lang === 'fa') {
+                if (this.user?.location) {
+                    return this.user.location
+                        .replace(/Iran/gi, 'ایران')
+                        .replace(/Mazandaran/gi, 'مازندران')
+                        .replace(/\s*,\s*/g, '، ');
+                }
+                return 'ایران، مازندران';
+            }
+            return this.user?.location || 'Iran, Mazandaran';
+        },
+
+        get userBlogUrl() {
+            const b = this.user?.blog || 'www.exxondev.ir';
+            return (b.startsWith('http://') || b.startsWith('https://')) ? b : 'https://' + b;
+        },
+
+        get userBlogTitle() {
+            return this.user?.blog || 'www.exxondev.ir';
+        },
+
+        get userBio() {
+            if (this.user?.bio) {
+                if (this.lang === 'fa') {
+                    return this.user.bio.replace(/Developer/gi, 'توسعه‌دهنده');
+                }
+                return this.user.bio;
+            }
+            return this.t('about.headline');
         },
 
         // Language State (fa | en) - Default to English (en)
@@ -98,6 +140,8 @@ const registerPortfolioApp = () => {
                 },
                 hero: {
                     badge: 'آماده برای پروژه‌ها و همکاری‌های جدید',
+                    badgeAvailable: 'آماده برای پروژه‌ها و همکاری‌های جدید (Hireable)',
+                    badgeBusy: 'در حال حاضر مشغول در پروژه',
                     prefix: 'من',
                     name: 'علی رضا هرجی',
                     suffix: '',
@@ -112,7 +156,7 @@ const registerPortfolioApp = () => {
                     subtitle: 'توسعه‌دهنده پرانگیزه بک‌اند متعهد به مهندسی سرویس‌های پایدار، نرم‌افزارهای مقیاس‌پذیر و کدهای تمیز و قابل نگهداری.',
                     bio: 'توسعه‌دهنده پویا و خلاق PHP و Python با تمرکز عمیق بر معماری راه‌حل‌های کارآمد سمت سرور، ساخت REST APIهای مقیاس‌پذیر، بهینه‌سازی دیتابیس‌های پرترافیک و همکاری موثر در تیم‌های چابک (Agile).',
                     headline: 'متخصص بک‌اند · توسعه‌دهنده پایتون و PHP · معمار API',
-                    available: 'آماده همکاری',
+                    available: 'آماده همکاری (Hireable)',
                     busy: 'مشغول در پروژه',
                     emailMe: 'ارسال ایمیل',
                     backgroundTitle: 'پیشینه و تجارب حرفه‌ای',
@@ -125,7 +169,7 @@ const registerPortfolioApp = () => {
                     website: 'وب‌سایت',
                     email: 'ایمیل',
                     workStatus: 'وضعیت کاری',
-                    workStatusAvailable: 'آماده همکاری / دورکاری',
+                    workStatusAvailable: 'آماده همکاری و استخدام (Hireable)',
                     workStatusBusy: 'مشغول در پروژه فعلی',
                     githubMetrics: 'شاخص‌های زنده گیت‌هاب',
                     liveSync: 'همگام‌سازی زنده',
@@ -228,6 +272,8 @@ const registerPortfolioApp = () => {
                 },
                 hero: {
                     badge: 'Available for New Projects & Collaborations',
+                    badgeAvailable: 'Available for New Projects & Hire',
+                    badgeBusy: 'Currently Engaged in Projects',
                     prefix: "Hi, I'm a",
                     name: 'Alireza Haraji',
                     suffix: '',
@@ -242,7 +288,7 @@ const registerPortfolioApp = () => {
                     subtitle: 'Passionate Backend Engineer dedicated to architecting reliable services, scalable web apps, and clean maintainable code.',
                     bio: 'Dynamic PHP & Python Developer with a strong focus on architecting efficient backend solutions, building scalable RESTful APIs, optimizing high-traffic databases, and collaborating effectively in modern Agile teams.',
                     headline: 'Backend Specialist · Python & PHP Developer · API Architect',
-                    available: 'Available',
+                    available: 'Available for Hire',
                     busy: 'Currently Engaged',
                     emailMe: 'Email Me',
                     backgroundTitle: 'Professional Background',
@@ -255,7 +301,7 @@ const registerPortfolioApp = () => {
                     website: 'Website',
                     email: 'Email',
                     workStatus: 'Work Status',
-                    workStatusAvailable: 'Available / Remote',
+                    workStatusAvailable: 'Available for Hire / Remote',
                     workStatusBusy: 'Currently Engaged',
                     githubMetrics: 'GitHub Real-Time Metrics',
                     liveSync: 'Live Sync',
