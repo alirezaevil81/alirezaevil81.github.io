@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://alirezaevil81.github.io/sitemap.xml
+Sitemap: https://exxondev.ir/sitemap.xml

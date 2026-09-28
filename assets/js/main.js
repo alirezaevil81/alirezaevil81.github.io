@@ -322,7 +322,22 @@ const registerPortfolioApp = () => {
                     explore: 'مشاهده',
                     emptyState: 'هیچ پروژه‌ای در این دسته‌بندی یافت نشد.',
                     noProjects: 'هیچ پروژه‌ای در این دسته‌بندی یافت نشد.',
-                    showAll: 'نمایش همه پروژه‌ها'
+                    showAll: 'نمایش همه پروژه‌ها',
+                    quickPreview: 'پیش‌نمایش وب‌سایت',
+                    preview: 'پیش‌نمایش',
+                    previewTitle: 'پیش‌نمایش پروژه و وب‌سایت',
+                    openNewTab: 'مشاهده زنده در تب جدید',
+                    copyLink: 'کپی آدرس سایت',
+                    copied: 'کپی شد!',
+                    deviceDesktop: 'دسکتاپ',
+                    deviceTablet: 'تبلت',
+                    deviceMobile: 'موبایل',
+                    snapshotView: 'اسکرین‌شات باکیفیت',
+                    liveFrameView: 'تست فریم تعاملی (iFrame)',
+                    iframeNotice: 'به دلیل پروتکل‌های امنیتی وب‌سایت مقصد (مانند X-Frame-Options)، ممکن است برخی سایت‌ها درون فریم باز نشوند. برای دسترسی کامل و روان، روی «مشاهده زنده در تب جدید» کلیک کنید.',
+                    closeModal: 'بستن پیش‌نمایش',
+                    techDetails: 'دسته‌بندی و پلتفرم:',
+                    openRepo: 'مشاهده سورس در گیت‌هاب'
                 },
                 footer: {
                     badge: 'آماده برای فرصت‌های جدید',
@@ -454,7 +469,22 @@ const registerPortfolioApp = () => {
                     explore: 'Explore',
                     emptyState: 'No projects found in this category.',
                     noProjects: 'No projects found in this category.',
-                    showAll: 'Show All Projects'
+                    showAll: 'Show All Projects',
+                    quickPreview: 'Website Preview',
+                    preview: 'Preview',
+                    previewTitle: 'Project & Website Preview',
+                    openNewTab: 'Open Live in New Tab',
+                    copyLink: 'Copy Link',
+                    copied: 'Copied!',
+                    deviceDesktop: 'Desktop',
+                    deviceTablet: 'Tablet',
+                    deviceMobile: 'Mobile',
+                    snapshotView: 'High-Res Snapshot',
+                    liveFrameView: 'Live Frame Test (iFrame)',
+                    iframeNotice: 'Due to browser and website security headers (e.g. X-Frame-Options), some live sites restrict iframe embedding. For the full live experience, click "Open Live in New Tab".',
+                    closeModal: 'Close Preview',
+                    techDetails: 'Details & Category:',
+                    openRepo: 'View Source on GitHub'
                 },
                 footer: {
                     badge: 'Ready for New Opportunities',
@@ -879,8 +909,8 @@ const registerPortfolioApp = () => {
                 link: 'https://compressorsepah.ir', 
                 category: 'WordPress', 
                 websiteUrl: 'https://compressorsepah.ir', 
-                iframeLoaded: false, 
                 imgLoaded: false, 
+                iframeLoaded: false,
                 isCustomImg: true 
             },
             { 
@@ -893,15 +923,120 @@ const registerPortfolioApp = () => {
                 link: 'https://azadpc.com', 
                 category: 'WordPress', 
                 websiteUrl: 'https://azadpc.com', 
-                iframeLoaded: false, 
                 imgLoaded: false, 
+                iframeLoaded: false,
                 isCustomImg: true 
             },
+            {
+                imgSrc: 'assets/img/portfolio/bilmakh.webp',
+                title: 'Bilmakh',
+                description: {
+                    fa: 'سامانه و وب‌اپلیکیشن سرگرمی و بازی تعاملی آنلاین توسعه‌داده شده با پایتون',
+                    en: 'Interactive entertainment web application developed with Python and clean UI'
+                },
+                link: 'https://github.com/alirezaevil81/bilmakh',
+                repoUrl: 'https://github.com/alirezaevil81/bilmakh',
+                category: 'Python',
+                imgLoaded: false,
+                isCustomImg: true
+            },
+            {
+                imgSrc: 'assets/img/portfolio/freepik-geter.webp',
+                title: 'Freepik-Geter',
+                description: {
+                    fa: 'ابزار خودکار دریافت و دانلود تصاویر، وکتورها و فایل‌های گرافیکی با کیفیت بالا',
+                    en: 'Automated tool for fetching and downloading high-res photos and vectors'
+                },
+                link: 'https://github.com/alirezaevil81/freepik-geter',
+                repoUrl: 'https://github.com/alirezaevil81/freepik-geter',
+                category: 'Python',
+                imgLoaded: false,
+                isCustomImg: true
+            },
+            {
+                imgSrc: 'assets/img/portfolio/weblog-plus.webp',
+                title: 'Weblog-Plus',
+                description: {
+                    fa: 'سیستم وبلاگ‌نویسی و مدیریت محتوای پیشرفته بر پایه معماری ماژولار PHP و امن',
+                    en: 'Advanced modular blogging and content management system'
+                },
+                link: 'https://github.com/alirezaevil81/weblog-plus',
+                repoUrl: 'https://github.com/alirezaevil81/weblog-plus',
+                category: 'PHP',
+                imgLoaded: false,
+                isCustomImg: true
+            }
         ],
 
-        handleIframeLoad(item, event) {
+        // Interactive Website Preview Modal State & Controls
+        previewModalOpen: false,
+        selectedPreviewItem: null,
+        previewDevice: 'desktop', // 'desktop' | 'tablet' | 'mobile'
+        previewMode: 'snapshot', // 'snapshot' | 'live'
+        previewCopied: false,
+        iframeLoading: false,
+
+        openPreviewModal(item, mode = 'live') {
             if (!item) return;
-            item.iframeLoaded = true;
+            this.selectedPreviewItem = item;
+            this.previewDevice = 'desktop';
+            this.previewMode = (mode === 'live' && item.websiteUrl) ? 'live' : (item.websiteUrl ? 'live' : 'snapshot');
+            this.previewCopied = false;
+            this.iframeLoading = (this.previewMode === 'live');
+            this.previewModalOpen = true;
+            document.body.classList.add('overflow-hidden');
+        },
+
+        closePreviewModal() {
+            this.previewModalOpen = false;
+            this.selectedPreviewItem = null;
+            document.body.classList.remove('overflow-hidden');
+        },
+
+        setPreviewDevice(device) {
+            this.previewDevice = device;
+        },
+
+        setPreviewMode(mode) {
+            this.previewMode = mode;
+            if (mode === 'live') {
+                this.iframeLoading = true;
+            }
+        },
+
+        handleIframeLoad() {
+            this.iframeLoading = false;
+        },
+
+        getLivePreviewUrl(targetUrl) {
+            if (!targetUrl) return '';
+            return '/api/proxy-preview?url=' + encodeURIComponent(targetUrl);
+        },
+
+        copyPreviewUrl(url) {
+            if (!url) return;
+            if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(() => {
+                    this.previewCopied = true;
+                    setTimeout(() => { this.previewCopied = false; }, 2000);
+                }).catch(() => {
+                    this.previewCopied = true;
+                    setTimeout(() => { this.previewCopied = false; }, 2000);
+                });
+            } else {
+                this.previewCopied = true;
+                setTimeout(() => { this.previewCopied = false; }, 2000);
+            }
+        },
+
+        getDomain(url) {
+            if (!url) return '';
+            try {
+                const u = new URL(url.startsWith('http') ? url : 'https://' + url);
+                return u.hostname.replace(/^www\./, '');
+            } catch (e) {
+                return url.replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
+            }
         },
 
         // Brand colors for specific tech stacks and categories
@@ -1107,7 +1242,7 @@ const registerPortfolioApp = () => {
                     if (Array.isArray(repos)) {
                         let nonCustomCount = 0;
                         repos.forEach((repo) => {
-                            if (repo.name.toLowerCase() === 'alirezaevil81') return;
+                            if (repo.name.toLowerCase() === 'alirezaevil81' || repo.name.toLowerCase() === 'alirezaevil81.github.io') return;
 
                             let category = repo.language || 'Open Source';
                             let imgSrc = '';
@@ -1136,6 +1271,7 @@ const registerPortfolioApp = () => {
                                 if (!hp.startsWith('http://') && !hp.startsWith('https://')) {
                                     hp = 'https://' + hp;
                                 }
+                                hp = hp.replace(/https?:\/\/alirezaevil81\.github\.io\/?/i, 'https://exxondev.ir/');
                                 websiteUrl = hp;
                             } else if (repo.description) {
                                 const match = repo.description.match(/https?:\/\/[^\s]+/i);
@@ -1144,8 +1280,13 @@ const registerPortfolioApp = () => {
                                 }
                             }
 
-                            const exists = this.portfolioItems.some(item => item.title.toLowerCase() === repo.name.toLowerCase());
-                            if (!exists) {
+                            const existingItem = this.portfolioItems.find(item => item.title.toLowerCase() === repo.name.toLowerCase());
+                            if (existingItem) {
+                                existingItem.stars = repo.stargazers_count;
+                                existingItem.forks = repo.forks_count;
+                                if (repo.html_url) existingItem.repoUrl = repo.html_url;
+                                if (!existingItem.websiteUrl && websiteUrl) existingItem.websiteUrl = websiteUrl;
+                            } else {
                                 const newItem = {
                                     imgSrc: imgSrc,
                                     isCustomImg: isCustomImg,
@@ -1158,7 +1299,6 @@ const registerPortfolioApp = () => {
                                     category: category,
                                     stars: repo.stargazers_count,
                                     forks: repo.forks_count,
-                                    iframeLoaded: false,
                                     imgLoaded: false
                                 };
                                 if (!isCustomImg) nonCustomCount++;
