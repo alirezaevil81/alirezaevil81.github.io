@@ -1,3 +1,48 @@
+const resolveAssetBase = () => {
+    try {
+        if (window.location.protocol === 'file:') {
+            return /^\/.*\/(fa|en)(\/|$)/i.test(window.location.pathname) ? '../' : '';
+        }
+        return '/';
+    } catch (e) {
+        return '/';
+    }
+};
+
+const ASSET_BASE = resolveAssetBase();
+
+const resolveInitialLang = () => {
+    try {
+        const params = new URLSearchParams(window.location.search);
+        const queryLang = params.get('lang');
+        if (queryLang === 'fa' || queryLang === 'en') return queryLang;
+    } catch (e) {}
+
+    try {
+        const path = window.location.pathname.toLowerCase();
+        if (path === '/fa' || path.startsWith('/fa/')) return 'fa';
+        if (path === '/en' || path.startsWith('/en/')) return 'en';
+    } catch (e) {}
+
+    try {
+        const saved = localStorage.getItem('app_lang');
+        if (saved === 'fa' || saved === 'en') return saved;
+    } catch (e) {}
+
+    try {
+        const browserLangs = (navigator.languages && navigator.languages.length > 0)
+            ? navigator.languages
+            : [navigator.language || navigator.userLanguage || 'en'];
+        for (const l of browserLangs) {
+            if (typeof l === 'string' && l.toLowerCase().startsWith('fa')) {
+                return 'fa';
+            }
+        }
+    } catch (e) {}
+
+    return 'en';
+};
+
 const registerPortfolioApp = () => {
     if (typeof Alpine === 'undefined' || !Alpine.data) return;
     // ثبت کامپوننت اصلی رزومه
@@ -151,29 +196,80 @@ const registerPortfolioApp = () => {
             };
         },
 
-        // Language State (fa | en) - Default to English (en)
-        lang: localStorage.getItem('app_lang') || 'en',
+        // Language State (fa | en) - Resolved from ?lang= -> /fa|/en -> saved preference -> browser language
+        lang: resolveInitialLang(),
 
-        setLang(newLang) {
-            if (this.lang === newLang) return;
+        setLang(newLang, updateUrl = true) {
+            if (newLang !== 'fa' && newLang !== 'en') return;
             this.isMobileMenuOpen = false;
             this.lang = newLang;
-            localStorage.setItem('app_lang', newLang);
+            try {
+                localStorage.setItem('app_lang', newLang);
+            } catch (e) {}
+            if (updateUrl) {
+                this.syncUrlLang(newLang);
+            }
             this.applyLang();
         },
 
         toggleLang() {
-            this.setLang(this.lang === 'fa' ? 'en' : 'fa');
+            this.setLang(this.lang === 'fa' ? 'en' : 'fa', true);
+        },
+
+        syncUrlLang(targetLang) {
+            try {
+                if (!window.history || !window.history.replaceState) return;
+                const url = new URL(window.location.href);
+                url.searchParams.set('lang', targetLang);
+                window.history.replaceState(null, '', url.pathname + url.search + url.hash);
+            } catch (e) {}
         },
 
         applyLang() {
+            const isFa = this.lang === 'fa';
             document.documentElement.lang = this.lang;
-            document.documentElement.dir = this.lang === 'fa' ? 'rtl' : 'ltr';
-            document.title = this.lang === 'fa' 
-                ? 'رزومه علیرضا هرجی | Alireza Haraji' 
-                : 'Alireza Haraji | Resume & Portfolio';
-            
-            this.typedStrings = this.lang === 'fa' ? this.typedStringsFa : this.typedStringsEn;
+            document.documentElement.dir = isFa ? 'rtl' : 'ltr';
+
+            const langBtnText = document.getElementById('lang-btn-text');
+            if (langBtnText) {
+                langBtnText.textContent = isFa ? 'FA' : 'EN';
+            }
+
+            const titleText = isFa
+                ? 'علیرضا هرجی | برنامه‌نویس و توسعه‌دهنده بک‌اند و وب (Alireza Haraji)'
+                : 'Alireza Haraji | Backend & Web Programmer (PHP, Laravel, Python)';
+            const descText = isFa
+                ? 'وب‌سایت و رزومه رسمی علیرضا هرجی، برنامه‌نویس و توسعه‌دهنده بک‌اند (PHP، لاراول، پایتون، وردپرس) و معمار API. مشاهده نمونه‌کارهای زنده، سوابق و راه‌های ارتباطی.'
+                : 'Official portfolio and resume of Alireza Haraji (علیرضا هرجی), Backend & Web Programmer specializing in PHP, Laravel, Python, WordPress, REST APIs, and scalable web architecture.';
+
+            document.title = titleText;
+
+            const setMeta = (selector, attr, val) => {
+                const el = document.querySelector(selector);
+                if (el) el.setAttribute(attr, val);
+            };
+            setMeta('meta[name="description"]', 'content', descText);
+            setMeta('meta[property="og:title"]', 'content', titleText);
+            setMeta('meta[property="og:description"]', 'content', descText);
+            setMeta('meta[property="og:locale"]', 'content', isFa ? 'fa_IR' : 'en_US');
+            setMeta('meta[name="twitter:title"]', 'content', titleText);
+            setMeta('meta[name="twitter:description"]', 'content', descText);
+
+            try {
+                const path = window.location.pathname.toLowerCase();
+                let canonicalUrl = isFa ? 'https://www.exxondev.ir/fa/' : 'https://www.exxondev.ir/en/';
+                if (path === '/' || path === '/index.html') {
+                    const params = new URLSearchParams(window.location.search);
+                    const qLang = params.get('lang');
+                    if (qLang === 'fa' || qLang === 'en') {
+                        canonicalUrl = `https://www.exxondev.ir/?lang=${qLang}`;
+                    }
+                }
+                setMeta('link[rel="canonical"]', 'href', canonicalUrl);
+                setMeta('meta[property="og:url"]', 'content', canonicalUrl);
+            } catch (e) {}
+
+            this.typedStrings = isFa ? this.typedStringsFa : this.typedStringsEn;
             this.stringIndex = 0;
             this.typedText = '';
             this.isDeleting = false;
@@ -219,8 +315,9 @@ const registerPortfolioApp = () => {
                     skills: 'مهارت‌ها و استک',
                     resume: 'سوابق و تجربیات',
                     portfolio: 'نمونه‌کارها',
+                    faq: 'سوالات متداول',
                     ready: 'آماده همکاری',
-                    role: 'توسعه‌دهنده بک‌اند و نرم‌افزار',
+                    role: 'برنامه‌نویس و توسعه‌دهنده بک‌اند',
                     github: 'پروفایل گیت‌هاب',
                     email: 'ارسال ایمیل',
                     website: 'وب‌سایت شخصی',
@@ -319,6 +416,7 @@ const registerPortfolioApp = () => {
                     viewProject: 'مشاهده پروژه',
                     liveWebsite: 'وب‌سایت زنده',
                     loadingImg: 'در حال بارگذاری تصویر...',
+                    loadingPreview: 'در حال آماده‌سازی پیش‌نمایش...',
                     explore: 'مشاهده',
                     emptyState: 'هیچ پروژه‌ای در این دسته‌بندی یافت نشد.',
                     noProjects: 'هیچ پروژه‌ای در این دسته‌بندی یافت نشد.',
@@ -339,6 +437,11 @@ const registerPortfolioApp = () => {
                     techDetails: 'دسته‌بندی و پلتفرم:',
                     openRepo: 'مشاهده سورس در گیت‌هاب'
                 },
+                faq: {
+                    badge: 'پرسش‌های متداول',
+                    title: 'سوالات رایج درباره خدمات و همکاری',
+                    subtitle: 'پاسخ‌های کوتاه و دقیق درباره تخصص‌های برنامه‌نویسی، معماری بک‌اند و نحوه شروع همکاری با علیرضا هرجی.'
+                },
                 footer: {
                     badge: 'آماده برای فرصت‌های جدید',
                     ctaTitle: 'پروژه یا چالشی در حوزه مهندسی نرم‌افزار دارید؟',
@@ -347,7 +450,7 @@ const registerPortfolioApp = () => {
                     readySubtitle: 'بیایید برای ساخت معماری‌های پایدار بک‌اند، APIهای پرسرعت یا پلتفرم‌های سفارشی وب همکاری کنیم.',
                     getInTouch: 'ارتباط با من',
                     githubProfile: 'پروفایل گیت‌هاب',
-                    role: 'توسعه‌دهنده بک‌اند و نرم‌افزار',
+                    role: 'برنامه‌نویس و توسعه‌دهنده بک‌اند',
                     bio: 'متمرکز بر توسعه سیستم‌های مقیاس‌پذیر بک‌اند با PHP و Python، میکروسرویس‌های تمیز، بهینه‌سازی دیتابیس و راه‌حل‌های پایدار وب.',
                     navTitle: 'دسترسی سریع',
                     quickNav: 'دسترسی سریع',
@@ -355,8 +458,7 @@ const registerPortfolioApp = () => {
                     coreStack: 'استک فنی محوری',
                     rights: 'تمامی حقوق محفوظ است.',
                     allRights: 'تمامی حقوق محفوظ است.',
-                    craftedWith: 'طراحی و توسعه با',
-                    using: 'با Tailwind مدرن و Alpine.js'
+                    craftedBy: 'طراحی و توسعه اختصاصی توسط علیرضا هرجی'
                 }
             },
             en: {
@@ -366,8 +468,9 @@ const registerPortfolioApp = () => {
                     skills: 'Skills & Stack',
                     resume: 'Experience',
                     portfolio: 'Portfolio',
+                    faq: 'FAQ',
                     ready: 'Available for work',
-                    role: 'Backend & Software Dev',
+                    role: 'Backend & Web Programmer',
                     github: 'GitHub Profile',
                     email: 'Send Email',
                     website: 'Personal Website',
@@ -466,6 +569,7 @@ const registerPortfolioApp = () => {
                     viewProject: 'View Project',
                     liveWebsite: 'Live Website',
                     loadingImg: 'Loading image...',
+                    loadingPreview: 'Preparing live preview...',
                     explore: 'Explore',
                     emptyState: 'No projects found in this category.',
                     noProjects: 'No projects found in this category.',
@@ -486,6 +590,11 @@ const registerPortfolioApp = () => {
                     techDetails: 'Details & Category:',
                     openRepo: 'View Source on GitHub'
                 },
+                faq: {
+                    badge: 'Frequently Asked Questions',
+                    title: 'Common Questions & Collaboration',
+                    subtitle: 'Concise answers about Alireza Haraji’s programming stack, backend architecture services, and workflow.'
+                },
                 footer: {
                     badge: 'Ready for New Opportunities',
                     ctaTitle: 'Have a project or engineering challenge?',
@@ -494,7 +603,7 @@ const registerPortfolioApp = () => {
                     readySubtitle: "Let's collaborate to build resilient backend architectures, high-performance APIs, or custom web platforms.",
                     getInTouch: 'Get in Touch',
                     githubProfile: 'GitHub Profile',
-                    role: 'Backend & Software Engineer',
+                    role: 'Backend & Web Programmer',
                     bio: 'Focused on crafting scalable PHP & Python backend systems, clean microservices, database optimizations, and robust web solutions.',
                     navTitle: 'Quick Navigation',
                     quickNav: 'Quick Navigation',
@@ -502,19 +611,28 @@ const registerPortfolioApp = () => {
                     coreStack: 'Core Tech Stack',
                     rights: 'All rights reserved.',
                     allRights: 'All rights reserved.',
-                    craftedWith: 'Crafted with',
-                    using: 'using Modern Tailwind & Alpine.js'
+                    craftedBy: 'Crafted exclusively by Alireza Haraji'
                 }
             }
         },
 
         // Theme Management State (light | dark | system)
-        theme: localStorage.getItem('theme') || 'system',
+        theme: (() => {
+            try {
+                const t = localStorage.getItem('theme');
+                return ['light', 'dark', 'system'].includes(t) ? t : 'system';
+            } catch (e) {
+                return 'system';
+            }
+        })(),
         openThemeMenu: false,
 
         setTheme(mode) {
-            this.theme = mode;
-            localStorage.setItem('theme', mode);
+            const validMode = ['light', 'dark', 'system'].includes(mode) ? mode : 'system';
+            this.theme = validMode;
+            try {
+                localStorage.setItem('theme', validMode);
+            } catch (e) {}
             this.applyTheme();
             this.updateHeroBg();
             this.updatePortfolioImages();
@@ -566,7 +684,11 @@ const registerPortfolioApp = () => {
         },
 
         applyTheme() {
-            let isDark = this.getIsDark();
+            if (!['light', 'dark', 'system'].includes(this.theme)) {
+                this.theme = 'system';
+            }
+            document.documentElement.dataset.themePref = this.theme;
+            const isDark = this.getIsDark();
             if (isDark) {
                 document.documentElement.classList.add('dark');
             } else {
@@ -596,8 +718,52 @@ const registerPortfolioApp = () => {
 
         // UI States for animations
         showHeroContent: false,
-        showAboutContent: false,
-        showStats: [false, false, false, false], // Followers, Following, Repos, Gists
+        showAboutContent: true,
+        skillsVisible: false,
+        showStats: [true, true, true, true], // Followers, Following, Repos, Gists
+        activeFaq: 0,
+        faqs: [
+            {
+                q: {
+                    fa: 'علیرضا هرجی کیست و چه تخصصی در برنامه‌نویسی دارد؟',
+                    en: 'Who is Alireza Haraji and what is his programming specialization?'
+                },
+                a: {
+                    fa: 'علیرضا هرجی برنامه‌نویس و توسعه‌دهنده بک‌اند با بیش از ۵ سال تجربه در مهندسی وب است. تمرکز اصلی او بر توسعه سیستم‌های مقیاس‌پذیر با PHP، لاراول (Laravel)، پایتون (Python)، طراحی REST API، بهینه‌سازی دیتابیس‌های MySQL/Redis و ساخت پلاگین‌های اختصاصی وردپرس است.',
+                    en: 'Alireza Haraji is a backend and web programmer with over 5 years of hands-on engineering experience. His core stack includes PHP, Laravel, Python, RESTful API architecture, MySQL/Redis performance optimization, and custom WordPress plugin development.'
+                }
+            },
+            {
+                q: {
+                    fa: 'در بخش نمونه‌کارها چه نوع پروژه‌هایی قابل مشاهده است؟',
+                    en: 'What kinds of projects are showcased in the portfolio?'
+                },
+                a: {
+                    fa: 'مجموعه پروژه‌ها شامل سامانه‌های وب زنده (مانند داشبورد لحظه‌ای قیمت طلا و ارز Market-IR، اپلیکیشن رستا، سامانه هواشناسی Weather-Pro، ابزار اتوماسیون پایتون Instagrapi CLI Bot و فروشگاه‌های آنلاین AzadPc و Compressorsepah) به همراه مخازن متن‌باز گیت‌هاب است.',
+                    en: 'Featured works span live web applications—including Market-IR (real-time currency & gold dashboard), Rasta, Weather-Pro, Instagrapi CLI Bot, and e-commerce platforms AzadPc & Compressorsepah—alongside open-source GitHub repositories.'
+                }
+            },
+            {
+                q: {
+                    fa: 'آیا علیرضا هرجی برای پروژه‌های برنامه‌نویسی و همکاری آماده است؟',
+                    en: 'Is Alireza Haraji available for programming projects and hiring?'
+                },
+                a: {
+                    fa: 'بله، در حال حاضر امکان همکاری در پروژه‌های طراحی وب، توسعه بک‌اند، پیاده‌سازی API، بهینه‌سازی سرعت و سئوی فنی و همچنین موقعیت‌های شغلی تمام‌وقت یا ریموت وجود دارد.',
+                    en: 'Yes. He is available for backend engineering, custom web application development, API integration, technical SEO optimization, and remote or full-time engineering roles.'
+                }
+            },
+            {
+                q: {
+                    fa: 'چگونه می‌توانم با علیرضا هرجی ارتباط برقرار کنم؟',
+                    en: 'How can I contact Alireza Haraji?'
+                },
+                a: {
+                    fa: 'سریع‌ترین راه‌های ارتباطی ایمیل مستقیم به نشانی alirezask385@gmail.com، پیام در تلگرام (@alirezaharaji)، شبکه لینکدین یا بررسی مخازن در گیت‌هاب (@alirezaevil81) است.',
+                    en: 'You can reach out directly via email at alirezask385@gmail.com, Telegram (@alirezaharaji), LinkedIn, or GitHub (@alirezaevil81).'
+                }
+            }
+        ],
 
         // Skill Data
         skills: [
@@ -899,49 +1065,124 @@ const registerPortfolioApp = () => {
         activeFilter: 'all',
         isCategoryDropdownOpen: false,
         portfolioItems: [
-            { 
-                imgSrc: 'assets/img/portfolio/compressorsepah.webp', 
-                title: 'Compressorsepah', 
+            {
+                imgSrc: '',
+                title: 'market-ir',
                 description: {
-                    fa: 'فروشگاه آنلاین انواع کمپرسور و ابزارآلات صنعتی با طراحی واکنش‌گرا و عملکرد بهینه‌شده',
-                    en: 'Site for selling compressors and industrial tools with optimized performance'
-                }, 
-                link: 'https://compressorsepah.ir', 
-                category: 'WordPress', 
-                websiteUrl: 'https://compressorsepah.ir', 
-                imgLoaded: false, 
+                    fa: 'داشبورد واکنش‌گرا و لحظه‌ای برای رصد قیمت طلا، سکه، ارز و صندوق‌های سرمایه‌گذاری با پیش‌نمایش زنده وب',
+                    en: 'Responsive real-time dashboard tracking gold, coin, currency, and ETF market prices'
+                },
+                link: 'https://www.exxondev.ir/market-ir/',
+                repoUrl: 'https://github.com/alirezaevil81/market-ir',
+                category: 'JavaScript',
+                websiteUrl: 'https://www.exxondev.ir/market-ir/',
+                canEmbedLive: false,
+                imgLoaded: false,
+                imgError: false,
                 iframeLoaded: false,
-                isCustomImg: true 
+                isCustomImg: false
+            },
+            {
+                imgSrc: '',
+                title: 'Rasta',
+                description: {
+                    fa: 'اپلیکیشن وب رستا (Rasta) برای پیگیری ترک عادت‌ها، مدیریت روزشمار پاکی و ایجاد عادت‌های مثبت',
+                    en: 'Clean minimalist web application for habit tracking, daily streaks, and recovery milestones'
+                },
+                link: 'https://www.exxondev.ir/Rasta/',
+                repoUrl: 'https://github.com/alirezaevil81/Rasta',
+                category: 'HTML',
+                websiteUrl: 'https://www.exxondev.ir/Rasta/',
+                canEmbedLive: false,
+                imgLoaded: false,
+                imgError: false,
+                iframeLoaded: false,
+                isCustomImg: false
+            },
+            {
+                imgSrc: '',
+                title: 'weather-pro',
+                description: {
+                    fa: 'سامانه مدرن پیش‌بینی آب‌وهوا، شاخص کیفیت هوا (AQI) و نقشه‌های هواشناسی با رابط تعاملی',
+                    en: 'Modern weather forecast platform with real-time metrics, AQI index, and interactive UI'
+                },
+                link: 'https://www.exxondev.ir/weather-pro/',
+                repoUrl: 'https://github.com/alirezaevil81/weather-pro',
+                category: 'JavaScript',
+                websiteUrl: 'https://www.exxondev.ir/weather-pro/',
+                canEmbedLive: false,
+                imgLoaded: false,
+                imgError: false,
+                iframeLoaded: false,
+                isCustomImg: false
+            },
+            {
+                imgSrc: '',
+                title: 'instagrapi-cli-bot',
+                description: {
+                    fa: 'ربات خط فرمان و ابزار اتوماسیون اینستاگرام با پایتون همراه با مستندات تعاملی تحت وب',
+                    en: 'Python-powered Instagram CLI automation bot with interactive web documentation'
+                },
+                link: 'https://www.exxondev.ir/instagrapi-cli-bot/',
+                repoUrl: 'https://github.com/alirezaevil81/instagrapi-cli-bot',
+                category: 'Python',
+                websiteUrl: 'https://www.exxondev.ir/instagrapi-cli-bot/',
+                canEmbedLive: false,
+                imgLoaded: false,
+                imgError: false,
+                iframeLoaded: false,
+                isCustomImg: false
             },
             { 
-                imgSrc: 'assets/img/portfolio/azadpc.webp', 
+                imgSrc: ASSET_BASE + 'assets/img/portfolio/azadpc.webp', 
                 title: 'AzadPc', 
                 description: {
                     fa: 'فروشگاه تخصصی قطعات کامپیوتر، لپ‌تاپ و سیستم‌های گیمینگ حرفه‌ای',
-                    en: 'Site for shop pc and laptop gaming'
+                    en: 'Specialized e-commerce platform for gaming PCs, laptops, and hardware components'
                 }, 
                 link: 'https://azadpc.com', 
                 category: 'WordPress', 
                 websiteUrl: 'https://azadpc.com', 
+                canEmbedLive: false,
                 imgLoaded: false, 
+                imgError: false,
+                iframeLoaded: false,
+                isCustomImg: true 
+            },
+            { 
+                imgSrc: ASSET_BASE + 'assets/img/portfolio/compressorsepah.webp', 
+                title: 'Compressorsepah', 
+                description: {
+                    fa: 'فروشگاه آنلاین انواع کمپرسور و ابزارآلات صنعتی با طراحی واکنش‌گرا و عملکرد بهینه‌شده',
+                    en: 'Industrial compressors and machinery e-commerce platform with optimized performance'
+                }, 
+                link: 'https://compressorsepah.ir', 
+                category: 'WordPress', 
+                websiteUrl: 'https://compressorsepah.ir', 
+                canEmbedLive: false,
+                imgLoaded: false, 
+                imgError: false,
                 iframeLoaded: false,
                 isCustomImg: true 
             },
             {
-                imgSrc: 'assets/img/portfolio/bilmakh.webp',
+                imgSrc: ASSET_BASE + 'assets/img/portfolio/bilmakh.webp',
                 title: 'Bilmakh',
                 description: {
-                    fa: 'سامانه و وب‌اپلیکیشن سرگرمی و بازی تعاملی آنلاین توسعه‌داده شده با پایتون',
-                    en: 'Interactive entertainment web application developed with Python and clean UI'
+                    fa: 'سامانه و وب‌اپلیکیشن سرگرمی و بازی تعاملی آنلاین توسعه‌داده شده با PHP',
+                    en: 'Interactive entertainment web application developed with PHP and clean UI'
                 },
                 link: 'https://github.com/alirezaevil81/bilmakh',
                 repoUrl: 'https://github.com/alirezaevil81/bilmakh',
-                category: 'Python',
+                category: 'PHP',
+                canEmbedLive: false,
                 imgLoaded: false,
+                imgError: false,
+                iframeLoaded: false,
                 isCustomImg: true
             },
             {
-                imgSrc: 'assets/img/portfolio/freepik-geter.webp',
+                imgSrc: ASSET_BASE + 'assets/img/portfolio/freepik-geter.webp',
                 title: 'Freepik-Geter',
                 description: {
                     fa: 'ابزار خودکار دریافت و دانلود تصاویر، وکتورها و فایل‌های گرافیکی با کیفیت بالا',
@@ -949,83 +1190,53 @@ const registerPortfolioApp = () => {
                 },
                 link: 'https://github.com/alirezaevil81/freepik-geter',
                 repoUrl: 'https://github.com/alirezaevil81/freepik-geter',
-                category: 'Python',
+                category: 'PHP',
+                canEmbedLive: false,
                 imgLoaded: false,
+                imgError: false,
+                iframeLoaded: false,
                 isCustomImg: true
             },
             {
-                imgSrc: 'assets/img/portfolio/weblog-plus.webp',
+                imgSrc: ASSET_BASE + 'assets/img/portfolio/weblog-plus.webp',
                 title: 'Weblog-Plus',
                 description: {
                     fa: 'سیستم وبلاگ‌نویسی و مدیریت محتوای پیشرفته بر پایه معماری ماژولار PHP و امن',
-                    en: 'Advanced modular blogging and content management system'
+                    en: 'Advanced modular blogging and content management system built with PHP'
                 },
                 link: 'https://github.com/alirezaevil81/weblog-plus',
                 repoUrl: 'https://github.com/alirezaevil81/weblog-plus',
                 category: 'PHP',
+                canEmbedLive: false,
                 imgLoaded: false,
+                imgError: false,
+                iframeLoaded: false,
                 isCustomImg: true
             }
         ],
 
-        // Interactive Website Preview Modal State & Controls
-        previewModalOpen: false,
-        selectedPreviewItem: null,
-        previewDevice: 'desktop', // 'desktop' | 'tablet' | 'mobile'
-        previewMode: 'snapshot', // 'snapshot' | 'live'
-        previewCopied: false,
-        iframeLoading: false,
+        async probeLivePreview(item) {
+            if (!item || !item.websiteUrl) return;
+            const target = item.websiteUrl;
+            if (!/^https:\/\//i.test(target)) return;
 
-        openPreviewModal(item, mode = 'live') {
-            if (!item) return;
-            this.selectedPreviewItem = item;
-            this.previewDevice = 'desktop';
-            this.previewMode = (mode === 'live' && item.websiteUrl) ? 'live' : (item.websiteUrl ? 'live' : 'snapshot');
-            this.previewCopied = false;
-            this.iframeLoading = (this.previewMode === 'live');
-            this.previewModalOpen = true;
-            document.body.classList.add('overflow-hidden');
-        },
-
-        closePreviewModal() {
-            this.previewModalOpen = false;
-            this.selectedPreviewItem = null;
-            document.body.classList.remove('overflow-hidden');
-        },
-
-        setPreviewDevice(device) {
-            this.previewDevice = device;
-        },
-
-        setPreviewMode(mode) {
-            this.previewMode = mode;
-            if (mode === 'live') {
-                this.iframeLoading = true;
-            }
-        },
-
-        handleIframeLoad() {
-            this.iframeLoading = false;
-        },
-
-        getLivePreviewUrl(targetUrl) {
-            if (!targetUrl) return '';
-            return '/api/proxy-preview?url=' + encodeURIComponent(targetUrl);
-        },
-
-        copyPreviewUrl(url) {
-            if (!url) return;
-            if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(url).then(() => {
-                    this.previewCopied = true;
-                    setTimeout(() => { this.previewCopied = false; }, 2000);
-                }).catch(() => {
-                    this.previewCopied = true;
-                    setTimeout(() => { this.previewCopied = false; }, 2000);
+            let controller = null;
+            let timer = null;
+            try {
+                controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+                if (controller) {
+                    timer = setTimeout(() => controller.abort(), 5000);
+                }
+                await fetch(target, {
+                    mode: 'no-cors',
+                    cache: 'no-store',
+                    signal: controller ? controller.signal : undefined
                 });
-            } else {
-                this.previewCopied = true;
-                setTimeout(() => { this.previewCopied = false; }, 2000);
+                item.canEmbedLive = true;
+            } catch (e) {
+                item.canEmbedLive = false;
+            } finally {
+                if (timer) clearTimeout(timer);
             }
         },
 
@@ -1153,51 +1364,112 @@ const registerPortfolioApp = () => {
             return this.portfolioItems.filter(item => item.category === cat).length;
         },
 
+        initScrollReveal() {
+            const revealAllFallback = () => {
+                document.querySelectorAll('.reveal-up').forEach(el => el.classList.add('is-visible'));
+                this.skillsVisible = true;
+            };
+
+            if (typeof IntersectionObserver === 'undefined') {
+                revealAllFallback();
+                return;
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        if (entry.target.id === 'skill') {
+                            this.skillsVisible = true;
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.08,
+                rootMargin: '0px 0px -40px 0px'
+            });
+
+            const observeTargets = () => {
+                document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+                const skillSection = document.getElementById('skill');
+                if (skillSection) observer.observe(skillSection);
+            };
+
+            this.$nextTick(() => {
+                observeTargets();
+            });
+            setTimeout(() => {
+                observeTargets();
+                // Ensure skills bar animates cleanly if user scrolled quickly
+                this.skillsVisible = true;
+            }, 900);
+            // Safety fallback so nothing remains invisible
+            setTimeout(revealAllFallback, 3500);
+        },
+
         async init() {
             // Apply initial language & direction
             this.applyLang();
 
             // Apply initial theme & watch system color scheme preference
             this.applyTheme();
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-                if (this.theme === 'system') {
-                    this.applyTheme();
-                    this.updateHeroBg();
-                    this.updatePortfolioImages();
+            if (window.matchMedia) {
+                const mq = window.matchMedia('(prefers-color-scheme: dark)');
+                const onSchemeChange = () => {
+                    if (this.theme === 'system') {
+                        this.applyTheme();
+                        this.updateHeroBg();
+                        this.updatePortfolioImages();
+                    }
+                };
+                if (typeof mq.addEventListener === 'function') {
+                    mq.addEventListener('change', onSchemeChange);
+                } else if (typeof mq.addListener === 'function') {
+                    mq.addListener(onSchemeChange);
                 }
-            });
+            }
 
-            // Set initial circular avatar favicon from profile picture
+            // Set initial rounded avatar favicon from profile picture
             this.updateCircularFavicon(this.user?.avatar_url || 'https://avatars.githubusercontent.com/u/60322583?v=4');
 
-            // Promise waiting for full page asset/DOM loading (window load event)
-            const windowPageLoadPromise = new Promise((resolve) => {
-                if (document.readyState === 'complete') {
-                    resolve();
-                } else {
-                    window.addEventListener('load', () => resolve(), { once: true });
+            // Probe live websites immediately for pre-populated portfolio items
+            this.portfolioItems.forEach(item => {
+                if (item.websiteUrl) {
+                    this.probeLivePreview(item);
                 }
             });
 
-            // Helper to preload critical image
-            const preloadImage = (url) => {
-                if (!url) return Promise.resolve();
-                return new Promise((resolve) => {
-                    const img = new Image();
-                    img.onload = () => resolve();
-                    img.onerror = () => resolve();
-                    img.src = url;
-                });
+            // Initial Handshake step
+            this.loadingProgress = 35;
+            if (this.loadingLogs[0]) this.loadingLogs[0].done = true;
+
+            // Keep preloader snappy while remote GitHub data finishes hydrating
+            const finishPreloader = () => {
+                if (!this.isLoading) return;
+                this.loadingProgress = 100;
+                if (this.loadingLogs[2]) this.loadingLogs[2].done = true;
+                if (this.loadingLogs[3]) this.loadingLogs[3].done = true;
+                this.isLoading = false;
+                this.showHeroContent = true;
+                this.showAboutContent = true;
+                this.showStats = [true, true, true, true];
+                this.type();
+                this.initScrollReveal();
+
+                if (window.location.hash) {
+                    const section = document.querySelector(window.location.hash);
+                    if (section) setTimeout(() => { window.scrollTo({ top: section.offsetTop, behavior: 'smooth' }); }, 150);
+                }
             };
 
-            // Initial Handshake step
-            this.loadingProgress = 25;
-            if (this.loadingLogs[0]) this.loadingLogs[0].done = true;
+            // Cap initial preloader lock at ~700ms max so first paint is never blocked by slow APIs
+            const fastPreloaderTimer = setTimeout(finishPreloader, 700);
 
             // Step 1: Fetch Image Assets, GitHub User Data & Social Accounts in parallel
             try {
                 const [imageRes, userRes, socialRes] = await Promise.allSettled([
-                    fetch('assets/data/images.json').then(res => res.ok ? res.json() : null),
+                    fetch(ASSET_BASE + 'assets/data/images.json').then(res => res.ok ? res.json() : null),
                     fetch('https://api.github.com/users/alirezaevil81').then(res => res.ok ? res.json() : null),
                     fetch('https://api.github.com/users/alirezaevil81/social_accounts').then(res => res.ok ? res.json() : null)
                 ]);
@@ -1231,7 +1503,7 @@ const registerPortfolioApp = () => {
                 console.error("Initial data fetch error:", e);
             }
 
-            this.loadingProgress = 55;
+            this.loadingProgress = 75;
             if (this.loadingLogs[1]) this.loadingLogs[1].done = true;
 
             // Step 2: Fetch Repositories
@@ -1250,13 +1522,13 @@ const registerPortfolioApp = () => {
 
                             const repoNameLower = repo.name.toLowerCase();
                             if (repo.id === 825470024 || repoNameLower.includes('bilmakh')) {
-                                imgSrc = 'assets/img/portfolio/bilmakh.webp';
+                                imgSrc = ASSET_BASE + 'assets/img/portfolio/bilmakh.webp';
                                 isCustomImg = true;
                             } else if (repo.id === 756756391 || repoNameLower.includes('freepik')) {
-                                imgSrc = 'assets/img/portfolio/freepik-geter.webp';
+                                imgSrc = ASSET_BASE + 'assets/img/portfolio/freepik-geter.webp';
                                 isCustomImg = true;
                             } else if (repo.id === 1047266466 || repoNameLower.includes('weblog')) {
-                                imgSrc = 'assets/img/portfolio/weblog-plus.webp';
+                                imgSrc = ASSET_BASE + 'assets/img/portfolio/weblog-plus.webp';
                                 isCustomImg = true;
                             } else {
                                 isCustomImg = false;
@@ -1271,12 +1543,16 @@ const registerPortfolioApp = () => {
                                 if (!hp.startsWith('http://') && !hp.startsWith('https://')) {
                                     hp = 'https://' + hp;
                                 }
-                                hp = hp.replace(/https?:\/\/alirezaevil81\.github\.io\/?/i, 'https://exxondev.ir/');
+                                hp = hp.replace(/^http:\/\//i, 'https://');
+                                hp = hp.replace(/https?:\/\/alirezaevil81\.github\.io\/?/i, 'https://www.exxondev.ir/');
+                                hp = hp.replace(/https?:\/\/exxondev\.ir\/?/i, 'https://www.exxondev.ir/');
                                 websiteUrl = hp;
                             } else if (repo.description) {
                                 const match = repo.description.match(/https?:\/\/[^\s]+/i);
                                 if (match) {
-                                    websiteUrl = match[0];
+                                    websiteUrl = match[0]
+                                        .replace(/^http:\/\//i, 'https://')
+                                        .replace(/https?:\/\/alirezaevil81\.github\.io\/?/i, 'https://www.exxondev.ir/');
                                 }
                             }
 
@@ -1285,13 +1561,17 @@ const registerPortfolioApp = () => {
                                 existingItem.stars = repo.stargazers_count;
                                 existingItem.forks = repo.forks_count;
                                 if (repo.html_url) existingItem.repoUrl = repo.html_url;
-                                if (!existingItem.websiteUrl && websiteUrl) existingItem.websiteUrl = websiteUrl;
+                                if (websiteUrl && !existingItem.websiteUrl) {
+                                    existingItem.websiteUrl = websiteUrl;
+                                    this.probeLivePreview(existingItem);
+                                }
                             } else {
                                 const newItem = {
                                     imgSrc: imgSrc,
                                     isCustomImg: isCustomImg,
                                     placeholderIndex: isCustomImg ? undefined : nonCustomCount,
                                     websiteUrl: websiteUrl,
+                                    canEmbedLive: false,
                                     title: repo.name,
                                     description: repo.description || 'Open-source repository on GitHub',
                                     link: websiteUrl || repo.html_url,
@@ -1299,10 +1579,15 @@ const registerPortfolioApp = () => {
                                     category: category,
                                     stars: repo.stargazers_count,
                                     forks: repo.forks_count,
-                                    imgLoaded: false
+                                    imgLoaded: false,
+                                    imgError: false,
+                                    iframeLoaded: false
                                 };
                                 if (!isCustomImg) nonCustomCount++;
                                 this.portfolioItems.push(newItem);
+                                if (newItem.websiteUrl) {
+                                    this.probeLivePreview(newItem);
+                                }
                             }
                         });
                         this.updatePortfolioImages();
@@ -1312,51 +1597,9 @@ const registerPortfolioApp = () => {
                 console.error("Repos fetch error:", e);
             }
 
-            this.loadingProgress = 80;
-            if (this.loadingLogs[2]) this.loadingLogs[2].done = true;
-
-            // Step 3: Ensure complete window load and critical hero background/avatar preload
-            await Promise.allSettled([
-                windowPageLoadPromise,
-                this.heroBg ? preloadImage(this.heroBg) : Promise.resolve(),
-                this.user?.avatar_url ? preloadImage(this.user.avatar_url) : Promise.resolve()
-            ]);
-
-            // Step 4: Page load is 100% complete
+            clearTimeout(fastPreloaderTimer);
             this.loadingProgress = 100;
-            if (this.loadingLogs[3]) this.loadingLogs[3].done = true;
-
-            setTimeout(() => {
-                this.isLoading = false;
-
-                // Start Typewriter & Sequential Animations
-                this.type();
-                setTimeout(() => this.showHeroContent = true, 100);
-                setTimeout(() => this.showAboutContent = true, 300);
-                setTimeout(() => this.showStats[0] = true, 500);
-                setTimeout(() => this.showStats[1] = true, 700);
-                setTimeout(() => this.showStats[2] = true, 900);
-                setTimeout(() => this.showStats[3] = true, 1100);
-
-                // Handle Hash Scroll on load
-                if (window.location.hash) {
-                    const section = document.querySelector(window.location.hash);
-                    if (section) setTimeout(() => { window.scrollTo({ top: section.offsetTop, behavior: 'smooth' }); }, 150);
-                }
-            }, 350);
-
-            // Safety fallback in case external third-party APIs get blocked/timeout
-            setTimeout(() => {
-                if (this.isLoading) {
-                    this.loadingProgress = 100;
-                    if (this.loadingLogs[3]) this.loadingLogs[3].done = true;
-                    this.isLoading = false;
-                    this.type();
-                    this.showHeroContent = true;
-                    this.showAboutContent = true;
-                    this.showStats = [true, true, true, true];
-                }
-            }, 8000);
+            setTimeout(finishPreloader, 180);
         },
 
         handleScroll() {
@@ -1370,7 +1613,7 @@ const registerPortfolioApp = () => {
             }
 
             // Active section scroll spy
-            const sections = ['portfolio', 'resume', 'skill', 'about', 'hero'];
+            const sections = ['faq', 'portfolio', 'resume', 'skill', 'about', 'hero'];
             const scrollPosition = scrollY + 240;
             for (const id of sections) {
                 const el = document.getElementById(id);

@@ -8,7 +8,7 @@
 }
 
 .shadow-3xl {
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 5px rgba(59, 130, 246, 0.5); /* blue-500 with 50% opacity */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 5px rgba(59, 130, 246, 0.5);
 }
 
 /* Prevent layout shift and horizontal overflows across all viewports */
@@ -17,17 +17,133 @@ html, body {
     overflow-x: hidden;
 }
 
-html[lang="fa"], [dir="rtl"] {
-    font-family: 'Yekan', 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+html[lang="fa"], html[lang="fa"] body, html[lang="fa"] .font-sans, [dir="rtl"], [dir="rtl"] body, [dir="rtl"] .font-sans {
+    font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
 }
 
-html[lang="en"], [dir="ltr"] {
-    font-family: 'Mona Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+html[lang="en"], html[lang="en"] body, html[lang="en"] .font-sans, [dir="ltr"], [dir="ltr"] body, [dir="ltr"] .font-sans {
+    font-family: 'Mona Sans', 'Vazirmatn', -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji" !important;
 }
 
 /* GitHub Monospace Typography for code elements */
 code, kbd, samp, pre {
     font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* Subtle Architectural Grid Pattern for Hero & Accent Sections */
+.bg-grid-pattern {
+    background-image: radial-gradient(rgba(100, 116, 139, 0.22) 1px, transparent 1px);
+    background-size: 26px 26px;
+}
+html.dark .bg-grid-pattern {
+    background-image: radial-gradient(rgba(148, 163, 184, 0.14) 1px, transparent 1px);
+}
+
+.bg-grid-masked {
+    -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 45%, #000 35%, transparent 100%);
+    mask-image: radial-gradient(ellipse 75% 65% at 50% 45%, #000 35%, transparent 100%);
+}
+
+/* Compositor-only modern animations */
+@keyframes floatSlow {
+    0%, 100% {
+        transform: translate3d(0, 0, 0);
+    }
+    50% {
+        transform: translate3d(0, -14px, 0);
+    }
+}
+
+@keyframes floatReverse {
+    0%, 100% {
+        transform: translate3d(0, 0, 0);
+    }
+    50% {
+        transform: translate3d(0, 14px, 0);
+    }
+}
+
+.animate-float-slow {
+    animation: floatSlow 9s ease-in-out infinite;
+    will-change: transform;
+}
+
+.animate-float-reverse {
+    animation: floatReverse 11s ease-in-out infinite;
+    will-change: transform;
+}
+
+/* Smooth Scroll-Reveal Animations */
+.reveal-up {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+.reveal-up.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+/* Modern Interactive Card Hover Glow & Elevation */
+.modern-card {
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.22s ease;
+}
+.modern-card:hover {
+    transform: translate3d(0, -4px, 0);
+}
+
+/* GPU-composited Shimmer Skeleton for Portfolio Previews & Preloader */
+@keyframes shimmerSlide {
+    0% {
+        transform: translate3d(-100%, 0, 0);
+    }
+    100% {
+        transform: translate3d(100%, 0, 0);
+    }
+}
+
+.skeleton-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+.skeleton-shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translate3d(-100%, 0, 0);
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(148, 163, 184, 0.16) 45%,
+        rgba(255, 255, 255, 0.22) 50%,
+        rgba(148, 163, 184, 0.16) 55%,
+        transparent 100%
+    );
+    animation: shimmerSlide 1.55s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    will-change: transform;
+    pointer-events: none;
+}
+html.dark .skeleton-shimmer::after {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(59, 130, 246, 0.08) 40%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(59, 130, 246, 0.08) 60%,
+        transparent 100%
+    );
+}
+
+/* Theme toggle icon guaranteed visibility even before Alpine mounts */
+.theme-icon-item {
+    display: none;
+}
+html[data-theme-pref="light"] .theme-icon-light,
+html[data-theme-pref="dark"] .theme-icon-dark,
+html[data-theme-pref="system"] .theme-icon-system,
+html:not([data-theme-pref]) .theme-icon-system {
+    display: inline-flex;
 }
 
 /* RTL Layout positioning for sidebar and main content */
@@ -43,7 +159,7 @@ code, kbd, samp, pre {
     }
     html[dir="rtl"] main {
         margin-left: 0 !important;
-        margin-right: 18rem !important; /* 72 in Tailwind is 18rem */
+        margin-right: 18rem !important;
     }
     html[dir="rtl"] #footer {
         margin-left: 0 !important;
@@ -153,7 +269,6 @@ html[dir="rtl"] .-left-6 {
     }
 }
 
-/* In English (LTR): Sidebar is on the LEFT (w-72), so floating controls MUST sit on the RIGHT */
 html[dir="ltr"] #floating-controls {
     right: 1rem !important;
     left: auto !important;
@@ -165,7 +280,6 @@ html[dir="ltr"] #floating-controls {
     }
 }
 
-/* In Persian (RTL): Sidebar is on the RIGHT (w-72), so floating controls MUST sit on the LEFT to never collide */
 html[dir="rtl"] #floating-controls {
     left: 1rem !important;
     right: auto !important;
@@ -177,7 +291,6 @@ html[dir="rtl"] #floating-controls {
     }
 }
 
-/* Dropdown alignment matching screen edge */
 html[dir="ltr"] #theme-dropdown-menu {
     right: 0 !important;
     left: auto !important;
@@ -187,9 +300,19 @@ html[dir="rtl"] #theme-dropdown-menu {
     right: auto !important;
 }
 
-/* Smooth scrolling support */
+/* Reduced motion compliance */
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
+    }
+    .animate-float-slow,
+    .animate-float-reverse,
+    .skeleton-shimmer::after {
+        animation: none !important;
+    }
+    .reveal-up {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
     }
 }

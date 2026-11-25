@@ -1,4 +1,23 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://exxondev.ir/sitemap.xml
+# AI & Generative Search Crawlers (GEO)
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://www.exxondev.ir/sitemap.xml

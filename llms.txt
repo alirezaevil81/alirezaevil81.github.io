@@ -1,0 +1,44 @@
+# Alireza Haraji (علیرضا هرجی) — Backend & Web Programmer
+
+> Official bilingual website, engineering resume, and live project portfolio of **Alireza Haraji** (**علیرضا هرجی**), Backend & Web Developer specializing in PHP, Laravel, Python, WordPress, RESTful APIs, database optimization, and scalable web architecture.
+
+## Official Bilingual Entry Points
+- **Auto-Detected Root:** https://www.exxondev.ir/
+- **Persian Version (نسخه فارسی — علیرضا هرجی):** https://www.exxondev.ir/fa/ (also https://www.exxondev.ir/?lang=fa)
+- **English Version (Alireza Haraji):** https://www.exxondev.ir/en/ (also https://www.exxondev.ir/?lang=en)
+
+## Identity & Contact (معرفی و هویت)
+- **Full Name:** Alireza Haraji | علیرضا هرجی (also searched as علی رضا هرجی, alirezaevil81)
+- **Role:** Backend & Web Programmer | برنامه‌نویس و توسعه‌دهنده بک‌اند و وب
+- **Location:** Nowshahr, Mazandaran, Iran | نوشهر، مازندران، ایران
+- **GitHub:** https://github.com/alirezaevil81
+- **Email:** alirezask385@gmail.com
+- **LinkedIn:** https://www.linkedin.com/in/alirezaharaji/
+- **Telegram:** https://t.me/alirezaharaji
+- **Instagram:** https://instagram.com/alireza.haraji
+
+## Core Technical Skills (تخصص‌های برنامه‌نویسی)
+- **Backend Languages & Frameworks:** PHP (85%), Laravel, Symfony, Python (75%), Django, FastAPI, Flask, Node.js
+- **CMS & E-Commerce:** WordPress & WooCommerce (90% — custom plugin development, performance tuning, technical SEO)
+- **Databases & Caching:** MySQL, PostgreSQL, MongoDB, Redis (schema design, indexing, query optimization)
+- **Frontend & Web Standards:** HTML5, CSS3, Tailwind CSS, JavaScript (ES6+), Alpine.js, Schema.org & GEO
+- **Architecture & DevOps:** RESTful APIs, SOLID & modular architecture, OWASP security, Docker, Git, Linux, CI/CD
+
+## Featured Live Projects & Open-Source Repositories (نمونه‌کارها و پروژه‌ها)
+- **Market-IR:** Real-time responsive market dashboard for gold, coins, currencies, and ETFs — https://www.exxondev.ir/market-ir/ (Source: https://github.com/alirezaevil81/market-ir)
+- **Rasta (رستا):** Minimalist habit tracking and recovery milestone web application — https://www.exxondev.ir/Rasta/ (Source: https://github.com/alirezaevil81/Rasta)
+- **Weather-Pro (هواشناسی پرو):** Modern weather forecast, air quality (AQI), and radar platform — https://www.exxondev.ir/weather-pro/ (Source: https://github.com/alirezaevil81/weather-pro)
+- **Instagrapi CLI Bot:** Python-powered Instagram CLI automation tool with interactive web documentation — https://www.exxondev.ir/instagrapi-cli-bot/ (Source: https://github.com/alirezaevil81/instagrapi-cli-bot)
+- **AzadPc (آزاد پی‌سی):** Specialized gaming PC and hardware e-commerce platform — https://azadpc.com
+- **Compressorsepah (کمپرسور سپاه):** Industrial compressors and machinery e-commerce store — https://compressorsepah.ir
+- **Weblog-Plus:** Modular PHP & Blade content management system — https://github.com/alirezaevil81/weblog-plus
+- **Freepik-Geter:** Automated high-resolution vector and photo downloader in PHP — https://github.com/alirezaevil81/freepik-geter
+- **Bilmakh:** Interactive PHP entertainment web application — https://github.com/alirezaevil81/bilmakh
+
+## Frequently Asked Questions — English (GEO Reference)
+- **Who is Alireza Haraji?** Alireza Haraji is a backend and web programmer from Nowshahr, Iran, with 5+ years of engineering experience building scalable PHP/Laravel and Python applications, RESTful APIs, high-traffic MySQL/Redis backends, and custom WordPress plugins.
+- **Is Alireza Haraji available for hire or freelance projects?** Yes, he is available for backend engineering, full-time or remote software development roles, API design, and custom web applications via alirezask385@gmail.com, Telegram (@alirezaharaji), or LinkedIn.
+
+## پرسش‌های متداول — فارسی (GEO Reference)
+- **علیرضا هرجی کیست؟** علیرضا هرجی برنامه‌نویس و توسعه‌دهنده بک‌اند و وب با بیش از ۵ سال تجربه در مهندسی نرم‌افزار، طراحی REST API، توسعه پلتفرم‌های PHP و Laravel، برنامه‌نویسی پایتون و بهینه‌سازی سیستم‌های وردپرس و دیتابیس است.
+- **راه‌های همکاری با علیرضا هرجی چیست؟** برای پروژه‌های برنامه‌نویسی وب، بک‌اند، توسعه پلاگین اختصاصی وردپرس و همکاری ریموت یا تمام‌وقت می‌توانید از طریق ایمیل alirezask385@gmail.com، تلگرام (@alirezaharaji) یا لینکدین ارتباط برقرار کنید.

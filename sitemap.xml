@@ -2,12 +2,48 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://exxondev.ir/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <loc>https://www.exxondev.ir/</loc>
+    <lastmod>2026-11-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="fa" href="https://exxondev.ir/?lang=fa" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://exxondev.ir/?lang=en" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://exxondev.ir/" />
+    <xhtml:link rel="alternate" hreflang="fa" href="https://www.exxondev.ir/fa/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.exxondev.ir/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.exxondev.ir/" />
+  </url>
+  <url>
+    <loc>https://www.exxondev.ir/fa/</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://www.exxondev.ir/fa/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.exxondev.ir/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.exxondev.ir/" />
+  </url>
+  <url>
+    <loc>https://www.exxondev.ir/en/</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://www.exxondev.ir/fa/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.exxondev.ir/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.exxondev.ir/" />
+  </url>
+  <url>
+    <loc>https://www.exxondev.ir/?lang=fa</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://www.exxondev.ir/fa/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.exxondev.ir/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.exxondev.ir/" />
+  </url>
+  <url>
+    <loc>https://www.exxondev.ir/?lang=en</loc>
+    <lastmod>2026-11-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://www.exxondev.ir/fa/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.exxondev.ir/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.exxondev.ir/" />
   </url>
 </urlset>

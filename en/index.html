@@ -1,0 +1,1987 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Alireza Haraji | Backend & Web Programmer (PHP, Laravel, Python)</title>
+    <meta name="description" content="Official portfolio and resume of Alireza Haraji (علیرضا هرجی), Backend & Web Programmer specializing in PHP, Laravel, Python, WordPress, REST APIs, and scalable web architecture.">
+    <meta name="keywords" content="Alireza Haraji, Alireza Haraji Programmer, Backend Developer, Web Developer, PHP Developer, Laravel Developer, Python Developer, WordPress Developer, API Architect, exxondev">
+    <meta name="author" content="علیرضا هرجی | Alireza Haraji">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8fafc">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#020617">
+    <link rel="canonical" href="https://www.exxondev.ir/en/">
+    <link rel="alternate" type="text/plain" title="LLMs Context" href="https://www.exxondev.ir/llms.txt">
+    
+    <!-- Preconnections for Performance -->
+    <link rel="preconnect" href="https://avatars.githubusercontent.com">
+    <link rel="preconnect" href="https://api.github.com">
+    
+    <!-- Preload Critical LCP Asset -->
+    <link rel="preload" as="image" href="https://avatars.githubusercontent.com/u/60322583?v=4">
+    
+    <!-- Multi-language definitions (hreflang) -->
+    <link rel="alternate" hreflang="fa" href="https://www.exxondev.ir/fa/">
+    <link rel="alternate" hreflang="fa-IR" href="https://www.exxondev.ir/fa/">
+    <link rel="alternate" hreflang="en" href="https://www.exxondev.ir/en/">
+    <link rel="alternate" hreflang="x-default" href="https://www.exxondev.ir/">
+
+    <!-- Anti-flash Early Theme & Language Initialization -->
+    <script>
+        (function() {
+            var storedTheme = 'system';
+            try {
+                var raw = localStorage.getItem('theme');
+                if (raw === 'light' || raw === 'dark' || raw === 'system') {
+                    storedTheme = raw;
+                }
+            } catch (e) {}
+            document.documentElement.dataset.themePref = storedTheme;
+
+            var isDark = false;
+            if (storedTheme === 'dark') {
+                isDark = true;
+            } else if (storedTheme === 'light') {
+                isDark = false;
+            } else {
+                isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            }
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+
+            var resolvedLang = '';
+            try {
+                var params = new URLSearchParams(window.location.search);
+                var qLang = params.get('lang');
+                if (qLang === 'fa' || qLang === 'en') {
+                    resolvedLang = qLang;
+                }
+            } catch (e) {}
+
+            if (!resolvedLang) {
+                try {
+                    var pathname = window.location.pathname.toLowerCase();
+                    if (pathname === '/fa' || pathname.indexOf('/fa/') === 0) resolvedLang = 'fa';
+                    else if (pathname === '/en' || pathname.indexOf('/en/') === 0) resolvedLang = 'en';
+                } catch (e) {}
+            }
+
+            if (!resolvedLang) {
+                try {
+                    var rawLang = localStorage.getItem('app_lang');
+                    if (rawLang === 'fa' || rawLang === 'en') {
+                        resolvedLang = rawLang;
+                    }
+                } catch (e) {}
+            }
+
+            if (!resolvedLang) {
+                try {
+                    var langs = (navigator.languages && navigator.languages.length > 0)
+                        ? navigator.languages
+                        : [navigator.language || navigator.userLanguage || 'en'];
+                    for (var i = 0; i < langs.length; i++) {
+                        if (typeof langs[i] === 'string' && langs[i].toLowerCase().indexOf('fa') === 0) {
+                            resolvedLang = 'fa';
+                            break;
+                        }
+                    }
+                } catch (e) {}
+            }
+
+            if (resolvedLang !== 'fa' && resolvedLang !== 'en') {
+                resolvedLang = 'en';
+            }
+
+            document.documentElement.lang = resolvedLang;
+            document.documentElement.dir = resolvedLang === 'fa' ? 'rtl' : 'ltr';
+            document.title = resolvedLang === 'fa'
+                ? 'علیرضا هرجی | برنامه‌نویس و توسعه‌دهنده بک‌اند و وب (Alireza Haraji)'
+                : 'Alireza Haraji | Backend & Web Programmer (PHP, Laravel, Python)';
+        })();
+    </script>
+
+    <!-- Typography: Vazirmatn (Google Fonts) & Mona Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Favicons with High-Resolution Circular Frame from Profile Picture -->
+    <link id="app-favicon" rel="icon" type="image/png" sizes="192x192" href="https://avatars.githubusercontent.com/u/60322583?v=4">
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/60322583?v=4">
+    <link rel="shortcut icon" href="https://avatars.githubusercontent.com/u/60322583?v=4">
+    <link id="app-apple-icon" rel="apple-touch-icon" sizes="180x180" href="https://avatars.githubusercontent.com/u/60322583?v=4">
+
+    <!-- Tailwind CSS CDN -->
+    <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @custom-variant dark (&:where(.dark, .dark *));
+    </style>
+    <!-- CSS Style -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <!-- Alpine.js CDN -->
+    <script defer crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <!-- Open Graph (Facebook, LinkedIn, etc.) -->
+    <meta property="og:type" content="profile">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="fa_IR">
+    <meta property="og:site_name" content="علیرضا هرجی | Alireza Haraji">
+    <meta property="profile:first_name" content="Alireza">
+    <meta property="profile:last_name" content="Haraji">
+    <meta property="profile:username" content="alirezaevil81">
+    <meta property="og:title" content="Alireza Haraji | Backend & Web Programmer (PHP, Laravel, Python)">
+    <meta property="og:url" content="https://www.exxondev.ir/en/">
+    <meta property="og:image" content="https://avatars.githubusercontent.com/u/60322583?v=4">
+    <meta property="og:image:alt" content="عکس پروفایل علیرضا هرجی برنامه‌نویس | Alireza Haraji Profile Photo">
+    <meta property="og:description" content="Official portfolio and resume of Alireza Haraji (علیرضا هرجی), Backend & Web Programmer specializing in PHP, Laravel, Python, WordPress, REST APIs, and scalable web architecture.">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Alireza Haraji | Backend & Web Programmer (PHP, Laravel, Python)">
+    <meta name="twitter:description" content="Official portfolio and resume of Alireza Haraji (علیرضا هرجی), Backend & Web Programmer specializing in PHP, Laravel, Python, WordPress, REST APIs, and scalable web architecture.">
+    <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/60322583?v=4">
+    <meta name="twitter:image:alt" content="Alireza Haraji | علیرضا هرجی">
+    
+    <!-- Schema.org (Structured Data for SEO & GEO: Person, ProfilePage, WebSite, ItemList, FAQPage) -->
+    <script type="application/ld+json">
+{
+        "@context": "https://schema.org",
+        "@graph": [
+                {
+                        "@type": "Person",
+                        "@id": "https://www.exxondev.ir/#person",
+                        "name": "Alireza Haraji",
+                        "alternateName": [
+                                "علیرضا هرجی",
+                                "Alireza Haraji Programmer",
+                                "Alireza Haraji Developer",
+                                "alirezaevil81"
+                        ],
+                        "url": "https://www.exxondev.ir/en/",
+                        "image": "https://avatars.githubusercontent.com/u/60322583?v=4",
+                        "jobTitle": "Backend & Web Programmer",
+                        "description": "Alireza Haraji is a backend and web programmer with over 5 years of experience in PHP, Laravel, Python, WordPress plugin engineering, RESTful API architecture, and MySQL/Redis database optimization.",
+                        "email": "mailto:alirezask385@gmail.com",
+                        "address": {
+                                "@type": "PostalAddress",
+                                "addressLocality": "Nowshahr",
+                                "addressRegion": "Mazandaran",
+                                "addressCountry": "IR"
+                        },
+                        "gender": "Male",
+                        "knowsLanguage": [
+                                "en",
+                                "fa"
+                        ],
+                        "knowsAbout": [
+                                "Backend Development",
+                                "Web Programming",
+                                "PHP",
+                                "Laravel",
+                                "Python",
+                                "Django",
+                                "WordPress",
+                                "RESTful APIs",
+                                "MySQL",
+                                "Redis",
+                                "Software Architecture",
+                                "Technical SEO"
+                        ],
+                        "sameAs": [
+                                "https://github.com/alirezaevil81",
+                                "https://www.linkedin.com/in/alirezaharaji",
+                                "https://www.instagram.com/alireza.haraji",
+                                "https://t.me/alirezaharaji"
+                        ]
+                },
+                {
+                        "@type": "ProfilePage",
+                        "@id": "https://www.exxondev.ir/en/#webpage",
+                        "url": "https://www.exxondev.ir/en/",
+                        "name": "Alireza Haraji | Backend & Web Programmer (PHP, Laravel, Python)",
+                        "inLanguage": "en",
+                        "isPartOf": {
+                                "@id": "https://www.exxondev.ir/#website"
+                        },
+                        "about": {
+                                "@id": "https://www.exxondev.ir/#person"
+                        },
+                        "mainEntity": {
+                                "@id": "https://www.exxondev.ir/#person"
+                        },
+                        "primaryImageOfPage": {
+                                "@type": "ImageObject",
+                                "url": "https://avatars.githubusercontent.com/u/60322583?v=4"
+                        }
+                },
+                {
+                        "@type": "WebSite",
+                        "@id": "https://www.exxondev.ir/#website",
+                        "url": "https://www.exxondev.ir/",
+                        "name": "Alireza Haraji | Backend & Web Programmer",
+                        "description": "Official portfolio and resume of Alireza Haraji (علیرضا هرجی), Backend & Web Programmer specializing in PHP, Laravel, Python, WordPress, REST APIs, and scalable web architecture.",
+                        "inLanguage": [
+                                "en",
+                                "fa"
+                        ],
+                        "publisher": {
+                                "@id": "https://www.exxondev.ir/#person"
+                        }
+                },
+                {
+                        "@type": "ItemList",
+                        "@id": "https://www.exxondev.ir/en/#portfolio",
+                        "name": "Alireza Haraji Programming Portfolio",
+                        "itemListElement": [
+                                {
+                                        "@type": "ListItem",
+                                        "position": 1,
+                                        "name": "market-ir",
+                                        "url": "https://www.exxondev.ir/market-ir/"
+                                },
+                                {
+                                        "@type": "ListItem",
+                                        "position": 2,
+                                        "name": "Rasta",
+                                        "url": "https://www.exxondev.ir/Rasta/"
+                                },
+                                {
+                                        "@type": "ListItem",
+                                        "position": 3,
+                                        "name": "weather-pro",
+                                        "url": "https://www.exxondev.ir/weather-pro/"
+                                },
+                                {
+                                        "@type": "ListItem",
+                                        "position": 4,
+                                        "name": "instagrapi-cli-bot",
+                                        "url": "https://www.exxondev.ir/instagrapi-cli-bot/"
+                                },
+                                {
+                                        "@type": "ListItem",
+                                        "position": 5,
+                                        "name": "AzadPc",
+                                        "url": "https://azadpc.com"
+                                },
+                                {
+                                        "@type": "ListItem",
+                                        "position": 6,
+                                        "name": "Compressorsepah",
+                                        "url": "https://compressorsepah.ir"
+                                }
+                        ]
+                },
+                {
+                        "@type": "FAQPage",
+                        "@id": "https://www.exxondev.ir/en/#faq",
+                        "inLanguage": "en",
+                        "mainEntity": [
+                                {
+                                        "@type": "Question",
+                                        "name": "Who is Alireza Haraji and what is his programming specialization?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "Alireza Haraji is a backend and web programmer with 5+ years of engineering experience specializing in PHP, Laravel, Python, RESTful API architecture, MySQL/Redis optimization, and custom WordPress plugins."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "What projects are featured in Alireza Haraji portfolio?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "Featured live works include Market-IR (real-time currency and gold dashboard), Rasta habit tracker, Weather-Pro forecast platform, Instagrapi CLI Bot, AzadPc, and Compressorsepah."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "How can I contact or hire Alireza Haraji?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "You can contact Alireza Haraji via email at alirezask385@gmail.com, Telegram (@alirezaharaji), LinkedIn, or GitHub (@alirezaevil81)."
+                                        }
+                                }
+                        ]
+                }
+        ]
+}
+    </script>
+</head>
+<body class="font-sans antialiased text-slate-800 dark:text-slate-100 bg-white dark:bg-slate-950 overflow-x-hidden transition-colors duration-300"
+      x-data="portfolioApp"
+      @scroll.window="handleScroll"
+      @resize.window="handleResize">
+
+<!-- Minimalist Glassmorphic Preloader -->
+<div x-show="isLoading"
+     x-transition:leave="transition ease-out duration-500"
+     x-transition:leave-start="opacity-100 scale-100"
+     x-transition:leave-end="opacity-0 scale-[0.98] pointer-events-none"
+     class="fixed inset-0 z-[100] bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-6 select-none overflow-hidden transition-colors duration-300"
+     id="preloader">
+
+    <!-- Subtle Architectural Grid & Soft Cobalt Radial Glow -->
+    <div class="absolute inset-0 bg-grid-pattern bg-grid-masked opacity-50 pointer-events-none"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[28rem] h-[28rem] bg-radial from-blue-500/15 dark:from-blue-500/20 via-indigo-500/5 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Centered Minimal Brand Monogram & Smooth Progress Bar -->
+    <div class="relative z-10 w-full max-w-xs flex flex-col items-center text-center">
+        <!-- Glassmorphic Monogram Emblem -->
+        <div class="relative mb-5">
+            <div class="absolute -inset-2 rounded-3xl bg-linear-to-tr from-blue-600/25 via-indigo-500/15 to-sky-400/25 blur-lg pointer-events-none"></div>
+            <div class="relative w-16 h-16 rounded-2xl bg-white/90 dark:bg-slate-900/90 border border-slate-200/80 dark:border-white/10 shadow-xl backdrop-blur-xl flex items-center justify-center">
+                <span class="text-xl font-black tracking-tighter bg-linear-to-br from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent font-mono">AH</span>
+            </div>
+        </div>
+
+        <!-- Name & Concise Role -->
+        <div class="text-lg font-black tracking-tight text-slate-900 dark:text-white mb-1" x-text="displayName">Alireza Haraji</div>
+        <div class="text-xs font-medium text-slate-500 dark:text-slate-400 mb-6" x-text="t('nav.role')">Backend & Web Programmer</div>
+
+        <!-- Smooth Progress Track -->
+        <div class="w-full max-w-[210px] space-y-2">
+            <div class="w-full h-1.5 rounded-full bg-slate-200/80 dark:bg-slate-800/80 overflow-hidden p-[1px] border border-slate-200/60 dark:border-white/5">
+                <div class="h-full rounded-full bg-linear-to-r from-blue-600 via-indigo-500 to-sky-500 dark:from-blue-500 dark:via-indigo-400 dark:to-sky-400 transition-all duration-300 ease-out"
+                     :style="`width: ${loadingProgress}%`"></div>
+            </div>
+            <div class="text-[11px] font-mono font-semibold text-slate-400 dark:text-slate-500 tabular-nums"
+                 x-text="loadingProgress + '%'">15%</div>
+        </div>
+    </div>
+</div>
+
+<!-- Header Section -->
+<header id="header"
+        class="fixed top-0 bottom-0 w-72 transition-all duration-500 ease-in-out bg-white/95 dark:bg-slate-950/95 backdrop-blur-2xl text-slate-800 dark:text-white z-50 flex flex-col justify-between border-slate-200 dark:border-slate-800/80 shadow-2xl"
+        :class="lang === 'fa' 
+            ? (isMobileMenuOpen ? 'sidebar-open right-0 left-auto' : 'sidebar-closed -right-72 lg:right-0 left-auto') 
+            : (isMobileMenuOpen ? 'sidebar-open left-0 right-auto' : 'sidebar-closed -left-72 lg:left-0 right-auto')"
+        @click.outside="if (window.innerWidth < 1024) isMobileMenuOpen = false">
+    
+    <!-- Ambient Sidebar Lighting -->
+    <div class="absolute top-0 left-0 w-full h-48 bg-radial-[at_top_center] from-blue-600/10 dark:from-blue-600/15 via-transparent to-transparent pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-full h-48 bg-radial-[at_bottom_center] from-indigo-600/10 via-transparent to-transparent pointer-events-none"></div>
+
+    <!-- Mobile Floating Toggle Button -->
+    <button class="header-toggle lg:hidden w-12 h-12 flex items-center justify-center bg-blue-600 text-white absolute top-5 shadow-xl shadow-blue-600/40 focus:outline-none transition-transform hover:scale-105 active:scale-95 border border-blue-400/30 cursor-pointer"
+            :class="lang === 'fa' ? '-left-12 right-auto rounded-l-2xl' : '-right-12 left-auto rounded-r-2xl'"
+            aria-label="Toggle Navigation Menu"
+            @click.stop="isMobileMenuOpen = !isMobileMenuOpen">
+        <i x-show="!isMobileMenuOpen" class="fa-solid fa-bars text-lg"></i>
+        <i x-show="isMobileMenuOpen" class="fa-solid fa-xmark text-lg"></i>
+    </button>
+
+    <!-- Top & Middle Content (Scrollable) -->
+    <div class="flex-1 overflow-y-auto w-full px-5 pt-8 pb-4 flex flex-col items-center relative z-10 scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-800">
+        
+        <!-- Profile Avatar with Subtle Ring -->
+        <div class="profile-img mb-3.5 relative group">
+            <div class="relative w-24 h-24 rounded-full overflow-hidden border border-slate-200/90 dark:border-slate-700/80 ring-4 ring-blue-500/10 dark:ring-blue-400/10 group-hover:ring-blue-500/25 transition-all duration-300 shadow-sm">
+                <img :src="user?.avatar_url || 'https://avatars.githubusercontent.com/u/60322583?v=4'"
+                     alt="علیرضا هرجی - برنامه‌نویس و توسعه‌دهنده بک‌اند | Alireza Haraji Backend Programmer"
+                     title="علیرضا هرجی | برنامه‌نویس و توسعه‌دهنده بک‌اند"
+                     class="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-500"
+                     width="96" height="96"
+                     referrerpolicy="no-referrer"
+                     fetchpriority="high"
+                >
+            </div>
+
+            <!-- Active Status Indicator -->
+            <div class="absolute bottom-0.5 w-4 h-4 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center border border-slate-200 dark:border-slate-700 shadow-sm"
+                 :class="lang === 'fa' ? 'left-0.5' : 'right-0.5'">
+                <span class="w-2 h-2 rounded-full"
+                      :class="isHireable ? 'bg-emerald-500' : 'bg-amber-500'"></span>
+            </div>
+        </div>
+
+        <!-- Name & Headline -->
+        <a href="#hero" class="logo flex flex-col items-center justify-center text-center mb-4 group" @click="isMobileMenuOpen = false">
+            <div class="text-xl font-black tracking-tight text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" x-text="displayName">Alireza Haraji</div>
+            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-0.5 tracking-wide" x-text="t('nav.role')">Backend & Software Dev</span>
+        </a>
+
+        <!-- Social Media Quick Bar (Dynamic from GitHub social_accounts + GitHub/Web/Email) -->
+        <div class="social-links text-center mb-6 flex flex-wrap items-center justify-center gap-1.5 w-full">
+            <!-- GitHub Profile -->
+            <a :href="user?.html_url || 'https://github.com/alirezaevil81'" target="_blank" rel="noopener noreferrer"
+               aria-label="GitHub Profile"
+               class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-800 hover:border-slate-700 hover:text-white transition-all duration-300 shadow-2xs">
+                <i class="fa-brands fa-github text-sm"></i>
+            </a>
+
+            <!-- Dynamic Social Accounts from GitHub API -->
+            <template x-for="item in socialAccounts" :key="item.url">
+                <a :href="item.url" target="_blank" rel="noopener noreferrer"
+                   :aria-label="item.title"
+                   :title="item.title"
+                   class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 transition-all duration-300 shadow-2xs"
+                   :class="item.hoverClass">
+                    <i :class="item.icon" class="text-sm"></i>
+                </a>
+            </template>
+
+            <!-- Personal Blog / Website -->
+            <a :href="userBlogUrl" target="_blank" rel="noopener noreferrer"
+               aria-label="Website"
+               class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-emerald-600 hover:border-emerald-600 hover:text-white transition-all duration-300 shadow-2xs">
+                <i class="fa-solid fa-globe text-sm"></i>
+            </a>
+
+            <!-- Contact Email -->
+            <a :href="'mailto:' + userEmail"
+               aria-label="Email"
+               class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-rose-600 hover:border-rose-600 hover:text-white transition-all duration-300 shadow-2xs">
+                <i class="fa-solid fa-envelope text-xs"></i>
+            </a>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav id="navmenu" class="navmenu w-full">
+            <ul class="flex flex-col space-y-1.5 w-full">
+                <!-- Home -->
+                <li>
+                    <a href="#hero"
+                       class="group flex items-center justify-between py-2.5 px-3.5 rounded-2xl transition-all duration-200"
+                       :class="activeSection === 'hero' ? 'bg-blue-600/15 text-blue-600 dark:text-blue-400 font-bold border border-blue-500/30 shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900/90 border border-transparent'"
+                       @click="isMobileMenuOpen = false">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <i class="fa-solid fa-house text-sm w-4 text-center transition-colors"
+                                :class="activeSection === 'hero' ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300'"></i>
+                            <span class="text-xs sm:text-sm tracking-wide" x-text="t('nav.home')">Home</span>
+                        </div>
+                        <span class="w-1.5 h-1.5 rounded-full" :class="activeSection === 'hero' ? 'bg-blue-600 dark:bg-blue-400' : 'opacity-0 group-hover:opacity-50 bg-slate-400 dark:bg-slate-500'"></span>
+                    </a>
+                </li>
+
+                <!-- About -->
+                <li>
+                    <a href="#about"
+                       class="group flex items-center justify-between py-2.5 px-3.5 rounded-2xl transition-all duration-200"
+                       :class="activeSection === 'about' ? 'bg-blue-600/15 text-blue-600 dark:text-blue-400 font-bold border border-blue-500/30 shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900/90 border border-transparent'"
+                       @click="isMobileMenuOpen = false">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <i class="fa-solid fa-user text-sm w-4 text-center transition-colors"
+                                :class="activeSection === 'about' ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300'"></i>
+                            <span class="text-xs sm:text-sm tracking-wide" x-text="t('nav.about')">About Me</span>
+                        </div>
+                        <span class="w-1.5 h-1.5 rounded-full" :class="activeSection === 'about' ? 'bg-blue-600 dark:bg-blue-400' : 'opacity-0 group-hover:opacity-50 bg-slate-400 dark:bg-slate-500'"></span>
+                    </a>
+                </li>
+
+                <!-- Skills -->
+                <li>
+                    <a href="#skill"
+                       class="group flex items-center justify-between py-2.5 px-3.5 rounded-2xl transition-all duration-200"
+                       :class="activeSection === 'skill' ? 'bg-blue-600/15 text-blue-600 dark:text-blue-400 font-bold border border-blue-500/30 shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900/90 border border-transparent'"
+                       @click="isMobileMenuOpen = false">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <i class="fa-solid fa-code text-sm w-4 text-center transition-colors"
+                                :class="activeSection === 'skill' ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300'"></i>
+                            <span class="text-xs sm:text-sm tracking-wide" x-text="t('nav.skills')">Skills & Stack</span>
+                        </div>
+                        <span class="w-1.5 h-1.5 rounded-full" :class="activeSection === 'skill' ? 'bg-blue-600 dark:bg-blue-400' : 'opacity-0 group-hover:opacity-50 bg-slate-400 dark:bg-slate-500'"></span>
+                    </a>
+                </li>
+
+                <!-- Resume -->
+                <li>
+                    <a href="#resume"
+                       class="group flex items-center justify-between py-2.5 px-3.5 rounded-2xl transition-all duration-200"
+                       :class="activeSection === 'resume' ? 'bg-blue-600/15 text-blue-600 dark:text-blue-400 font-bold border border-blue-500/30 shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900/90 border border-transparent'"
+                       @click="isMobileMenuOpen = false">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <i class="fa-solid fa-file-lines text-sm w-4 text-center transition-colors"
+                                :class="activeSection === 'resume' ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300'"></i>
+                            <span class="text-xs sm:text-sm tracking-wide" x-text="t('nav.resume')">Experience</span>
+                        </div>
+                        <span class="w-1.5 h-1.5 rounded-full" :class="activeSection === 'resume' ? 'bg-blue-600 dark:bg-blue-400' : 'opacity-0 group-hover:opacity-50 bg-slate-400 dark:bg-slate-500'"></span>
+                    </a>
+                </li>
+
+                <!-- Portfolio -->
+                <li>
+                    <a href="#portfolio"
+                       class="group flex items-center justify-between py-2.5 px-3.5 rounded-2xl transition-all duration-200"
+                       :class="activeSection === 'portfolio' ? 'bg-blue-600/15 text-blue-600 dark:text-blue-400 font-bold border border-blue-500/30 shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900/90 border border-transparent'"
+                       @click="isMobileMenuOpen = false">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <i class="fa-solid fa-cubes text-sm w-4 text-center transition-colors"
+                                :class="activeSection === 'portfolio' ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300'"></i>
+                            <span class="text-xs sm:text-sm tracking-wide" x-text="t('nav.portfolio')">Portfolio</span>
+                        </div>
+                        <span class="w-1.5 h-1.5 rounded-full" :class="activeSection === 'portfolio' ? 'bg-blue-600 dark:bg-blue-400' : 'opacity-0 group-hover:opacity-50 bg-slate-400 dark:bg-slate-500'"></span>
+                    </a>
+                </li>
+
+                <!-- FAQ -->
+                <li>
+                    <a href="#faq"
+                       class="group flex items-center justify-between py-2.5 px-3.5 rounded-2xl transition-all duration-200"
+                       :class="activeSection === 'faq' ? 'bg-blue-600/15 text-blue-600 dark:text-blue-400 font-bold border border-blue-500/30 shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900/90 border border-transparent'"
+                       @click="isMobileMenuOpen = false">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <i class="fa-solid fa-circle-question text-sm w-4 text-center transition-colors"
+                                :class="activeSection === 'faq' ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-600 dark:group-hover:text-slate-300'"></i>
+                            <span class="text-xs sm:text-sm tracking-wide" x-text="t('nav.faq')">FAQ</span>
+                        </div>
+                        <span class="w-1.5 h-1.5 rounded-full" :class="activeSection === 'faq' ? 'bg-blue-600 dark:bg-blue-400' : 'opacity-0 group-hover:opacity-50 bg-slate-400 dark:bg-slate-500'"></span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+
+    <!-- Bottom Status Card -->
+    <div class="p-4 border-t border-slate-200/80 dark:border-slate-800/80 relative z-10">
+        <div class="p-3 rounded-2xl bg-slate-50/90 dark:bg-slate-900/75 border border-slate-200/80 dark:border-slate-800/80 flex items-center justify-between">
+            <div class="flex items-center gap-2 min-w-0">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                <span class="text-[11px] font-semibold text-slate-700 dark:text-slate-300 truncate" x-text="userLocation"></span>
+            </div>
+            <a :href="'mailto:' + userEmail"
+               class="text-[11px] font-bold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors shrink-0 flex items-center gap-1">
+                <span x-text="t('about.emailMe')">Contact</span>
+                <i class="fa-solid text-[9px]" :class="lang === 'fa' ? 'fa-arrow-left' : 'fa-arrow-right'"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- Overlay for Mobile Menu -->
+<div x-show="isMobileMenuOpen" x-transition.opacity class="fixed inset-0 bg-black/70 backdrop-blur-xs z-40 lg:hidden"
+     @click="isMobileMenuOpen = false"></div>
+
+<!-- Floating Top Controls: Language Switcher & Theme Quick Picker -->
+<div id="floating-controls"
+     class="transition-all duration-300">
+    
+    <!-- Language Switcher Button -->
+    <button type="button"
+            id="lang-toggle-btn"
+            @click="toggleLang()"
+            aria-label="Toggle Language"
+            :title="lang === 'fa' ? 'تغییر زبان به انگلیسی (Switch to English)' : 'تغییر زبان به فارسی (Switch to Persian)'"
+            class="w-10 h-10 flex items-center justify-center rounded-full bg-white/80 dark:bg-slate-900/80 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-800/60 shadow-sm backdrop-blur-md hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer font-bold text-xs tracking-wider">
+        <span id="lang-btn-text" x-text="lang === 'fa' ? 'FA' : 'EN'">EN</span>
+    </button>
+    <script>
+        (function() {
+            var el = document.getElementById('lang-btn-text');
+            if (el) el.textContent = document.documentElement.lang === 'fa' ? 'FA' : 'EN';
+        })();
+    </script>
+
+    <!-- Theme Quick Picker Dropdown -->
+    <div class="relative" @click.outside="openThemeMenu = false">
+        <button type="button"
+                id="theme-toggle-btn"
+                @click="openThemeMenu = !openThemeMenu"
+                aria-label="Toggle Theme Menu"
+                :aria-expanded="openThemeMenu"
+                class="w-10 h-10 flex items-center justify-center rounded-full bg-white/85 dark:bg-slate-900/85 text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700/80 shadow-sm backdrop-blur-md hover:bg-white dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all cursor-pointer">
+            <!-- Sun Icon (Light) -->
+            <span class="theme-icon-item theme-icon-light items-center justify-center"
+                  :style="theme === 'light' ? 'display: inline-flex' : 'display: none'"
+                  aria-hidden="true">
+                <svg class="w-4 h-4 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"></path>
+                </svg>
+            </span>
+            <!-- Moon Icon (Dark) -->
+            <span class="theme-icon-item theme-icon-dark items-center justify-center"
+                  :style="theme === 'dark' ? 'display: inline-flex' : 'display: none'"
+                  aria-hidden="true">
+                <svg class="w-4 h-4 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                </svg>
+            </span>
+            <!-- Desktop Icon (System) -->
+            <span class="theme-icon-item theme-icon-system items-center justify-center"
+                  :style="theme === 'system' ? 'display: inline-flex' : 'display: none'"
+                  aria-hidden="true">
+                <svg class="w-4 h-4 text-slate-600 dark:text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="20" height="14" x="2" y="3" rx="2"></rect>
+                    <line x1="8" x2="16" y1="21" y2="21"></line>
+                    <line x1="12" x2="12" y1="17" y2="21"></line>
+                </svg>
+            </span>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div id="theme-dropdown-menu"
+             x-show="openThemeMenu"
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 translate-y-1 scale-95"
+             x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+             x-transition:leave-end="opacity-0 translate-y-1 scale-95"
+             class="absolute mt-2 w-36 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl p-1.5 z-50 text-xs font-medium space-y-0.5"
+             style="display: none;">
+            
+            <button type="button"
+                    @click="setTheme('light'); openThemeMenu = false"
+                    class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors cursor-pointer"
+                    :class="theme === 'light' ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50'">
+                <div class="flex items-center gap-2.5">
+                    <svg class="w-3.5 h-3.5 text-amber-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"></path>
+                    </svg>
+                    <span x-text="lang === 'fa' ? 'روشن' : 'Light'"></span>
+                </div>
+                <i x-show="theme === 'light'" class="fa-solid fa-check text-xs text-blue-600 dark:text-blue-400"></i>
+            </button>
+
+            <button type="button"
+                    @click="setTheme('dark'); openThemeMenu = false"
+                    class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors cursor-pointer"
+                    :class="theme === 'dark' ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50'">
+                <div class="flex items-center gap-2.5">
+                    <svg class="w-3.5 h-3.5 text-blue-500 dark:text-blue-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
+                    <span x-text="lang === 'fa' ? 'تاریک' : 'Dark'"></span>
+                </div>
+                <i x-show="theme === 'dark'" class="fa-solid fa-check text-xs text-blue-600 dark:text-blue-400"></i>
+            </button>
+
+            <button type="button"
+                    @click="setTheme('system'); openThemeMenu = false"
+                    class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors cursor-pointer"
+                    :class="theme === 'system' ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50'">
+                <div class="flex items-center gap-2.5">
+                    <svg class="w-3.5 h-3.5 opacity-80 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="20" height="14" x="2" y="3" rx="2"></rect>
+                        <line x1="8" x2="16" y1="21" y2="21"></line>
+                        <line x1="12" x2="12" y1="17" y2="21"></line>
+                    </svg>
+                    <span x-text="lang === 'fa' ? 'سیستم' : 'System'"></span>
+                </div>
+                <i x-show="theme === 'system'" class="fa-solid fa-check text-xs text-blue-600 dark:text-blue-400"></i>
+            </button>
+
+        </div>
+    </div>
+</div>
+
+<main class="transition-all duration-300 ease-in-out lg:ml-72 min-w-0">
+
+    <!-- Hero Section -->
+    <section id="hero"
+             class="relative min-h-[100dvh] flex flex-col items-center justify-center text-slate-900 dark:text-white text-center overflow-hidden bg-slate-50 dark:bg-slate-950 px-4 sm:px-6 pt-16 sm:pt-20 pb-24 sm:pb-28 transition-colors duration-300">
+        <!-- Subtle Background Image Wash -->
+        <div class="absolute inset-0 bg-cover bg-center opacity-25 dark:opacity-20 transition-transform duration-1000 scale-105"
+             :style="`background-image: url('${heroBg}')`"></div>
+        
+        <!-- Modern Minimalist Architectural Depth Overlays -->
+        <div class="absolute inset-0 bg-slate-50/75 dark:bg-slate-950/80 backdrop-blur-[2px]"></div>
+        <div class="absolute inset-0 bg-grid-pattern bg-grid-masked opacity-80 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-radial-[at_50%_0%] from-blue-500/14 dark:from-blue-500/20 via-transparent to-transparent pointer-events-none"></div>
+        <div class="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-slate-50 dark:to-slate-950 pointer-events-none"></div>
+
+        <!-- Soft Ambient Depth Orbs -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[30rem] sm:w-[46rem] h-64 sm:h-80 bg-blue-500/12 dark:bg-blue-500/15 rounded-full blur-3xl pointer-events-none animate-float-slow"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-60 sm:w-80 h-60 bg-indigo-500/10 dark:bg-indigo-500/12 rounded-full blur-3xl pointer-events-none animate-float-reverse"></div>
+
+        <!-- Main Hero Content Box -->
+        <div class="relative z-10 max-w-4xl mx-auto w-full flex flex-col items-center my-auto" x-show="showHeroContent"
+             x-transition:enter="transition ease-out duration-700"
+             x-transition:enter-start="opacity-0 transform -translate-y-4 scale-[0.98]"
+             x-transition:enter-end="opacity-100 transform translate-y-0 scale-100">
+            
+            <!-- Frosted Availability Status Pill -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 dark:bg-slate-900/75 border border-slate-200/80 dark:border-white/10 backdrop-blur-xl text-xs font-semibold text-slate-700 dark:text-slate-200 mb-6 sm:mb-7 shadow-sm">
+                <span class="w-2 h-2 rounded-full shrink-0"
+                      :class="isHireable ? 'bg-emerald-500' : 'bg-amber-500'"></span>
+                <span x-text="isHireable ? t('hero.badgeAvailable') : t('hero.badgeBusy')">Available for New Projects & Collaborations</span>
+            </div>
+
+            <!-- Statement Typography Heading -->
+            <h1 class="text-4xl sm:text-6xl md:text-7xl font-black mb-4 sm:mb-5 leading-[1.1] tracking-tight text-slate-900 dark:text-white break-words text-balance"
+                x-text="displayName">Alireza Haraji</h1>
+
+            <!-- Glassmorphic Dynamic Role Capsule -->
+            <div class="inline-flex items-center justify-center flex-wrap gap-x-2 gap-y-1 px-4 sm:px-5 py-2 sm:py-2.5 rounded-2xl bg-white/75 dark:bg-slate-900/65 backdrop-blur-xl border border-slate-200/75 dark:border-white/10 shadow-sm text-base sm:text-xl md:text-2xl font-medium text-slate-700 dark:text-slate-300 mb-5 sm:mb-6 min-h-[2.75rem] sm:min-h-[3.25rem]">
+                <span class="shrink-0 select-none" x-text="t('hero.prefix')"></span>
+                <span class="inline-flex items-center">
+                    <span class="font-bold text-transparent bg-clip-text bg-linear-to-r from-blue-600 via-indigo-600 to-sky-600 dark:from-blue-400 dark:via-indigo-300 dark:to-sky-300"
+                          dir="auto"
+                          x-text="typedText"></span>
+                    <span class="inline-block w-0.5 h-5 sm:h-6 bg-blue-600 dark:bg-blue-400 shrink-0 ms-1.5"
+                          aria-hidden="true"></span>
+                </span>
+                <span x-show="t('hero.suffix')" x-text="t('hero.suffix')"></span>
+            </div>
+
+            <!-- Subtitle / Value Proposition -->
+            <p class="max-w-xl text-sm sm:text-base text-slate-600 dark:text-slate-400 mb-7 sm:mb-9 leading-relaxed font-normal px-2 text-pretty"
+               x-text="t('hero.subtitle')">
+                Specializing in robust backend architectures, high-performance APIs, database optimization, and modern web application development.
+            </p>
+
+            <!-- Call to Action Buttons -->
+            <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-8 sm:mb-10 w-full max-w-md">
+                <a href="#portfolio"
+                   class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-600/25 hover:shadow-blue-500/35 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
+                    <i class="fa-solid fa-briefcase text-xs"></i>
+                    <span x-text="t('hero.ctaPortfolio')">Explore My Work</span>
+                </a>
+                <a href="#about"
+                   class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl bg-white/85 dark:bg-slate-900/75 hover:bg-white dark:hover:bg-slate-800/90 text-slate-800 dark:text-white font-bold text-xs sm:text-sm border border-slate-200/80 dark:border-white/12 shadow-sm backdrop-blur-xl hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
+                    <i class="fa-solid fa-user text-xs text-blue-600 dark:text-blue-400"></i>
+                    <span x-text="t('hero.ctaAbout')">About Me</span>
+                </a>
+            </div>
+
+            <!-- Unified Glassmorphic Core Technology Dock -->
+            <div class="inline-flex flex-wrap items-center justify-center gap-x-4 gap-y-2 px-5 py-2.5 rounded-2xl bg-white/75 dark:bg-slate-900/65 border border-slate-200/75 dark:border-white/10 shadow-sm backdrop-blur-xl text-xs font-medium text-slate-700 dark:text-slate-300">
+                <span class="inline-flex items-center gap-1.5">
+                    <i class="fa-brands fa-python text-amber-500 dark:text-yellow-400"></i> Python
+                </span>
+                <span class="w-px h-3.5 bg-slate-200 dark:bg-slate-700/80 hidden sm:block" aria-hidden="true"></span>
+                <span class="inline-flex items-center gap-1.5">
+                    <i class="fa-brands fa-php text-indigo-600 dark:text-indigo-400"></i> PHP & Laravel
+                </span>
+                <span class="w-px h-3.5 bg-slate-200 dark:bg-slate-700/80 hidden sm:block" aria-hidden="true"></span>
+                <span class="inline-flex items-center gap-1.5">
+                    <i class="fa-brands fa-wordpress text-blue-600 dark:text-blue-400"></i> WordPress
+                </span>
+                <span class="w-px h-3.5 bg-slate-200 dark:bg-slate-700/80 hidden sm:block" aria-hidden="true"></span>
+                <span class="inline-flex items-center gap-1.5">
+                    <i class="fa-solid fa-database text-emerald-600 dark:text-emerald-400"></i> MySQL & APIs
+                </span>
+            </div>
+        </div>
+
+        <!-- Subtle Scroll Down Indicator -->
+        <a href="#about"
+           aria-label="Scroll down to About section"
+           class="absolute bottom-5 sm:bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-slate-400 dark:text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors group cursor-pointer z-20">
+            <span class="text-[10px] font-bold uppercase tracking-widest transition-colors" x-text="t('hero.scroll')">Scroll</span>
+            <i class="fa-solid fa-chevron-down text-xs group-hover:translate-y-0.5 transition-transform duration-200"></i>
+        </a>
+    </section><!-- /Hero Section -->
+
+    <!-- About Section -->
+    <section id="about" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900/90 text-slate-800 dark:text-slate-100 transition-colors duration-300 relative overflow-hidden"
+             x-show="showAboutContent"
+             x-transition:enter="transition ease-out duration-1000"
+             x-transition:enter-start="opacity-0 transform translate-y-10"
+             x-transition:enter-end="opacity-100 transform translate-y-0">
+        <!-- Subtle ambient background elements -->
+        <div class="absolute top-1/3 left-0 w-96 h-96 bg-blue-100/30 dark:bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-indigo-100/30 dark:bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="container mx-auto max-w-7xl relative z-10">
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 reveal-up">
+                <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-2.5">
+                    <i class="fa-solid fa-user-gear text-[11px]"></i>
+                    <span x-text="t('about.badge')">Biography & Persona</span>
+                </span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight text-balance" x-text="t('about.title')">About Me</h2>
+                <p class="text-slate-600 dark:text-slate-300 mt-3 text-sm sm:text-base sm:leading-relaxed" x-text="t('about.subtitle')">
+                    Passionate Backend Engineer dedicated to architecting reliable services, scalable web apps, and clean maintainable code.
+                </p>
+            </div>
+
+            <!-- Main Asymmetric Bento Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start reveal-up">
+                
+                <!-- Left Column (4 cols): Profile Identity Card -->
+                <div class="lg:col-span-4 bg-white dark:bg-slate-900 p-6 sm:p-8 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-xs text-center relative group modern-card">
+                    
+                    <!-- Avatar with Active Status -->
+                    <div class="relative w-36 h-36 sm:w-44 sm:h-44 mx-auto mb-5">
+                        <img :src="user?.avatar_url || 'https://avatars.githubusercontent.com/u/60322583?v=4'"
+                             class="rounded-full w-full h-full object-cover object-center shadow-lg border-4 border-blue-600/90 transition-transform duration-500 group-hover:scale-105"
+                             alt="علیرضا هرجی - برنامه‌نویس و توسعه‌دهنده وب | Alireza Haraji Software Developer"
+                             title="علیرضا هرجی | برنامه‌نویس و توسعه‌دهنده نرم‌افزار"
+                             width="176" height="176"
+                             referrerpolicy="no-referrer"
+                             loading="lazy">
+
+                        
+                        <!-- Floating Availability Badge -->
+                        <div class="absolute bottom-2 right-2 flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 dark:bg-slate-950/90 text-white text-[11px] font-bold border border-white/20 dark:border-slate-700 shadow-md backdrop-blur-xs">
+                            <span class="w-2 h-2 rounded-full" :class="isHireable ? 'bg-emerald-400' : 'bg-amber-400'"></span>
+                            <span x-text="isHireable ? t('about.available') : t('about.busy')">Available</span>
+                        </div>
+                    </div>
+
+                    <!-- Identity Details -->
+                    <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight"
+                        x-text="displayName">Alireza Haraji</h3>
+                    
+                    <a :href="user?.html_url || 'https://github.com/alirezaevil81'" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors mt-1 mb-4">
+                        <i class="fa-brands fa-github text-sm"></i>
+                        <span x-text="user?.login ? `@${user.login}` : '@alirezaevil81'"></span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-70"></i>
+                    </a>
+
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6 font-medium"
+                       x-text="userBio">
+                        Backend Specialist · Python & PHP Developer · API Architect
+                    </p>
+
+                    <!-- Quick Actions -->
+                    <div class="grid grid-cols-2 gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+                        <a :href="user?.html_url || 'https://github.com/alirezaevil81'" target="_blank" rel="noopener noreferrer"
+                           class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white text-xs font-bold transition-all shadow-xs">
+                            <i class="fa-brands fa-github text-sm"></i>
+                            <span>GitHub</span>
+                        </a>
+                        <a :href="'mailto:' + userEmail"
+                           class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-xs">
+                            <i class="fa-solid fa-envelope text-xs"></i>
+                            <span x-text="t('about.emailMe')">Email Me</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Column (8 cols): Deep Dive, Info Grid & GitHub Metrics -->
+                <div class="lg:col-span-8 space-y-6">
+                    
+                    <!-- Bio Highlight Card -->
+                    <div class="bg-white dark:bg-slate-900 p-6 sm:p-8 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-xs relative">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center text-sm shadow-2xs">
+                                <i class="fa-solid fa-quote-left"></i>
+                            </div>
+                            <h4 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white" x-text="t('about.backgroundTitle')">Professional Background</h4>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed"
+                           x-text="t('about.bio')"></p>
+                    </div>
+
+                    <!-- Key Attributes Bento Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5 sm:gap-4">
+                        
+                        <!-- Location -->
+                        <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:border-blue-300 dark:hover:border-blue-500 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center text-sm mb-3">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block" x-text="t('about.location')">Location</span>
+                            <span class="text-sm font-bold text-slate-800 dark:text-slate-200 mt-0.5 block truncate" x-text="userLocation"></span>
+                        </div>
+
+                        <!-- Role Level -->
+                        <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:border-indigo-300 dark:hover:border-indigo-500 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-sm mb-3">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block" x-text="t('about.seniority')">Seniority</span>
+                            <span class="text-sm font-bold text-slate-800 dark:text-slate-200 mt-0.5 block" x-text="t('about.seniorityVal')"></span>
+                        </div>
+
+                        <!-- Age / Experience -->
+                        <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:border-emerald-300 dark:hover:border-emerald-500 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-sm mb-3">
+                                <i class="fa-solid fa-calendar-check"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block" x-text="t('about.ageExp')">Age & Experience</span>
+                            <span class="text-sm font-bold text-slate-800 dark:text-slate-200 mt-0.5 block"><span x-text="age"></span> <span x-text="t('about.ageExpVal')"></span></span>
+                        </div>
+
+                        <!-- Website / Domain -->
+                        <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:border-blue-300 dark:hover:border-blue-500 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-sky-50 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 flex items-center justify-center text-sm mb-3">
+                                <i class="fa-solid fa-globe"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block" x-text="t('about.website')">Website</span>
+                            <a :href="userBlogUrl"
+                               target="_blank" rel="noopener noreferrer"
+                               class="text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline mt-0.5 block truncate">
+                                <span x-text="userBlogTitle"></span>
+                            </a>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:border-blue-300 dark:hover:border-blue-500 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center text-sm mb-3">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block" x-text="t('about.email')">Email</span>
+                            <a :href="'mailto:' + userEmail" class="text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline mt-0.5 block truncate" x-text="userEmail">
+                                alirezask385@gmail.com
+                            </a>
+                        </div>
+
+                        <!-- Availability / Status -->
+                        <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xs transition-colors"
+                             :class="isHireable ? 'hover:border-emerald-300 dark:hover:border-emerald-500' : 'hover:border-amber-300 dark:hover:border-amber-500'">
+                            <div class="w-8 h-8 rounded-lg flex items-center justify-center text-sm mb-3"
+                                 :class="isHireable ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400' : 'bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400'">
+                                <i class="fa-solid fa-briefcase"></i>
+                            </div>
+                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block" x-text="t('about.workStatus')">Work Status</span>
+                            <div class="flex items-center gap-1.5 mt-0.5">
+                                <span class="w-2 h-2 rounded-full" :class="isHireable ? 'bg-emerald-500' : 'bg-amber-500'"></span>
+                                <span class="text-sm font-bold text-slate-800 dark:text-slate-200" x-text="isHireable ? t('about.workStatusAvailable') : t('about.workStatusBusy')"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- GitHub Live Stats Cards -->
+                    <div class="bg-white dark:bg-slate-900 p-6 sm:p-7 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-xs">
+                        <div class="flex items-center justify-between gap-3 mb-5">
+                            <div class="flex items-center gap-2.5">
+                                <i class="fa-brands fa-github text-slate-800 dark:text-slate-100 text-lg"></i>
+                                <h4 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white" x-text="t('about.githubMetrics')">GitHub Real-Time Metrics</h4>
+                            </div>
+                            <span class="text-xs text-slate-400 font-mono flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                <span x-text="t('about.liveSync')">Live Sync</span>
+                            </span>
+                        </div>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                            <!-- Followers -->
+                            <div class="bg-slate-50 dark:bg-slate-800/60 p-4 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 text-center hover:bg-blue-50 dark:hover:bg-slate-800 hover:border-blue-200 dark:hover:border-blue-500/50 transition-all duration-300"
+                                 x-show="showStats[0]" 
+                                 x-transition:enter="transition ease-out duration-500"
+                                 x-transition:enter-start="opacity-0 transform scale-90"
+                                 x-transition:enter-end="opacity-100 transform scale-100">
+                                <div class="w-8 h-8 mx-auto rounded-lg bg-blue-100/60 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xs mb-2">
+                                    <i class="fa-solid fa-users"></i>
+                                </div>
+                                <div class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white font-mono tabular-nums" x-text="user?.followers ?? '—'"></div>
+                                <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mt-0.5" x-text="t('about.followers')">Followers</div>
+                            </div>
+
+                            <!-- Following -->
+                            <div class="bg-slate-50 dark:bg-slate-800/60 p-4 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 text-center hover:bg-indigo-50 dark:hover:bg-slate-800 hover:border-indigo-200 dark:hover:border-indigo-500/50 transition-all duration-300"
+                                 x-show="showStats[1]" 
+                                 x-transition:enter="transition ease-out duration-500"
+                                 x-transition:enter-start="opacity-0 transform scale-90"
+                                 x-transition:enter-end="opacity-100 transform scale-100">
+                                <div class="w-8 h-8 mx-auto rounded-lg bg-indigo-100/60 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xs mb-2">
+                                    <i class="fa-solid fa-user-plus"></i>
+                                </div>
+                                <div class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white font-mono tabular-nums" x-text="user?.following ?? '—'"></div>
+                                <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mt-0.5" x-text="t('about.following')">Following</div>
+                            </div>
+
+                            <!-- Public Repos -->
+                            <div class="bg-slate-50 dark:bg-slate-800/60 p-4 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 text-center hover:bg-emerald-50 dark:hover:bg-emerald-950/40 hover:border-emerald-200 dark:hover:border-emerald-800/60 transition-all duration-300"
+                                 x-show="showStats[2]" 
+                                 x-transition:enter="transition ease-out duration-500"
+                                 x-transition:enter-start="opacity-0 transform scale-90"
+                                 x-transition:enter-end="opacity-100 transform scale-100">
+                                <div class="w-8 h-8 mx-auto rounded-lg bg-emerald-100/60 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xs mb-2">
+                                    <i class="fa-solid fa-code-fork"></i>
+                                </div>
+                                <div class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white font-mono tabular-nums" x-text="user?.public_repos ?? '—'"></div>
+                                <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mt-0.5" x-text="t('about.publicRepos')">Public Repos</div>
+                            </div>
+
+                            <!-- Public Gists / Stars -->
+                            <div class="bg-slate-50 dark:bg-slate-800/60 p-4 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 text-center hover:bg-amber-50 dark:hover:bg-amber-950/40 hover:border-amber-200 dark:hover:border-amber-800/60 transition-all duration-300"
+                                 x-show="showStats[3]" 
+                                 x-transition:enter="transition ease-out duration-500"
+                                 x-transition:enter-start="opacity-0 transform scale-90"
+                                 x-transition:enter-end="opacity-100 transform scale-100">
+                                <div class="w-8 h-8 mx-auto rounded-lg bg-amber-100/60 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xs mb-2">
+                                    <i class="fa-solid fa-file-code"></i>
+                                </div>
+                                <div class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white font-mono tabular-nums" x-text="user?.public_gists ?? 0"></div>
+                                <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mt-0.5" x-text="t('about.publicGists')">Public Gists</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section><!-- /About Section -->
+
+    <!-- Skill Section -->
+    <section id="skill" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300 relative overflow-hidden">
+        <!-- Subtle ambient background glows -->
+        <div class="absolute top-1/4 right-0 w-96 h-96 bg-blue-50/50 dark:bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 left-0 w-96 h-96 bg-indigo-50/50 dark:bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="container mx-auto max-w-7xl relative z-10">
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 reveal-up">
+                <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-2.5">
+                    <i class="fa-solid fa-code text-[11px]"></i>
+                    <span x-text="t('skills.badge')">Capabilities & Tech Stack</span>
+                </span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight text-balance" x-text="t('skills.title')">Technical Proficiency</h2>
+                <p class="text-slate-600 dark:text-slate-300 mt-3 text-sm sm:text-base sm:leading-relaxed" x-text="t('skills.subtitle')">
+                    A comprehensive overview of core technologies, architectural paradigms, frameworks, and engineering methodologies.
+                </p>
+            </div>
+
+            <!-- Primary Tech Stacks Matrix (Bento Cards with Progress Indicators) -->
+            <div class="mb-14 sm:mb-20 reveal-up">
+                <div class="flex items-center justify-between gap-3 mb-6">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-blue-600 dark:text-blue-400 text-sm"></i>
+                        <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white" x-text="t('skills.coreLanguages')">Core Languages & Primary Specializations</h3>
+                    </div>
+                    <span class="text-xs font-semibold text-slate-400" x-text="t('skills.masteryAssessment')">Mastery Assessment</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    <template x-for="skill in skills" :key="skill.name">
+                        <div class="modern-card bg-slate-50/80 dark:bg-slate-900/80 hover:bg-white dark:hover:bg-slate-900 p-5 sm:p-6 rounded-3xl border border-slate-200/80 dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-500/50 shadow-2xs hover:shadow-md transition-all duration-300 group flex flex-col justify-between">
+                            <div>
+                                <!-- Top Row: Icon, Title & Badge -->
+                                <div class="flex items-start justify-between gap-3 mb-3">
+                                    <div class="flex items-center gap-3 min-w-0">
+                                        <div class="w-11 h-11 rounded-2xl flex items-center justify-center text-xl shadow-2xs transition-transform duration-300 group-hover:scale-110 shrink-0"
+                                             :class="skill.iconBg">
+                                            <i :class="skill.icon"></i>
+                                        </div>
+                                        <div class="min-w-0">
+                                            <h4 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white truncate" x-text="skill.name"></h4>
+                                            <span class="text-[11px] font-semibold text-slate-400 block truncate" x-text="skill.numericLevel >= 90 ? t('skills.expert') : (skill.numericLevel >= 80 ? t('skills.advanced') : t('skills.proficient'))"></span>
+                                        </div>
+                                    </div>
+                                    <span class="px-2.5 py-1 rounded-xl text-xs font-black font-mono border shrink-0 tabular-nums"
+                                          :class="skill.badgeColor"
+                                          x-text="skill.level"></span>
+                                </div>
+
+                                <!-- Description / Tagline -->
+                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4 line-clamp-2" x-text="getLocalized(skill.tagline)"></p>
+                            </div>
+
+                            <!-- Progress Track -->
+                            <div>
+                                <div class="w-full bg-slate-200/70 dark:bg-slate-800 rounded-full h-2 overflow-hidden p-0.5">
+                                    <div class="h-full rounded-full bg-linear-to-r transition-all duration-1000 ease-out"
+                                         :class="skill.barGradient"
+                                         :style="`width: ${skillsVisible ? skill.level : '0%'}`"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Categorized Ecosystem Matrix (4 Bento Blocks) -->
+            <div class="mb-14 sm:mb-20">
+                <div class="flex items-center justify-between gap-3 mb-6">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-cubes text-blue-600 dark:text-blue-400 text-sm"></i>
+                        <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white" x-text="t('skills.ecosystem')">Ecosystem, Frameworks & Tooling</h3>
+                    </div>
+                    <span class="text-xs font-semibold text-slate-400" x-text="t('skills.categorizedStack')">Categorized Stack</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                    <template x-for="cat in skillCategories" :key="typeof cat.title === 'string' ? cat.title : cat.title.en">
+                        <div class="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-2xs hover:shadow-md hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300 flex flex-col justify-between">
+                            <div>
+                                <!-- Header -->
+                                <div class="flex items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+                                    <div class="flex items-center gap-2.5 min-w-0">
+                                        <div class="w-8 h-8 rounded-xl flex items-center justify-center text-xs border"
+                                             :class="cat.color">
+                                            <i :class="cat.icon"></i>
+                                        </div>
+                                        <h4 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate" x-text="getLocalized(cat.title)"></h4>
+                                    </div>
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-mono shrink-0"
+                                          x-text="cat.skills.length"></span>
+                                </div>
+
+                                <!-- Skill Chips -->
+                                <div class="flex flex-wrap gap-1.5 sm:gap-2">
+                                    <template x-for="s in cat.skills" :key="s">
+                                        <span class="px-2.5 py-1 bg-slate-50 dark:bg-slate-800/80 hover:bg-blue-50 dark:hover:bg-blue-900/30 border border-slate-200/70 dark:border-slate-700/80 hover:border-blue-200 dark:hover:border-blue-500/50 text-slate-700 dark:text-slate-300 hover:text-blue-700 dark:hover:text-blue-400 text-xs font-medium rounded-xl transition-all duration-200 cursor-default"
+                                              x-text="s"></span>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Engineering Mindset & Professional Practices -->
+            <div class="bg-linear-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 p-6 sm:p-10 md:p-12 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-xs relative overflow-hidden">
+                <!-- Ambient decorative blob -->
+                <div class="absolute -top-20 -right-20 w-80 h-80 bg-blue-100/40 dark:bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- Section Sub-Header -->
+                <div class="text-center max-w-3xl mx-auto mb-8 sm:mb-12 relative z-10">
+                    <div class="w-12 h-12 mx-auto rounded-2xl bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl mb-3.5 shadow-2xs border border-blue-200/60 dark:border-blue-700/60">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 dark:text-white mb-2.5 tracking-tight" x-text="t('skills.mindsetTitle')">Engineering Mindset & Professional Practices</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl mx-auto" x-text="t('skills.mindsetSubtitle')">
+                        The architectural principles, security standards, performance guidelines, and collaboration culture that guide my daily development workflow.
+                    </p>
+                </div>
+
+                <!-- Bento Grid of 6 Engineering Principles -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 relative z-10">
+                    <template x-for="item in softSkills" :key="typeof item.title === 'string' ? item.title : item.title.en">
+                        <div class="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200/80 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+                            <div>
+                                <!-- Top Row: Category & Icon -->
+                                <div class="flex items-center justify-between gap-3 mb-4">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400" x-text="getLocalized(item.category)"></span>
+                                    <div class="w-10 h-10 rounded-2xl flex items-center justify-center text-base transition-transform duration-300 group-hover:scale-110 shrink-0 border"
+                                         :class="item.color">
+                                        <i :class="item.icon"></i>
+                                    </div>
+                                </div>
+
+                                <!-- Title -->
+                                <h4 class="text-base font-bold text-slate-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" x-text="getLocalized(item.title)"></h4>
+
+                                <!-- Description -->
+                                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-5" x-text="getLocalized(item.description)"></p>
+                            </div>
+
+                            <!-- Bottom Tag & Visual Indicator -->
+                            <div class="flex items-center justify-between pt-3.5 border-t border-slate-100 dark:border-slate-800">
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[11px] font-bold font-mono border border-slate-200/60 dark:border-slate-700/60"
+                                      x-text="'#' + getLocalized(item.tag)"></span>
+                                <span class="text-xs text-slate-400 font-semibold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors flex items-center gap-1">
+                                    <span x-text="t('skills.standard')">Standard</span> <i class="fa-solid fa-check text-[10px] text-emerald-500"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Engineering Workflow Guarantee Banner -->
+                <div class="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-slate-200/80 dark:border-slate-800 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10">
+                    <div class="flex items-center gap-3 p-3 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/60 dark:border-slate-800">
+                        <div class="w-8 h-8 rounded-xl bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xs shrink-0">
+                            <i class="fa-solid fa-vial-circle-check"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="text-xs font-bold text-slate-900 dark:text-white block truncate" x-text="t('skills.guarantee1Title')">Test-Driven Mindset</span>
+                            <span class="text-[10px] text-slate-500 dark:text-slate-400 block truncate" x-text="t('skills.guarantee1Sub')">Reliable & Resilient</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/60 dark:border-slate-800">
+                        <div class="w-8 h-8 rounded-xl bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xs shrink-0">
+                            <i class="fa-solid fa-book-bookmark"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="text-xs font-bold text-slate-900 dark:text-white block truncate" x-text="t('skills.guarantee2Title')">Clean Documentation</span>
+                            <span class="text-[10px] text-slate-500 dark:text-slate-400 block truncate" x-text="t('skills.guarantee2Sub')">Readable & Maintainable</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/60 dark:border-slate-800">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xs shrink-0">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="text-xs font-bold text-slate-900 dark:text-white block truncate" x-text="t('skills.guarantee3Title')">Security Focused</span>
+                            <span class="text-[10px] text-slate-500 dark:text-slate-400 block truncate" x-text="t('skills.guarantee3Sub')">Defense in Depth</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200/60 dark:border-slate-800">
+                        <div class="w-8 h-8 rounded-xl bg-amber-50 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xs shrink-0">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="text-xs font-bold text-slate-900 dark:text-white block truncate" x-text="t('skills.guarantee4Title')">High Performance</span>
+                            <span class="text-[10px] text-slate-500 dark:text-slate-400 block truncate" x-text="t('skills.guarantee4Sub')">Optimized Latency</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- /Skill Section -->
+
+    <!-- Resume Section -->
+    <section id="resume" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900/90 text-slate-800 dark:text-slate-100 transition-colors duration-300 relative overflow-hidden">
+        <!-- Subtle decorative background gradient -->
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-blue-100/40 dark:bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-1/4 w-96 h-96 bg-indigo-100/40 dark:bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="container mx-auto max-w-7xl relative z-10">
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 reveal-up">
+                <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-2.5">
+                    <i class="fa-solid fa-briefcase text-[11px]"></i>
+                    <span x-text="t('resume.badge')">Curriculum Vitae</span>
+                </span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight text-balance" x-text="t('resume.title')">My Resume & Experience</h2>
+                <p class="text-slate-600 dark:text-slate-300 mt-3 text-sm sm:text-base sm:leading-relaxed" x-text="t('resume.subtitle')">
+                    A comprehensive overview of my technical journey, professional development experience, and academic background.
+                </p>
+            </div>
+
+            <!-- Quick Metrics Strip -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-12 sm:mb-16">
+                <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200/70 dark:border-slate-800 shadow-2xs text-center">
+                    <div class="text-2xl sm:text-3xl font-extrabold text-blue-600 dark:text-blue-400 font-mono tabular-nums" x-text="lang === 'fa' ? '+۵' : '5+'">5+</div>
+                    <div class="text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300 mt-1" x-text="t('resume.stat1')">Years Experience</div>
+                </div>
+                <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200/70 dark:border-slate-800 shadow-2xs text-center">
+                    <div class="text-2xl sm:text-3xl font-extrabold text-indigo-600 dark:text-indigo-400 font-mono tabular-nums" x-text="lang === 'fa' ? '۲' : '2'">2</div>
+                    <div class="text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300 mt-1" x-text="t('resume.stat2')">Core Tech Stacks</div>
+                </div>
+                <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200/70 dark:border-slate-800 shadow-2xs text-center">
+                    <div class="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 font-mono tabular-nums" x-text="lang === 'fa' ? '۱۰۰٪' : '100%'">100%</div>
+                    <div class="text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300 mt-1" x-text="t('resume.stat3')">Dedicated Learner</div>
+                </div>
+                <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200/70 dark:border-slate-800 shadow-2xs text-center">
+                    <div class="text-2xl sm:text-3xl font-extrabold text-amber-600 dark:text-amber-400 font-mono" x-text="lang === 'fa' ? 'چابک' : 'Agile'">Agile</div>
+                    <div class="text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300 mt-1" x-text="t('resume.stat4')">Team Collaboration</div>
+                </div>
+            </div>
+
+            <!-- Main Timeline Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+                
+                <!-- Left Column (5 Cols): Summary & Education -->
+                <div class="lg:col-span-5 space-y-8 sm:space-y-10">
+                    
+                    <!-- Executive Summary Card -->
+                    <div class="bg-white dark:bg-slate-900 p-6 sm:p-8 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-xs relative">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg shadow-2xs">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white" x-text="t('resume.summaryTitle')">Professional Summary</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400" x-text="t('resume.summarySub')">Overview & Core Strengths</p>
+                            </div>
+                        </div>
+
+                        <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed mb-5" x-text="t('resume.summaryText')">
+                            Dynamic Python and PHP backend developer with a solid track record in building efficient web services, refactoring architectures, and mentoring teams in coding best practices. Expert in database management, scalable API development, and continuous performance optimization.
+                        </p>
+
+                        <!-- Key Proficiency Badges -->
+                        <div class="flex flex-wrap gap-1.5 sm:gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+                            <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold" x-text="t('resume.badge1')">Backend Architecture</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold" x-text="t('resume.badge2')">API Engineering</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold" x-text="t('resume.badge3')">Team Mentorship</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold" x-text="t('resume.badge4')">Database Management</span>
+                        </div>
+                    </div>
+
+                    <!-- Education Section -->
+                    <div>
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-lg shadow-2xs">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white" x-text="t('resume.educationTitle')">Education & Training</h3>
+                        </div>
+
+                        <!-- Education Timeline Items -->
+                        <div class="relative pl-6 sm:pl-8 space-y-6 before:content-[''] before:absolute before:left-2 sm:before:left-2.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-linear-to-b before:from-indigo-500 before:via-blue-400 before:to-slate-200 dark:before:to-slate-800">
+                            <template x-for="(edu, idx) in education" :key="idx">
+                                <div class="relative group">
+                                    <div class="absolute -left-6 sm:-left-8 top-1.5 w-4 h-4 sm:w-5 sm:h-5 rounded-full border-4 border-white dark:border-slate-900 shadow-xs group-hover:scale-110 transition-transform"
+                                         :class="idx === 0 ? 'bg-indigo-600' : 'bg-blue-500'"></div>
+                                    <div class="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xs group-hover:shadow-md transition-all">
+                                        <div class="flex items-center justify-between gap-2 mb-2 flex-wrap">
+                                            <span class="px-2.5 py-0.5 rounded-md text-xs font-bold font-mono border"
+                                                  :class="idx === 0 ? 'bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-700/60' : 'bg-blue-50 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-700/60'"
+                                                  x-text="getLocalized(edu.period)">
+                                            </span>
+                                            <span class="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                                                <i class="fa-solid fa-location-dot text-slate-400"></i> <span x-text="getLocalized(edu.location)"></span>
+                                            </span>
+                                        </div>
+                                        <h4 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white" x-text="getLocalized(edu.title)"></h4>
+                                        <template x-if="edu.field">
+                                            <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm mt-1" x-text="getLocalized(edu.field)"></p>
+                                        </template>
+                                        <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm mt-1.5 leading-relaxed"
+                                           :class="idx === 1 ? 'italic text-slate-500 dark:text-slate-400' : ''"
+                                           x-text="getLocalized(edu.description)">
+                                        </p>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Column (7 Cols): Professional Experience -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg shadow-2xs">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white" x-text="t('resume.experienceTitle')">Work Experience</h3>
+                    </div>
+
+                    <!-- Experience Cards Timeline -->
+                    <div class="relative pl-6 sm:pl-8 space-y-8 before:content-[''] before:absolute before:left-2 sm:before:left-2.5 before:top-4 before:bottom-4 before:w-0.5 before:bg-linear-to-b before:from-blue-600 before:via-indigo-500 before:to-slate-200 dark:before:to-slate-800">
+                        <template x-for="(exp, idx) in experiences" :key="idx">
+                            <div class="relative group">
+                                <div class="absolute -left-6 sm:-left-8 top-2 w-4 h-4 sm:w-5 sm:h-5 rounded-full border-4 border-white dark:border-slate-900 shadow-xs group-hover:scale-110 transition-transform"
+                                     :class="exp.dotClass"></div>
+                                
+                                <div class="bg-white dark:bg-slate-900 p-6 sm:p-8 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-md transition-all duration-300">
+                                    <!-- Top Bar -->
+                                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+                                        <div>
+                                            <div class="flex items-center gap-2 flex-wrap">
+                                                <h4 class="text-lg sm:text-xl font-black text-slate-900 dark:text-white" x-text="getLocalized(exp.role)"></h4>
+                                                <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold"
+                                                      :class="exp.tagClass"
+                                                      x-text="exp.tag"></span>
+                                            </div>
+                                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5 font-medium" x-text="getLocalized(exp.subtitle)"></p>
+                                        </div>
+                                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold font-mono border w-fit"
+                                              :class="exp.badgeClass">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                                            <span x-text="getLocalized(exp.period)"></span>
+                                        </span>
+                                    </div>
+
+                                    <!-- Responsibilities & Accomplishments -->
+                                    <ul class="mt-5 space-y-3 text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed">
+                                        <template x-for="(bullet, bIdx) in exp.bullets" :key="bIdx">
+                                            <li class="flex items-start gap-2.5">
+                                                <i class="fa-solid fa-circle-check mt-1 shrink-0 text-xs" :class="idx === 0 ? 'text-blue-500' : 'text-indigo-500'"></i>
+                                                <span><strong class="text-slate-800 dark:text-slate-200 font-semibold" x-text="getLocalized(bullet.label)"></strong> <span x-text="getLocalized(bullet.text)"></span></span>
+                                            </li>
+                                        </template>
+                                    </ul>
+
+                                    <!-- Tech Chips -->
+                                    <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center gap-2">
+                                        <span class="text-[11px] font-bold uppercase text-slate-400 me-1" x-text="t('resume.skillsLabel')">Skills:</span>
+                                        <template x-for="skillItem in exp.skills" :key="skillItem">
+                                            <span class="px-2.5 py-1 rounded-md bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold border border-slate-200/60 dark:border-slate-700/60" x-text="skillItem"></span>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section><!-- /Resume Section -->
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-14 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300">
+
+        <div class="container mx-auto max-w-7xl">
+            <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-12 reveal-up">
+                <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-2.5">
+                    <i class="fa-solid fa-cubes text-[11px]"></i>
+                    <span x-text="t('nav.portfolio')">Portfolio</span>
+                </span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight text-balance" x-text="t('portfolio.title')">Featured Works</h2>
+                <p class="text-slate-600 dark:text-slate-300 mt-3 text-sm sm:text-base sm:leading-relaxed" x-text="t('portfolio.subtitle')">A showcase of my recent projects, blending clean code with functional design.</p>
+            </div>
+
+            <!-- Dynamic Category Filter Controls -->
+            <!-- Mobile: Modern Dropdown Menu (< sm) -->
+            <div class="sm:hidden mb-8 relative" @click.away="isCategoryDropdownOpen = false">
+                <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wider" x-text="t('portfolio.filterLabel')">Filter by Category</label>
+                <button type="button" 
+                        @click="isCategoryDropdownOpen = !isCategoryDropdownOpen"
+                        class="w-full flex items-center justify-between px-4 py-3 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm text-slate-800 dark:text-slate-200 text-sm font-semibold transition-all duration-200 active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                        aria-haspopup="true" 
+                        :aria-expanded="isCategoryDropdownOpen">
+                    <div class="flex items-center gap-2.5 truncate">
+                        <span class="w-2.5 h-2.5 rounded-full shrink-0"
+                              :class="activeFilter === 'all' || activeFilter === '0' ? 'bg-slate-900 dark:bg-white' : getCategoryStyle(activeFilter).dot"></span>
+                        <span class="truncate" x-text="activeFilter === 'all' || activeFilter === '0' ? t('portfolio.all') : activeFilter"></span>
+                        <span class="text-xs px-2 py-0.5 rounded-full font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 tabular-nums"
+                              x-text="getCategoryCount(activeFilter)"></span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-300"
+                       :class="isCategoryDropdownOpen ? 'rotate-180 text-blue-600 dark:text-blue-400' : ''"></i>
+                </button>
+
+                <!-- Dropdown Menu Items -->
+                <div x-show="isCategoryDropdownOpen"
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0 -translate-y-2 scale-95"
+                     x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                     x-transition:leave="transition ease-in duration-150"
+                     x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                     x-transition:leave-end="opacity-0 -translate-y-2 scale-95"
+                     class="absolute top-full left-0 right-0 mt-2 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-xl overflow-hidden p-1.5 max-h-72 overflow-y-auto"
+                     style="display: none;">
+                    <!-- All Projects Option -->
+                    <button type="button"
+                            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-colors"
+                            :class="activeFilter === 'all' || activeFilter === '0' ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'"
+                            @click="activeFilter = 'all'; isCategoryDropdownOpen = false">
+                        <div class="flex items-center gap-2.5 truncate">
+                            <span class="w-2 h-2 rounded-full"
+                                  :class="activeFilter === 'all' || activeFilter === '0' ? 'bg-white dark:bg-slate-900' : 'bg-slate-900 dark:bg-white'"></span>
+                            <span x-text="t('portfolio.all')">All Projects</span>
+                        </div>
+                        <span class="px-2 py-0.5 rounded-full font-mono text-[10px] font-bold tabular-nums"
+                              :class="activeFilter === 'all' || activeFilter === '0' ? 'bg-white/20 dark:bg-slate-900/20 text-white dark:text-slate-900' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'"
+                              x-text="getCategoryCount('all')"></span>
+                    </button>
+
+                    <!-- Individual Category Options -->
+                    <template x-for="cat in categories" :key="cat">
+                        <button type="button"
+                                class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-colors mt-1"
+                                :class="activeFilter === cat ? getCategoryStyle(cat).activeBtn : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'"
+                                @click="activeFilter = cat; isCategoryDropdownOpen = false">
+                            <div class="flex items-center gap-2.5 truncate">
+                                <span class="w-2 h-2 rounded-full" :class="getCategoryStyle(cat).dot"></span>
+                                <span x-text="cat"></span>
+                            </div>
+                            <span class="px-2 py-0.5 rounded-full font-mono text-[10px] font-bold tabular-nums"
+                                  :class="activeFilter === cat ? 'bg-white/25 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'"
+                                  x-text="getCategoryCount(cat)"></span>
+                        </button>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Desktop & Tablet: Segmented Horizontal Buttons (>= sm) -->
+            <div class="hidden sm:flex justify-center mb-10 sm:mb-14 reveal-up">
+                <div class="flex flex-wrap justify-center gap-2 p-1.5 sm:p-2 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs max-w-4xl">
+                    <!-- All Projects Button -->
+                    <button type="button"
+                            class="py-1.5 sm:py-2 px-3.5 sm:px-5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center gap-1.5 sm:gap-2 cursor-pointer"
+                            :class="activeFilter === 'all' || activeFilter === '0' ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-md shadow-slate-900/20' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800'"
+                            @click="activeFilter = 'all'">
+                        <span x-text="t('portfolio.all')">All Projects</span>
+                        <span class="text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full font-mono font-bold tabular-nums"
+                              :class="activeFilter === 'all' || activeFilter === '0' ? 'bg-white/20 dark:bg-slate-900/20 text-white dark:text-slate-900' : 'bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-slate-300'"
+                              x-text="getCategoryCount('all')"></span>
+                    </button>
+
+                    <!-- Dynamic Category Buttons from All Projects with Unique Brand Colors -->
+                    <template x-for="cat in categories" :key="cat">
+                        <button type="button"
+                                class="py-1.5 sm:py-2 px-3.5 sm:px-5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center gap-1.5 sm:gap-2 cursor-pointer"
+                                :class="activeFilter === cat ? getCategoryStyle(cat).activeBtn : 'text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 ' + getCategoryStyle(cat).btnHover"
+                                @click="activeFilter = cat">
+                            <span class="w-2 h-2 rounded-full" :class="getCategoryStyle(cat).dot"></span>
+                            <span x-text="cat"></span>
+                            <span class="text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full font-mono font-bold tabular-nums"
+                                  :class="activeFilter === cat ? 'bg-white/25 text-white' : 'bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-slate-300'"
+                                  x-text="getCategoryCount(cat)"></span>
+                        </button>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 reveal-up">
+                <template x-for="item in filteredItems" :key="item.title">
+                    <div class="portfolio-item w-full">
+                        <div class="modern-card group relative overflow-hidden rounded-2xl bg-white dark:bg-slate-900 shadow-md hover:shadow-xl border border-slate-200/80 dark:border-slate-800/80 hover:border-blue-300/70 dark:hover:border-blue-500/40 flex flex-col h-full">
+                            <!-- Browser Mockup Window Container -->
+                            <div class="relative w-full h-56 sm:h-64 overflow-hidden bg-slate-950 flex flex-col">
+                                
+                                <!-- Mockup Top Browser Chrome Bar -->
+                                <div class="w-full bg-slate-900/95 dark:bg-slate-950/95 backdrop-blur-md px-3.5 py-2 flex items-center justify-between border-b border-white/10 z-20 shrink-0">
+                                    <!-- 3 Window Control Dots -->
+                                    <div class="flex items-center gap-1.5 shrink-0">
+                                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
+                                        <span class="w-2.5 h-2.5 rounded-full bg-amber-400/80"></span>
+                                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+                                    </div>
+                                    
+                                    <!-- Address Bar Capsule -->
+                                    <div class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-800/90 border border-white/10 text-[10px] text-slate-300 font-mono max-w-[150px] sm:max-w-[205px] truncate"
+                                         :title="item.websiteUrl || item.link">
+                                        <i class="fa-solid fa-lock text-[8px] text-emerald-400"></i>
+                                        <span class="truncate" x-text="getDomain(item.websiteUrl || item.link)"></span>
+                                    </div>
+
+                                    <!-- Live Status or Category Label -->
+                                    <div class="flex items-center shrink-0 text-[10px] font-mono">
+                                        <template x-if="item.websiteUrl">
+                                            <span class="inline-flex items-center gap-1 font-semibold text-emerald-400">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                                <span x-text="t('portfolio.liveWebsite')">Live</span>
+                                            </span>
+                                        </template>
+                                        <template x-if="!item.websiteUrl">
+                                            <span class="font-semibold text-slate-400 uppercase tracking-wider"
+                                                  x-text="item.category"></span>
+                                        </template>
+                                    </div>
+                                </div>
+
+                                <!-- Visual Area (Live Website iFrame when available, otherwise Screenshot / Styled Fallback) -->
+                                <div class="relative w-full flex-1 overflow-hidden bg-slate-100 dark:bg-slate-900">
+                                    
+                                    <!-- Live Website Preview (Direct HTTPS Iframe for Embeddable Sites) -->
+                                    <template x-if="item.websiteUrl && item.canEmbedLive">
+                                        <div class="relative w-full h-full overflow-hidden bg-white dark:bg-slate-950">
+                                            <!-- Browser-Wireframe Shimmer Loading Skeleton for iFrame -->
+                                            <div x-show="!item.iframeLoaded"
+                                                 x-transition:leave="transition ease-out duration-300"
+                                                 x-transition:leave-start="opacity-100"
+                                                 x-transition:leave-end="opacity-0"
+                                                 class="skeleton-shimmer absolute inset-0 z-10 bg-slate-100 dark:bg-slate-900 p-4 flex flex-col justify-between">
+                                                <!-- Wireframe Mini Navbar -->
+                                                <div class="flex items-center justify-between gap-3">
+                                                    <div class="w-16 h-2.5 rounded-full bg-slate-200/90 dark:bg-slate-800"></div>
+                                                    <div class="flex items-center gap-1.5">
+                                                        <div class="w-8 h-2 rounded-full bg-slate-200/80 dark:bg-slate-800/80"></div>
+                                                        <div class="w-8 h-2 rounded-full bg-slate-200/80 dark:bg-slate-800/80"></div>
+                                                        <div class="w-8 h-2 rounded-full bg-slate-200/80 dark:bg-slate-800/80"></div>
+                                                    </div>
+                                                </div>
+                                                <!-- Wireframe Page Preview & Status Caption -->
+                                                <div class="space-y-2.5 my-auto pt-2">
+                                                    <div class="w-full h-20 rounded-xl bg-slate-200/80 dark:bg-slate-800/80 border border-slate-200/50 dark:border-slate-700/40 flex items-center justify-center px-3">
+                                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/85 dark:bg-slate-900/85 border border-slate-200/70 dark:border-white/10 text-[11px] font-mono text-slate-600 dark:text-slate-300 shadow-2xs truncate max-w-full">
+                                                            <span class="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
+                                                            <span class="truncate" x-text="getDomain(item.websiteUrl)"></span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="grid grid-cols-3 gap-2">
+                                                        <div class="col-span-2 h-2.5 rounded-full bg-slate-200/85 dark:bg-slate-800/85"></div>
+                                                        <div class="col-span-1 h-2.5 rounded-full bg-slate-200/70 dark:bg-slate-800/70"></div>
+                                                    </div>
+                                                    <div class="w-1/2 h-2 rounded-full bg-slate-200/70 dark:bg-slate-800/70"></div>
+                                                </div>
+                                            </div>
+
+                                            <iframe :src="item.websiteUrl"
+                                                    :title="item.title + ' live website preview'"
+                                                    loading="lazy"
+                                                    referrerpolicy="no-referrer"
+                                                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                                                    @load="item.iframeLoaded = true"
+                                                    class="border-0 bg-white transition-opacity duration-500 pointer-events-none select-none"
+                                                    :class="item.iframeLoaded ? 'opacity-100' : 'opacity-0'"
+                                                    style="position: absolute; top: 0; left: 0; width: 285.71%; height: 285.71%; transform: scale(0.35); transform-origin: 0 0;"></iframe>
+                                        </div>
+                                    </template>
+
+                                    <!-- Static Image or Styled Fallback for Non-Website or Non-Embeddable Repositories -->
+                                    <template x-if="!item.websiteUrl || !item.canEmbedLive">
+                                        <div class="relative w-full h-full overflow-hidden bg-slate-100 dark:bg-slate-900">
+                                            <!-- Browser-Wireframe Shimmer Image Loading Skeleton -->
+                                            <div x-show="!item.imgLoaded && !item.imgError && item.imgSrc"
+                                                 x-transition:leave="transition ease-out duration-300"
+                                                 x-transition:leave-start="opacity-100"
+                                                 x-transition:leave-end="opacity-0"
+                                                 class="skeleton-shimmer absolute inset-0 z-10 bg-slate-100 dark:bg-slate-900 p-4 flex flex-col justify-between">
+                                                <!-- Wireframe Mini Navbar -->
+                                                <div class="flex items-center justify-between gap-3">
+                                                    <div class="w-16 h-2.5 rounded-full bg-slate-200/90 dark:bg-slate-800"></div>
+                                                    <div class="flex items-center gap-1.5">
+                                                        <div class="w-8 h-2 rounded-full bg-slate-200/80 dark:bg-slate-800/80"></div>
+                                                        <div class="w-8 h-2 rounded-full bg-slate-200/80 dark:bg-slate-800/80"></div>
+                                                    </div>
+                                                </div>
+                                                <!-- Wireframe Page Preview & Status Caption -->
+                                                <div class="space-y-2.5 my-auto pt-2">
+                                                    <div class="w-full h-20 rounded-xl bg-slate-200/80 dark:bg-slate-800/80 border border-slate-200/50 dark:border-slate-700/40 flex items-center justify-center px-3">
+                                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/85 dark:bg-slate-900/85 border border-slate-200/70 dark:border-white/10 text-[11px] font-medium text-slate-600 dark:text-slate-300 shadow-2xs truncate max-w-full"
+                                                              x-text="t('portfolio.loadingPreview')">Preparing preview...</span>
+                                                    </div>
+                                                    <div class="grid grid-cols-3 gap-2">
+                                                        <div class="col-span-2 h-2.5 rounded-full bg-slate-200/85 dark:bg-slate-800/85"></div>
+                                                        <div class="col-span-1 h-2.5 rounded-full bg-slate-200/70 dark:bg-slate-800/70"></div>
+                                                    </div>
+                                                    <div class="w-1/2 h-2 rounded-full bg-slate-200/70 dark:bg-slate-800/70"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Screenshot Image with Smooth Hover Zoom -->
+                                            <img x-show="!item.imgError && item.imgSrc"
+                                                 :src="item.imgSrc"
+                                                 referrerpolicy="no-referrer"
+                                                 @load="item.imgLoaded = true"
+                                                 @error="item.imgLoaded = true; item.imgError = true"
+                                                 class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                                                 :class="item.imgLoaded ? 'opacity-100' : 'opacity-0'"
+                                                 :alt="item.title + ' preview'"
+                                                 width="600" height="400"
+                                                 loading="lazy">
+
+                                            <!-- Zero-Broken-Image Styled Gradient Fallback -->
+                                            <div x-show="item.imgError || !item.imgSrc"
+                                                 class="absolute inset-0 bg-linear-to-br from-slate-900 via-slate-800 to-blue-950 flex flex-col items-center justify-center p-4 text-center">
+                                                <div class="w-11 h-11 rounded-2xl bg-blue-500/15 border border-blue-400/25 text-blue-400 flex items-center justify-center text-lg mb-2.5">
+                                                    <i class="fa-solid fa-code"></i>
+                                                </div>
+                                                <span class="text-sm font-bold text-white tracking-tight truncate max-w-full" x-text="item.title"></span>
+                                                <span class="text-[11px] font-mono text-slate-400 mt-0.5" x-text="item.category"></span>
+                                            </div>
+                                        </div>
+                                    </template>
+
+                                    <!-- Sleek Bottom Hover Gradient Scrim Action Bar (Keeps Live Preview Visible) -->
+                                    <div class="hidden sm:flex absolute inset-x-0 bottom-0 z-20 items-center justify-between gap-2 px-3.5 py-3 bg-linear-to-t from-slate-950/95 via-slate-950/75 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                        <a :href="item.link" target="_blank" rel="noopener noreferrer"
+                                           class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-white font-semibold text-xs transition-all shadow-md"
+                                           :class="getCategoryStyle(item.category).activeBtn">
+                                            <span x-text="item.websiteUrl ? t('portfolio.visitWebsite') : t('portfolio.viewProject')">Visit Website</span>
+                                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                                        </a>
+                                        <template x-if="item.repoUrl">
+                                            <a :href="item.repoUrl" target="_blank" rel="noopener noreferrer"
+                                               class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/95 hover:bg-slate-700 text-white font-medium text-xs border border-white/15 shadow-md transition-all">
+                                                <i class="fa-brands fa-github text-xs"></i>
+                                                <span>GitHub</span>
+                                            </a>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card Bottom Info -->
+                            <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between bg-white dark:bg-slate-900">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <a :href="item.link" target="_blank" rel="noopener noreferrer"
+                                           class="text-base sm:text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate me-2"
+                                           x-text="item.title"></a>
+                                        <div class="flex items-center gap-1.5 shrink-0">
+                                            <template x-if="item.repoUrl">
+                                                <a :href="item.repoUrl" target="_blank" rel="noopener noreferrer"
+                                                   class="text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors p-1"
+                                                   title="GitHub Repository">
+                                                    <i class="fa-brands fa-github text-xs sm:text-sm"></i>
+                                                </a>
+                                            </template>
+                                            <a :href="item.link" target="_blank" rel="noopener noreferrer"
+                                               class="text-slate-400 dark:text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors p-1"
+                                               :title="item.websiteUrl ? 'Visit Website' : 'Open project'">
+                                                <i class="fa-solid fa-arrow-up-right-from-square text-xs sm:text-sm"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm line-clamp-2 leading-relaxed"
+                                       x-text="getLocalized(item.description) || (lang === 'fa' ? 'بدون توضیحات' : 'No description provided.')"></p>
+                                </div>
+
+                                <div class="pt-3 sm:pt-4 mt-3 sm:mt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-medium">
+                                    <div class="flex items-center gap-2 truncate me-2">
+                                        <span class="inline-flex items-center gap-1.5 font-semibold truncate"
+                                              :class="getCategoryStyle(item.category).text">
+                                            <span class="w-2 h-2 rounded-full shrink-0" :class="getCategoryStyle(item.category).dot"></span>
+                                            <span x-text="item.category" class="truncate"></span>
+                                        </span>
+                                        <template x-if="item.stars > 0">
+                                            <span class="text-[11px] text-slate-400 font-mono tabular-nums flex items-center gap-1 shrink-0">
+                                                <span aria-hidden="true">·</span>
+                                                <i class="fa-solid fa-star text-amber-400 text-[10px]"></i>
+                                                <span x-text="item.stars"></span>
+                                            </span>
+                                        </template>
+                                    </div>
+                                    <a :href="item.link" target="_blank" rel="noopener noreferrer" 
+                                       class="hover:underline inline-flex items-center gap-1 shrink-0 font-semibold"
+                                       :class="getCategoryStyle(item.category).text">
+                                        <span x-text="item.websiteUrl ? t('portfolio.visitWebsite') : t('portfolio.explore')">Visit Website</span>
+                                        <i class="fa-solid text-[10px]" :class="lang === 'fa' ? 'fa-chevron-left' : 'fa-chevron-right'"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Empty State if no projects in category -->
+            <div x-show="filteredItems.length === 0" class="text-center py-12 sm:py-16 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 mt-6 px-4">
+                <i class="fa-solid fa-folder-open text-3xl sm:text-4xl text-slate-400 mb-3"></i>
+                <p class="text-slate-600 dark:text-slate-300 font-medium text-sm sm:text-base" x-text="t('portfolio.emptyState')">No projects found in this category.</p>
+                <button type="button" class="mt-4 px-4 py-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs sm:text-sm rounded-xl font-semibold cursor-pointer" @click="activeFilter = 'all'" x-text="t('portfolio.showAll')">Show All Projects</button>
+            </div>
+        </div>
+    </section>
+    <!-- /Portfolio Section -->
+
+    <!-- FAQ Section (SEO & GEO Structured Questions) -->
+    <section id="faq" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900/90 text-slate-800 dark:text-slate-100 transition-colors duration-300 relative overflow-hidden">
+        <div class="container mx-auto max-w-4xl relative z-10">
+            <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-14 reveal-up">
+                <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-2.5">
+                    <i class="fa-solid fa-circle-question text-[11px]"></i>
+                    <span x-text="t('faq.badge')">Frequently Asked Questions</span>
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight text-balance" x-text="t('faq.title')">Common Questions & Collaboration</h2>
+                <p class="text-slate-600 dark:text-slate-300 mt-3 text-sm sm:text-base leading-relaxed" x-text="t('faq.subtitle')">
+                    Concise answers about Alireza Haraji’s programming stack, backend architecture services, and workflow.
+                </p>
+            </div>
+
+            <div class="space-y-3.5 reveal-up">
+                <template x-for="(item, idx) in faqs" :key="idx">
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-2xs overflow-hidden transition-colors"
+                         :class="activeFaq === idx ? 'border-blue-300 dark:border-blue-500/60' : ''">
+                        <button type="button"
+                                @click="activeFaq = (activeFaq === idx ? null : idx)"
+                                :aria-expanded="activeFaq === idx"
+                                class="w-full flex items-center justify-between gap-4 px-5 sm:px-6 py-4 sm:py-5 text-start font-bold text-sm sm:text-base text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer">
+                            <span x-text="getLocalized(item.q)"></span>
+                            <span class="w-7 h-7 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center shrink-0 transition-transform duration-200"
+                                  :class="activeFaq === idx ? 'rotate-180 bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400' : ''">
+                                <i class="fa-solid fa-chevron-down text-xs"></i>
+                            </span>
+                        </button>
+                        <div x-show="activeFaq === idx"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 -translate-y-1"
+                             x-transition:enter-end="opacity-100 translate-y-0"
+                             class="px-5 sm:px-6 pb-5 pt-0 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800/80">
+                            <p class="pt-3.5" x-text="getLocalized(item.a)"></p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+    <!-- /FAQ Section -->
+
+</main>
+
+<footer id="footer" class="lg:ml-72 bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-300 border-t border-slate-200 dark:border-slate-800/80 relative overflow-hidden transition-colors duration-300">
+    <!-- Ambient background glows -->
+    <div class="absolute top-0 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative z-10">
+        <!-- Top Banner: Collaborative CTA Card -->
+        <div class="bg-white dark:bg-slate-900 p-6 sm:p-8 md:p-10 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl mb-12 sm:mb-16 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-start transition-colors duration-300">
+            <div class="max-w-xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-semibold mb-3"
+                     :class="isHireable ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400' : 'bg-amber-500/10 border-amber-500/20 text-amber-600 dark:text-amber-400'">
+                    <span class="w-2 h-2 rounded-full"
+                          :class="isHireable ? 'bg-emerald-500 dark:bg-emerald-400' : 'bg-amber-500 dark:bg-amber-400'"></span>
+                    <span x-text="isHireable ? t('footer.badge') : (lang === 'fa' ? 'مشغول در پروژه فعلی' : 'Engaged in Current Projects')">Ready for New Opportunities</span>
+                </div>
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight" x-text="t('footer.ctaTitle')">Have a project or engineering challenge?</h3>
+                <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed" x-text="t('footer.ctaSub')">
+                    Let's collaborate to build resilient backend architectures, high-performance APIs, or custom web platforms.
+                </p>
+            </div>
+            <div class="flex flex-wrap items-center justify-center gap-3 shrink-0">
+                <a :href="'mailto:' + userEmail"
+                   class="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-600/30 hover:shadow-blue-500/40 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
+                    <i class="fa-solid fa-paper-plane text-xs"></i>
+                    <span x-text="t('footer.getInTouch')">Get in Touch</span>
+                </a>
+                <a :href="user?.html_url || 'https://github.com/alirezaevil81'" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-white font-bold text-xs sm:text-sm border border-slate-200 dark:border-slate-700 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
+                    <i class="fa-brands fa-github text-sm"></i>
+                    <span x-text="t('footer.githubProfile')">GitHub Profile</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Footer Links & Info Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12 pb-12 border-b border-slate-200 dark:border-slate-800/80">
+            <!-- Col 1: Identity & Bio (5 cols) -->
+            <div class="lg:col-span-5 space-y-4 text-center md:text-start">
+                <div class="flex items-center justify-center md:justify-start gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-blue-600/15 border border-blue-500/30 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg font-black font-mono">
+                        &lt;/&gt;
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-black text-slate-900 dark:text-white tracking-tight" x-text="displayName">Alireza Haraji</h4>
+                        <span class="text-xs text-blue-600 dark:text-blue-400 font-semibold" x-text="t('footer.role')">Backend & Software Engineer</span>
+                    </div>
+                </div>
+
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-sm mx-auto md:mx-0" x-text="t('footer.bio')">
+                    Focused on crafting scalable PHP & Python backend systems, clean microservices, database optimizations, and robust web solutions.
+                </p>
+
+                <!-- Social Links Pills (Dynamic from GitHub social_accounts + GitHub/Web/Email) -->
+                <div class="flex flex-wrap items-center justify-center md:justify-start gap-2.5 pt-2">
+                    <a :href="user?.html_url || 'https://github.com/alirezaevil81'" target="_blank" rel="noopener noreferrer"
+                       aria-label="GitHub Profile"
+                       class="w-9 h-9 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-800 border border-slate-200 dark:border-slate-800 hover:border-slate-700 text-slate-600 dark:text-slate-300 hover:text-white flex items-center justify-center text-sm transition-all duration-300 shadow-2xs">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+
+                    <!-- Dynamic Social Accounts from GitHub API -->
+                    <template x-for="item in socialAccounts" :key="'footer-' + item.url">
+                        <a :href="item.url" target="_blank" rel="noopener noreferrer"
+                           :aria-label="item.title"
+                           :title="item.title"
+                           class="w-9 h-9 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center text-sm transition-all duration-300 shadow-2xs"
+                           :class="item.hoverClass">
+                            <i :class="item.icon"></i>
+                        </a>
+                    </template>
+
+                    <a :href="userBlogUrl"
+                       target="_blank" rel="noopener noreferrer"
+                       aria-label="Personal Website"
+                       class="w-9 h-9 rounded-xl bg-white dark:bg-slate-900 hover:bg-emerald-600 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 text-slate-600 dark:text-slate-300 hover:text-white flex items-center justify-center text-sm transition-all duration-300 shadow-2xs">
+                        <i class="fa-solid fa-globe"></i>
+                    </a>
+                    <a :href="'mailto:' + userEmail"
+                       aria-label="Send Email"
+                       class="w-9 h-9 rounded-xl bg-white dark:bg-slate-900 hover:bg-rose-600 border border-slate-200 dark:border-slate-800 hover:border-rose-500 text-slate-600 dark:text-slate-300 hover:text-white flex items-center justify-center text-sm transition-all duration-300 shadow-2xs">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Col 2: Navigation Links (3 cols) -->
+            <div class="lg:col-span-3 text-center md:text-start">
+                <h5 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200 mb-4" x-text="t('footer.navTitle')">Quick Navigation</h5>
+                <ul class="space-y-2.5 text-xs sm:text-sm">
+                    <li>
+                        <a href="#hero" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors inline-flex items-center gap-1.5">
+                            <i class="fa-solid text-[10px] text-slate-400 dark:text-slate-600" :class="lang === 'fa' ? 'fa-chevron-left' : 'fa-chevron-right'"></i>
+                            <span x-text="t('nav.home')">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#about" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors inline-flex items-center gap-1.5">
+                            <i class="fa-solid text-[10px] text-slate-400 dark:text-slate-600" :class="lang === 'fa' ? 'fa-chevron-left' : 'fa-chevron-right'"></i>
+                            <span x-text="t('nav.about')">About Me</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#skill" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors inline-flex items-center gap-1.5">
+                            <i class="fa-solid text-[10px] text-slate-400 dark:text-slate-600" :class="lang === 'fa' ? 'fa-chevron-left' : 'fa-chevron-right'"></i>
+                            <span x-text="t('nav.skills')">Skills & Proficiency</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#resume" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors inline-flex items-center gap-1.5">
+                            <i class="fa-solid text-[10px] text-slate-400 dark:text-slate-600" :class="lang === 'fa' ? 'fa-chevron-left' : 'fa-chevron-right'"></i>
+                            <span x-text="t('nav.resume')">Experience & Resume</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#portfolio" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors inline-flex items-center gap-1.5">
+                            <i class="fa-solid text-[10px] text-slate-400 dark:text-slate-600" :class="lang === 'fa' ? 'fa-chevron-left' : 'fa-chevron-right'"></i>
+                            <span x-text="t('nav.portfolio')">Projects Portfolio</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#faq" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors inline-flex items-center gap-1.5">
+                            <i class="fa-solid text-[10px] text-slate-400 dark:text-slate-600" :class="lang === 'fa' ? 'fa-chevron-left' : 'fa-chevron-right'"></i>
+                            <span x-text="t('nav.faq')">FAQ</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Core Technology Stack (4 cols) -->
+            <div class="lg:col-span-4 text-center md:text-start">
+                <h5 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200 mb-4" x-text="t('footer.techTitle')">Core Tech Stack</h5>
+                <div class="flex flex-wrap justify-center md:justify-start gap-2">
+                    <span class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-medium shadow-2xs">Python & Django</span>
+                    <span class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-medium shadow-2xs">PHP & Laravel</span>
+                    <span class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-medium shadow-2xs">MySQL & Redis</span>
+                    <span class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-medium shadow-2xs">WordPress & CMS</span>
+                    <span class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-medium shadow-2xs">RESTful APIs</span>
+                    <span class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-medium shadow-2xs">Docker & Git</span>
+                    <span class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-medium shadow-2xs">Linux & CI/CD</span>
+                </div>
+
+                <div class="mt-4 p-3 rounded-2xl bg-white/80 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 text-start">
+                    <span class="text-[11px] font-semibold text-slate-600 dark:text-slate-400 flex items-center gap-1.5">
+                        <i class="fa-solid fa-location-dot text-blue-600 dark:text-blue-400"></i>
+                        <span x-text="lang === 'fa' ? 'ایران، مازندران، نوشهر' : (user?.location || 'Nowshahr, Mazandaran, Iran')"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Copyright & Credits Strip -->
+        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-500 text-center sm:text-start">
+            <div>
+                <p>
+                    © <span x-text="(user && user.created_at) ? `${new Date(user.created_at).getFullYear()} - ${new Date().getFullYear()}` : `2019 - ${new Date().getFullYear()}`"></span>
+                    <strong class="text-slate-800 dark:text-slate-300 font-semibold" x-text="displayName">Alireza Haraji</strong>. <span x-text="t('footer.rights')">All rights reserved.</span>
+                </p>
+            </div>
+            <div class="flex flex-wrap items-center justify-center gap-3">
+                <nav aria-label="Language versions" class="inline-flex items-center gap-2 text-xs font-medium">
+                    <a href="/fa/" hreflang="fa" lang="fa" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors" :class="lang === 'fa' ? 'text-blue-600 dark:text-blue-400 font-bold' : ''">فارسی</a>
+                    <span aria-hidden="true">·</span>
+                    <a href="/en/" hreflang="en" lang="en" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors" :class="lang === 'en' ? 'text-blue-600 dark:text-blue-400 font-bold' : ''">English</a>
+                </nav>
+                <span aria-hidden="true" class="hidden sm:inline">·</span>
+                <span class="font-medium text-slate-600 dark:text-slate-400" x-text="t('footer.craftedBy')">Crafted exclusively by Alireza Haraji</span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Modern Back to Top Button with Dynamic Scroll Progress Ring -->
+<button id="scroll-top"
+        type="button"
+        aria-label="Scroll to top"
+        class="fixed bottom-6 sm:bottom-8 group flex items-center justify-center p-1.5 bg-white/90 dark:bg-slate-900/90 hover:bg-white dark:hover:bg-slate-900 text-slate-800 dark:text-white backdrop-blur-xl rounded-full shadow-2xl shadow-slate-900/10 dark:shadow-slate-950/40 border border-slate-200 dark:border-white/20 transition-all duration-300 z-50 transform hover:-translate-y-1.5 hover:shadow-blue-500/30 active:scale-90 cursor-pointer"
+        :class="lang === 'fa' ? 'left-6 sm:left-8 right-auto' : 'right-6 sm:right-8 left-auto'"
+        x-show="showScrollTop"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 translate-y-8 scale-75"
+        x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+        x-transition:leave-end="opacity-0 translate-y-8 scale-75"
+        @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+        style="display: none;">
+
+    <div class="relative w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center">
+        <!-- SVG Radial Progress Ring -->
+        <svg class="absolute inset-0 w-full h-full -rotate-90 pointer-events-none" viewBox="0 0 48 48">
+            <!-- Track Circle -->
+            <circle cx="24" cy="24" r="21"
+                    class="text-slate-200 dark:text-white/15"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    fill="none" />
+            <!-- Progress Circle -->
+            <circle cx="24" cy="24" r="21"
+                    class="text-blue-600 dark:text-blue-500 transition-all duration-150 ease-out"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-dasharray="131.95"
+                    :stroke-dashoffset="131.95 - (131.95 * scrollProgress / 100)"
+                    fill="none" />
+        </svg>
+
+        <!-- Upward Arrow Icon with Lift Animation -->
+        <i class="fa-solid fa-arrow-up text-sm sm:text-base text-slate-700 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transform group-hover:-translate-y-1 transition-all duration-300 z-10"></i>
+
+        <!-- Percentage Tooltip / Badge on Hover -->
+        <div class="absolute -top-9 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-300 transform group-hover:-translate-y-0.5 bg-white dark:bg-slate-900/95 text-[11px] font-bold font-mono text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded-lg border border-slate-200 dark:border-white/10 shadow-lg whitespace-nowrap">
+            <span x-text="scrollProgress + '%'"></span>
+        </div>
+    </div>
+</button>
+
+<!-- Main Logic -->
+<script src="/assets/js/main.js"></script>
+</body>
+</html>

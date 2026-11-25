@@ -1,8 +1,37 @@
+# IDEs & Editors
 .idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Dependencies & Build Outputs
 node_modules/
+dist/
+build/
+coverage/
+.cache/
+.tmp/
+tmp/
+
+# Environment & Secrets
+.env
+.env.local
+.env.*.local
+.env.example
+
+# Platform / Server / Tooling files not needed on GitHub Pages
 package.json
 package-lock.json
+bun.lock
 server.js
 metadata.json
-.env.example
-bun.lock
+
+# Logs & OS Metadata
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.DS_Store
+Thumbs.db
